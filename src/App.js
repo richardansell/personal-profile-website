@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {colors, createMuiTheme, Grid, MuiThemeProvider} from "@material-ui/core";
 import "./App.css";
 import BackgroundVideo from "./background_video/BackgroundVideo";
+import Navigation from "./navigation/Navigation";
 
 const theme = createMuiTheme({
     palette: {
@@ -33,7 +34,7 @@ class App extends Component {
                     <div className="navigation-bar">
                         <Grid container justify="center" spacing={24}>
                             <Grid item xs={9}>
-
+                                <Navigation/>
                             </Grid>
                         </Grid>
                     </div>
