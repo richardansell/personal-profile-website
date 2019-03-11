@@ -8,6 +8,7 @@ import Navigation, {tabs} from "./navigation/Navigation";
 import BackToTopButton from "./back_to_top_button/BackToTopButton";
 import About from "./about/About";
 import Skills from "./skills/Skills";
+import Education from "./education/Education";
 
 const theme = createMuiTheme({
     palette: {
@@ -88,6 +89,9 @@ class App extends Component {
                             </Grid>
                             <Grid item lg={8} xs={9}>
                                 <Skills/>
+                            </Grid>
+                            <Grid item lg={8} xs={9}>
+                                <Education/>
                             </Grid>
                         </Grid>
                         <BackToTopButton/>
