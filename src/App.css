@@ -1,11 +1,16 @@
-.navigation-bar {
+#navigation-bar {
     left: 0;
+    margin: 0 auto;
     position: fixed;
     right: 0;
     top: 0;
+    z-index: 99;
 }
 
-.content {
+#content {
+    left: 0;
+    margin: 0 auto;
     position: absolute;
-    top: 150px;
+    right: 0;
+    top: 200px;
 }
