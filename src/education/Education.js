@@ -6,6 +6,9 @@ import {isWidthDown} from "@material-ui/core/withWidth";
 import UoBLogo from "./media/uob-logo-slate-grey.png";
 
 const styles = theme => ({
+    courseContentText: {
+        whiteSpace: "pre-line"
+    },
     paper: {
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 4,
@@ -27,7 +30,13 @@ class Education extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {universityOfBathUrl: "https://www.bath.ac.uk/"};
+        this.state = {
+            instituteName: "University of Bath",
+            instituteUrl: "https://www.bath.ac.uk/",
+            tooltipVisitInstituteTitle: "Visit University of Bath website",
+            courseDetails: "BSc Applied Computing, First Class (Honours) (GPA 4.0), 2014 - 2017",
+            courseContent: "Key modules included: Creative Computing, Multi-Tasking Systems, Advanced Web-Based Technologies, Mobile Technologies, Computer Hardware, Cyber Security and Ethics, Systems Analysis, Networking, Programming and Database Development.\n\nDevelopment work included the creation of a website for the Local Safeguarding Children’s Board for Bath & North-East Somerset Council, a professional services website and a website and Android mobile application for a client specialising in promoting shopping events across the UK."
+        };
         this.educationRef = React.createRef();
     }
 
@@ -40,12 +49,12 @@ class Education extends Component {
         const distanceToTop = this.educationRef.current.offsetTop;
         this.props.updateEducation({height, distanceToTop});
     };
-    
+
     universityOfBathLogo = style => (
-        <Tooltip title="Visit University of Bath website">
-            <img alt="University of Bath"
+        <Tooltip title={this.state.tooltipVisitInstituteTitle}>
+            <img alt={this.state.instituteName}
                  className={style}
-                 onClick={() => window.open(this.state.universityOfBathUrl, "", "", false)}
+                 onClick={() => window.open(this.state.instituteUrl, "", "", false)}
                  src={UoBLogo}/>
         </Tooltip>
     );
@@ -73,24 +82,17 @@ class Education extends Component {
                             <Toolbar disableGutters={true}>
                                 <Typography className={classes.universityTitle} color="secondary"
                                             variant={widthSmDown ? "h6" : "h5"}>
-                                    University of Bath
+                                    {this.state.instituteName}
                                 </Typography>
                                 <Hidden smDown>
                                     {this.universityOfBathLogo(classes.universityOfBathLogo)}
                                 </Hidden>
                             </Toolbar>
                             <Typography color="textSecondary" variant={widthSmDown ? "subtitle1" : "h6"}>
-                                BSc Applied Computing, First Class (Honours) (GPA 4.0), 2014 -2017
+                                {this.state.courseDetails}
                             </Typography>
-                            <Typography color="secondary" variant="body1">
-                                Key modules included: Creative Computing, Multi-Tasking Systems, Advanced Web-Based
-                                Technologies, Mobile Technologies, Computer Hardware, Cyber Security and
-                                Ethics, Systems Analysis, Networking, Programming and Database Development.
-                                <br/><br/>
-                                Development work included the creation of a website for the Local Safeguarding
-                                Children’s Board for Bath & North-East Somerset Council, a professional services website
-                                and a website and Android mobile application for a client specialising in promoting
-                                shopping events across the UK.
+                            <Typography className={classes.courseContentText} color="secondary" variant="body1">
+                                {this.state.courseContent}
                             </Typography>
                         </Paper>
                     </Grid>
