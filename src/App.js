@@ -24,17 +24,16 @@ class App extends Component {
             <div>
                 <MuiThemeProvider theme={theme}>
                     <BackgroundVideo/>
-                    <div className="content">
+                    <div id="navigation-bar">
                         <Grid container justify="center" spacing={24}>
-                            <Grid item xs={9}>
-
+                            <Grid item lg={8} xs={9}>
+                                <Navigation/>
                             </Grid>
                         </Grid>
                     </div>
-                    <div className="navigation-bar">
+                    <div id="content">
                         <Grid container justify="center" spacing={24}>
-                            <Grid item xs={9}>
-                                <Navigation/>
+                            <Grid item lg={8} xs={9}>
                             </Grid>
                         </Grid>
                     </div>
