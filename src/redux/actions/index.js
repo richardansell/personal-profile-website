@@ -1,4 +1,6 @@
 import {
+    UPDATE_TAB_INDEX,
+    UPDATE_APP_BAR,
     UPDATE_ABOUT,
     UPDATE_SKILLS,
     UPDATE_PORTFOLIO,
@@ -6,6 +8,14 @@ import {
     UPDATE_EXPERIENCE,
     UPDATE_CONTACT
 } from "../constants/action-types";
+
+export const updateTabIndex = payload => {
+  return {type: UPDATE_TAB_INDEX, payload}
+};
+
+export const updateAppBar = payload => {
+  return {type: UPDATE_APP_BAR, payload}
+};
 
 export const updateAbout = payload => {
     return {type: UPDATE_ABOUT, payload}

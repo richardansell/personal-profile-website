@@ -1,4 +1,6 @@
 import {
+    UPDATE_TAB_INDEX,
+    UPDATE_APP_BAR,
     UPDATE_ABOUT,
     UPDATE_SKILLS,
     UPDATE_PORTFOLIO,
@@ -8,6 +10,11 @@ import {
 } from "../constants/action-types";
 
 const navigationState = {
+    tabIndex: 0,
+    appBarComponent: {
+        height: 0,
+        paddingTop: 0
+    },
     aboutComponent: {
         height: 0,
         distanceToTop: 0
@@ -36,6 +43,14 @@ const navigationState = {
 
 function navigation(state = navigationState, action) {
     switch (action.type) {
+        case UPDATE_TAB_INDEX:
+            return Object.assign({}, state, {
+                tabIndex: action.payload
+            });
+        case UPDATE_APP_BAR:
+            return Object.assign({}, state, {
+                appBarComponent: action.payload
+            });
         case UPDATE_ABOUT:
             return Object.assign({}, state, {
                 aboutComponent: action.payload
