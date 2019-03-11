@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {colors, createMuiTheme, Grid, MuiThemeProvider} from "@material-ui/core";
+import {connect} from "react-redux";
 import "./App.css";
+import {updateTabIndex} from "./redux/actions";
+import {colors, createMuiTheme, Grid, MuiThemeProvider} from "@material-ui/core";
 import BackgroundVideo from "./background_video/BackgroundVideo";
 import Navigation, {tabs} from "./navigation/Navigation";
-import {connect} from "react-redux";
-import {updateTabIndex} from "./redux/actions";
+import BackToTopButton from "./back_to_top_button/BackToTopButton";
 
 const theme = createMuiTheme({
     palette: {
@@ -83,6 +84,7 @@ class App extends Component {
                             <Grid item lg={8} xs={9}>
                             </Grid>
                         </Grid>
+                        <BackToTopButton/>
                     </div>
                 </MuiThemeProvider>
             </div>
