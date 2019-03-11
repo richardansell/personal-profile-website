@@ -164,7 +164,7 @@ class Skills extends Component {
                         <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
                             Technical Skills
                         </Typography>
-                        <Paper className={classes.paper}>
+                        <Paper className={classes.paper} square={true}>
                             <Typography className={classes.technicalSkillSubtitle} color="secondary" gutterBottom
                                         variant="overline">
                                 Programming Languages

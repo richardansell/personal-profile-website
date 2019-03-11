@@ -71,7 +71,7 @@ class Education extends Component {
                                     variant={widthSmDown ? "h5" : "h4"}>
                             Education
                         </Typography>
-                        <Paper className={classes.paper}>
+                        <Paper className={classes.paper} square={true}>
                             <Hidden mdUp>
                                 <Grid container justify="flex-end">
                                     <Grid item>
