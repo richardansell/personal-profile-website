@@ -43,7 +43,7 @@ class BackToTopButton extends Component {
             this.setState({showBackToTopButton: true})
         } else {
             this.setState({showBackToTopButton: false}, () => {
-                setTimeout(() => {
+                this.scrollTimer = setTimeout(() => {
                     this.setState({showBackToTopButton: scrollTop !== 0})
                 }, 10);
             });

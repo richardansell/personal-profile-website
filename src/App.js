@@ -6,6 +6,7 @@ import {colors, createMuiTheme, Grid, MuiThemeProvider} from "@material-ui/core"
 import BackgroundVideo from "./background_video/BackgroundVideo";
 import Navigation, {tabs} from "./navigation/Navigation";
 import BackToTopButton from "./back_to_top_button/BackToTopButton";
+import About from "./about/About";
 
 const theme = createMuiTheme({
     palette: {
@@ -82,6 +83,7 @@ class App extends Component {
                     <div id="content">
                         <Grid container justify="center" spacing={24}>
                             <Grid item lg={8} xs={9}>
+                                <About/>
                             </Grid>
                         </Grid>
                         <BackToTopButton/>
