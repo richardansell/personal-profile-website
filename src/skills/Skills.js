@@ -9,6 +9,7 @@ import {
     ListItemIcon,
     ListItemText,
     Paper,
+    Tooltip,
     Typography,
     withStyles,
     withWidth
@@ -160,11 +161,11 @@ class Skills extends Component {
         return (
             <div ref={this.skillsRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
-                    <Grid item md={6}>
+                    <Grid item md={6} xs={12}>
                         <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
                             Technical Skills
                         </Typography>
-                        <Paper className={classes.paper}>
+                        <Paper className={classes.paper} square={true}>
                             <Typography className={classes.technicalSkillSubtitle} color="secondary" gutterBottom
                                         variant="overline">
                                 Programming Languages
@@ -172,20 +173,21 @@ class Skills extends Component {
                             <div className={classes.chipContainer}>
                                 {this.state.programmingSkills.map(chip => {
                                     return (
-                                        <Chip
-                                            avatar={
-                                                <Avatar className={classes.avatarBackground}>
-                                                    <Icon color={chip.color} icon={chip.icon}/>
-                                                </Avatar>
-                                            }
-                                            className={classes.chip}
-                                            clickable
-                                            color="default"
-                                            key={chip.key}
-                                            label={chip.label}
-                                            onClick={() => this.openLink(chip.link)}
-                                            variant="outlined"
-                                        />
+                                        <Tooltip key={chip.key} title="Learn more">
+                                            <Chip
+                                                avatar={
+                                                    <Avatar className={classes.avatarBackground}>
+                                                        <Icon color={chip.color} icon={chip.icon}/>
+                                                    </Avatar>
+                                                }
+                                                className={classes.chip}
+                                                clickable
+                                                color="default"
+                                                label={chip.label}
+                                                onClick={() => this.openLink(chip.link)}
+                                                variant="outlined"
+                                            />
+                                        </Tooltip>
                                     );
                                 })}
                             </div>
@@ -208,30 +210,31 @@ class Skills extends Component {
                                             break;
                                     }
                                     return (
-                                        <Chip
-                                            avatar={
-                                                <Avatar className={classes.avatarBackground}>
-                                                    {icon}
-                                                </Avatar>
-                                            }
-                                            className={classes.chip}
-                                            clickable
-                                            color="default"
-                                            key={chip.key}
-                                            label={chip.label}
-                                            onClick={() => this.openLink(chip.link)}
-                                            variant="outlined"
-                                        />
+                                        <Tooltip key={chip.key} title="Learn more">
+                                            <Chip
+                                                avatar={
+                                                    <Avatar className={classes.avatarBackground}>
+                                                        {icon}
+                                                    </Avatar>
+                                                }
+                                                className={classes.chip}
+                                                clickable
+                                                color="default"
+                                                label={chip.label}
+                                                onClick={() => this.openLink(chip.link)}
+                                                variant="outlined"
+                                            />
+                                        </Tooltip>
                                     );
                                 })}
                             </div>
                         </Paper>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} xs={12}>
                         <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
                             Personal Skills
                         </Typography>
-                        <Paper className={classes.paper}>
+                        <Paper className={classes.paper} square={true}>
                             <List dense={true}>
                                 {this.state.personalSkills.map(skill => {
                                     return (

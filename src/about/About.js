@@ -22,7 +22,7 @@ import {
     faStackOverflow as StackOverflowIcon
 } from "@fortawesome/free-brands-svg-icons";
 import {updateAbout} from "../redux/actions";
-import ProfilePicture from "./media/profile-picture.jpg";
+import ProfilePicture from "../utils/media/profile-picture.jpg";
 
 const styles = theme => ({
     emailHover: {
