@@ -23,6 +23,7 @@ import IdeaOfTheYear2006AwardOne from "./media/idea-of-the-year-2006-award-one.j
 import IdeaOfTheYear2006AwardTwo from "./media/idea-of-the-year-2006-award-two.jpeg";
 import IdeaOfTheQuarter2008Award from "./media/idea-of-the-quarter-2008-award.jpeg";
 import {Icon} from "@iconify/react";
+import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
 
 const styles = () => ({
     card: {
@@ -43,8 +44,6 @@ const styles = () => ({
 const mapDispatchToProps = dispatch => {
     return {updateExperience: dimensions => dispatch(updateExperience(dimensions))}
 };
-
-export const mediaType = {IMAGE: 0, VIDEO: 1};
 
 class Experience extends Component {
 
@@ -534,6 +533,13 @@ class Experience extends Component {
                                             <Typography color="secondary" variant="body1">
                                                 {position.description}
                                             </Typography>
+                                            {position.mediaAvailable &&
+                                            <Grid container justify="center" spacing={24}>
+                                                <Grid item>
+                                                    <CardMediaSingle gridJustifyPosition="center"
+                                                                     media={position.media}/>
+                                                </Grid>
+                                            </Grid>}
                                         </StepContent>
                                     </Step>
                                 )
