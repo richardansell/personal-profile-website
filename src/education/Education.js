@@ -66,7 +66,7 @@ class Education extends Component {
         return (
             <div ref={this.educationRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
-                    <Grid item md={12}>
+                    <Grid item md={12} xs={12}>
                         <Typography color="secondary" gutterBottom
                                     variant={widthSmDown ? "h5" : "h4"}>
                             Education
