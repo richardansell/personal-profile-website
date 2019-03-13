@@ -9,18 +9,19 @@ import BackToTopButton from "./back_to_top_button/BackToTopButton";
 import About from "./about/About";
 import Skills from "./skills/Skills";
 import Education from "./education/Education";
+import Experience from "./experience/Experience";
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: colors.blueGrey[50],
+            main: colors.blueGrey[50]
         },
         secondary: {
-            main: colors.blueGrey[900],
-        },
+            main: colors.blueGrey[900]
+        }
     },
     typography: {
-        useNextVariants: true,
+        useNextVariants: true
     }
 });
 
@@ -92,6 +93,9 @@ class App extends Component {
                             </Grid>
                             <Grid item lg={8} xs={9}>
                                 <Education/>
+                            </Grid>
+                            <Grid item lg={8} xs={9}>
+                                <Experience/>
                             </Grid>
                         </Grid>
                         <BackToTopButton/>
