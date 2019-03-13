@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {AppBar, Hidden, Tab, Tabs, Toolbar, Typography, withStyles} from "@material-ui/core";
+import {AppBar, Button, Hidden, Tab, Tabs, Toolbar, Typography, withStyles, withWidth} from "@material-ui/core";
 import * as Icon from "@material-ui/icons";
 import {connect} from "react-redux";
 import {updateAppBar} from "../redux/actions";
+import {isWidthDown} from "@material-ui/core/withWidth";
 
 const styles = theme => ({
     appBarName: {
@@ -91,16 +92,31 @@ class Navigation extends Component {
         });
     };
 
+    scrollToContactForm = () => {
+        const {appBarComponent, contactComponent} = this.props.navigation;
+        window.scrollTo({
+            top: contactComponent.distanceToTop - (appBarComponent.height - (appBarComponent.paddingTop * 0.5)),
+            left: 0,
+            behavior: 'smooth'
+        });
+    };
+
     render() {
         const {classes, navigation} = this.props;
+        const widthSmDown = isWidthDown("sm", this.props.width);
         return (
             <div className={classes.root} ref={this.appBarRef}>
                 <AppBar color="inherit" position="static">
                     <Toolbar>
-                        <Icon.Code className={classes.codeIcon}/>
-                        <Typography className={classes.appBarName} color="inherit" variant="h6">
+                        <Icon.Code className={classes.codeIcon} color="secondary"/>
+                        <Typography className={classes.appBarName} color="secondary" variant={widthSmDown ? "body1" : "h6"}>
                             Richard
                         </Typography>
+                        <Hidden lgUp>
+                            <Button color="secondary" onClick={this.scrollToContactForm} size={widthSmDown ? "small" : "medium"}>
+                                Contact
+                            </Button>
+                        </Hidden>
                         <Hidden mdDown>
                             <Tabs indicatorColor="secondary" onChange={this.handleTabChange}
                                   color="secondary" value={navigation.tabIndex}>
@@ -120,4 +136,4 @@ class Navigation extends Component {
 
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Navigation));
+export default withWidth()(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Navigation)));
