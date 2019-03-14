@@ -1,13 +1,18 @@
 import {
-    UPDATE_TAB_INDEX,
-    UPDATE_APP_BAR,
     UPDATE_ABOUT,
-    UPDATE_SKILLS,
-    UPDATE_PORTFOLIO,
+    UPDATE_APP_BAR,
+    UPDATE_COMPONENT_DISTANCES_TO_TOP,
+    UPDATE_CONTACT,
     UPDATE_EDUCATION,
     UPDATE_EXPERIENCE,
-    UPDATE_CONTACT
+    UPDATE_PORTFOLIO,
+    UPDATE_SKILLS,
+    UPDATE_TAB_INDEX
 } from "../constants/action-types";
+
+export const updateComponentDistancesToTop = payload => {
+    return {type: UPDATE_COMPONENT_DISTANCES_TO_TOP, payload}
+};
 
 export const updateTabIndex = payload => {
   return {type: UPDATE_TAB_INDEX, payload}

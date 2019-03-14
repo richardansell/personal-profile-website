@@ -6,6 +6,11 @@ import {isWidthDown} from "@material-ui/core/withWidth";
 import UoBLogo from "./media/uob-logo-slate-grey.png";
 
 const styles = theme => ({
+    border: {
+        borderColor: "transparent",
+        borderStyle: "solid",
+        borderWidth: "1px"
+    },
     courseContentText: {
         whiteSpace: "pre-line"
     },
@@ -42,12 +47,16 @@ class Education extends Component {
 
     componentDidMount() {
         this.setComponentMeasurements();
+        window.addEventListener('resize', this.setComponentMeasurements);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
     setComponentMeasurements = () => {
         const height = this.educationRef.current.scrollHeight;
-        const distanceToTop = this.educationRef.current.offsetTop;
-        this.props.updateEducation({height, distanceToTop});
+        this.props.updateEducation({height: height});
     };
 
     universityOfBathLogo = style => (
@@ -64,7 +73,7 @@ class Education extends Component {
         const {classes} = this.props;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
-            <div ref={this.educationRef}>
+            <div className={classes.border} ref={this.educationRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={12} xs={12}>
                         <Typography color="secondary" gutterBottom
