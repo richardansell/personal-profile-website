@@ -44,13 +44,11 @@ const styles = () => ({
         maxHeight: 250
     },
     cardSmDown: {
-        marginTop: 30,
         width: "auto",
     },
     cardSmUp: {
-        marginTop: 30,
         maxWidth: 400,
-        width: 400
+        width: "auto"
     },
     dialogAction: {
         margin: 15
@@ -77,6 +75,10 @@ class CardMediaSingle extends Component {
         };
     }
 
+    componentDidMount() {
+        this.props.setComponentMeasurements();
+    }
+
     handleNext = media => this.setState(prevState => ({activeStep: prevState.activeStep !== media.count - 1 ? prevState.activeStep + 1 : 0}));
 
     handleBack = media => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? media.count - 1 : prevState.activeStep - 1}));
@@ -87,7 +89,7 @@ class CardMediaSingle extends Component {
 
     render() {
         const widthSmUp = isWidthUp("sm", this.props.width);
-        const {classes, theme, media} = this.props;
+        const {classes, theme, media, square} = this.props;
         const {activeStep, dialogImage, dialogImageAlt, name, showSelectedImageDialog} = this.state;
         const item = media.items[activeStep];
         return (
@@ -110,7 +112,7 @@ class CardMediaSingle extends Component {
                     </DialogActions>
                 </Dialog>
 
-                <Card className={widthSmUp ? classes.cardSmUp : classes.cardSmDown}>
+                <Card className={widthSmUp ? classes.cardSmUp : classes.cardSmDown} square={square}>
                     {widthSmUp ?
                         <CardHeader
                             avatar={

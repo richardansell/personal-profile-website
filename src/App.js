@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import "./App.css";
-import {updateTabIndex} from "./redux/actions";
+import {
+    updateComponentDistancesToTop,
+    updateContact,
+    updateEducation,
+    updateExperience,
+    updatePortfolio,
+    updateSkills,
+    updateTabIndex
+} from "./redux/actions";
 import {colors, createMuiTheme, Grid, MuiThemeProvider} from "@material-ui/core";
 import BackgroundVideo from "./background_video/BackgroundVideo";
 import Navigation, {tabs} from "./navigation/Navigation";
@@ -30,48 +38,113 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {updateTabIndex: tabIndex => dispatch(updateTabIndex(tabIndex))}
+    return {
+        updateComponentDistancesToTop: status => dispatch(updateComponentDistancesToTop(status)),
+        updateTabIndex: tabIndex => dispatch(updateTabIndex(tabIndex)),
+        updateSkills: dimensions => dispatch(updateSkills(dimensions)),
+        updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions)),
+        updateEducation: dimensions => dispatch(updateEducation(dimensions)),
+        updateExperience: dimensions => dispatch(updateExperience(dimensions)),
+        updateContact: dimensions => dispatch(updateContact(dimensions))
+    }
 };
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.resizeSectionComponentsTimer = null;
+    }
+
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.setSectionComponentsDistancesToTop);
     }
 
     componentWillUnmount() {
+        this.clearResizeSectionComponentsTimer();
         window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.setSectionComponentsDistancesToTop);
     }
 
+    clearResizeSectionComponentsTimer = () => {
+        if (this.resizeSectionComponentsTimer !== null) {
+            clearTimeout(this.resizeSectionComponentsTimer);
+            this.resizeSectionComponentsTimer = null;
+        }
+        this.setSectionComponentsDistancesToTop();
+    };
+
+    setSectionComponentsDistancesToTop = () => {
+        this.resizeSectionComponentsTimer = setTimeout(() => {
+            const {appBarComponent, aboutComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
+            const componentSections = [skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent];
+            let distanceToTop = 200 + aboutComponent.height - appBarComponent.height;
+            let margin = 24;
+            componentSections.forEach(component => {
+                if (component === skillsComponent) {
+                    this.props.updateSkills({distanceToTop: distanceToTop + margin, height: component.height});
+                } else {
+                    switch (component) {
+                        case portfolioComponent:
+                            this.props.updatePortfolio({distanceToTop: distanceToTop, height: component.height});
+                            break;
+                        case educationComponent:
+                            this.props.updateEducation({
+                                distanceToTop: distanceToTop,
+                                height: component.height
+                            });
+                            break;
+                        case experienceComponent:
+                            this.props.updateExperience({
+                                distanceToTop: distanceToTop,
+                                height: component.height
+                            });
+                            break;
+                        case contactComponent:
+                            this.props.updateContact({
+                                distanceToTop: distanceToTop,
+                                height: component.height
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                distanceToTop += component.height + margin;
+            });
+            this.props.updateComponentDistancesToTop({updateComponentDistancesToTop: false});
+        }, 500);
+    };
+
     handleScroll = () => {
-        const {appBarComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent} = this.props.navigation;
+        const {appBarComponent, aboutComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
         const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
-        const scrollPoint = document.documentElement.scrollTop + appBarComponent.height;
-        if (scrollPoint < skillsComponent.distanceToTop) {
+        const scrollPoint = document.documentElement.scrollTop;
+        const initialDistance = 200 + aboutComponent.height - appBarComponent.height;
+        if (scrollPoint <= initialDistance) {
+            if (this.props.navigation.tabIndex === ABOUT) return;
             this.props.updateTabIndex(ABOUT);
-        } else if (this.isScrollPointInComponent(scrollPoint, skillsComponent)) {
+        } else if (scrollPoint > initialDistance && scrollPoint < portfolioComponent.distanceToTop) {
             if (this.props.navigation.tabIndex === SKILLS) return;
             this.props.updateTabIndex(SKILLS);
-        } else if (this.isScrollPointInComponent(scrollPoint, portfolioComponent)) {
+        } else if (scrollPoint >= portfolioComponent.distanceToTop && scrollPoint < educationComponent.distanceToTop) {
             if (this.props.navigation.tabIndex === PORTFOLIO) return;
             this.props.updateTabIndex(PORTFOLIO);
-        } else if (this.isScrollPointInComponent(scrollPoint, educationComponent)) {
+        } else if (scrollPoint >= educationComponent.distanceToTop && scrollPoint < experienceComponent.distanceToTop) {
             if (this.props.navigation.tabIndex === EDUCATION) return;
             this.props.updateTabIndex(EDUCATION);
-        } else if (this.isScrollPointInComponent(scrollPoint, experienceComponent)) {
+        } else if (scrollPoint >= experienceComponent.distanceToTop && scrollPoint < contactComponent.distanceToTop) {
             if (this.props.navigation.tabIndex === EXPERIENCE) return;
             this.props.updateTabIndex(EXPERIENCE);
-        } else if (scrollPoint > (experienceComponent.distanceToTop + experienceComponent.height)) {
+        } else if (scrollPoint >= contactComponent.distanceToTop) {
             if (this.props.navigation.tabIndex === CONTACT) return;
             this.props.updateTabIndex(CONTACT);
         }
     };
 
-    isScrollPointInComponent = (scrollPoint, component) => {
-        return (scrollPoint >= component.distanceToTop) && (scrollPoint <= (component.distanceToTop + component.height));
-    };
-
     render() {
+        if (this.props.navigation.updateComponentDistancesToTop) this.clearResizeSectionComponentsTimer();
         return (
             <div>
                 <MuiThemeProvider theme={theme}>

@@ -17,6 +17,9 @@ const styles = theme => ({
         marginRight: 10
     },
     root: {
+        borderColor: "transparent",
+        borderStyle: "solid",
+        borderWidth: "1px",
         paddingTop: theme.spacing.unit * 2
     }
 });
@@ -49,18 +52,23 @@ class Navigation extends Component {
 
     componentDidMount() {
         this.setComponentMeasurements();
+        window.addEventListener('resize', this.setComponentMeasurements);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
     setComponentMeasurements = () => {
         const height = this.appBarRef.current.scrollHeight;
         const appBarStyle = window.getComputedStyle(this.appBarRef.current);
         const appBarTopPadding = parseInt(appBarStyle.getPropertyValue('padding-top'));
-        const totalHeight = 200 - (height - (appBarTopPadding * 2));
-        this.props.updateAppBar({height: totalHeight, paddingTop: appBarTopPadding});
+        const totalHeight = height + appBarTopPadding;
+        this.props.updateAppBar({height: totalHeight});
     };
 
     handleTabChange = (event, value) => {
-        const {appBarComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
+        const {skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
         const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
         let scrollToPoint = 0;
         switch (value) {
@@ -86,16 +94,16 @@ class Navigation extends Component {
                 break;
         }
         window.scrollTo({
-            top: scrollToPoint - (appBarComponent.height - (appBarComponent.paddingTop * 0.5)),
+            top: scrollToPoint,
             left: 0,
             behavior: 'smooth'
         });
     };
 
     scrollToContactForm = () => {
-        const {appBarComponent, contactComponent} = this.props.navigation;
+        const {contactComponent} = this.props.navigation;
         window.scrollTo({
-            top: contactComponent.distanceToTop - (appBarComponent.height - (appBarComponent.paddingTop * 0.5)),
+            top: contactComponent.distanceToTop,
             left: 0,
             behavior: 'smooth'
         });
@@ -109,11 +117,13 @@ class Navigation extends Component {
                 <AppBar color="inherit" position="static">
                     <Toolbar>
                         <Icon.Code className={classes.codeIcon} color="secondary"/>
-                        <Typography className={classes.appBarName} color="secondary" variant={widthSmDown ? "body1" : "h6"}>
+                        <Typography className={classes.appBarName} color="secondary"
+                                    variant={widthSmDown ? "body1" : "h6"}>
                             Richard
                         </Typography>
                         <Hidden lgUp>
-                            <Button color="secondary" onClick={this.scrollToContactForm} size={widthSmDown ? "small" : "medium"}>
+                            <Button color="secondary" onClick={this.scrollToContactForm}
+                                    size={widthSmDown ? "small" : "medium"}>
                                 Contact
                             </Button>
                         </Hidden>

@@ -51,6 +51,11 @@ const styles = theme => ({
         borderStyle: "solid",
         borderWidth: "0.5px"
     },
+    border: {
+        borderColor: "transparent",
+        borderStyle: "solid",
+        borderWidth: "1px"
+    },
     chip: {
         margin: theme.spacing.unit
     },
@@ -145,12 +150,16 @@ class Skills extends Component {
 
     componentDidMount() {
         this.setComponentMeasurements();
+        window.addEventListener('resize', this.setComponentMeasurements);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
     setComponentMeasurements = () => {
         const height = this.skillsRef.current.scrollHeight;
-        const distanceToTop = this.skillsRef.current.offsetTop;
-        this.props.updateSkills({height, distanceToTop});
+        this.props.updateSkills({height});
     };
 
     openLink = url => window.open(url, "", "", false);
@@ -159,7 +168,7 @@ class Skills extends Component {
         const {classes} = this.props;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
-            <div ref={this.skillsRef}>
+            <div className={classes.border} ref={this.skillsRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={6} xs={12}>
                         <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>

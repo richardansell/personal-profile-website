@@ -25,6 +25,11 @@ import {updateAbout} from "../redux/actions";
 import ProfilePicture from "../utils/media/profile-picture.jpg";
 
 const styles = theme => ({
+    border: {
+        borderColor: "transparent",
+        borderStyle: "solid",
+        borderWidth: "1px"
+    },
     emailHover: {
         cursor: "pointer"
     },
@@ -105,22 +110,23 @@ class About extends Component {
 
     componentDidMount() {
         this.setComponentMeasurements();
+        window.addEventListener('resize', this.setComponentMeasurements);
     }
 
     componentWillUnmount() {
         clearTimeout(this.toolTipCopyEmailTimer);
+        window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
     setComponentMeasurements = () => {
         const height = this.aboutRef.current.scrollHeight;
-        const distanceToTop = this.aboutRef.current.offsetTop;
-        this.props.updateAbout({height, distanceToTop});
+        this.props.updateAbout({height});
     };
 
     scrollToContactForm = () => {
-        const {appBarComponent, contactComponent} = this.props.navigation;
+        const {contactComponent} = this.props.navigation;
         window.scrollTo({
-            top: contactComponent.distanceToTop - (appBarComponent.height - (appBarComponent.paddingTop * 0.5)),
+            top: contactComponent.distanceToTop,
             left: 0,
             behavior: 'smooth'
         });
@@ -149,7 +155,7 @@ class About extends Component {
             width: widthSmDown ? 100 : 200
         };
         return (
-            <div ref={this.aboutRef}>
+            <div className={classes.border} ref={this.aboutRef}>
                 <Paper className={classes.paper} square={true}>
                     <Grid alignItems="center" container justify="center" spacing={24}>
                         <Grid item md={5}>

@@ -1,23 +1,23 @@
 import {
-    UPDATE_TAB_INDEX,
-    UPDATE_APP_BAR,
     UPDATE_ABOUT,
-    UPDATE_SKILLS,
-    UPDATE_PORTFOLIO,
+    UPDATE_APP_BAR,
+    UPDATE_COMPONENT_DISTANCES_TO_TOP,
+    UPDATE_CONTACT,
     UPDATE_EDUCATION,
     UPDATE_EXPERIENCE,
-    UPDATE_CONTACT
+    UPDATE_PORTFOLIO,
+    UPDATE_SKILLS,
+    UPDATE_TAB_INDEX
 } from "../constants/action-types";
 
 const navigationState = {
+    updateComponentDistancesToTop: false,
     tabIndex: 0,
     appBarComponent: {
-        height: 0,
-        paddingTop: 0
+        height: 0
     },
     aboutComponent: {
-        height: 0,
-        distanceToTop: 0
+        height: 0
     },
     skillsComponent: {
         height: 0,
@@ -43,6 +43,10 @@ const navigationState = {
 
 function navigation(state = navigationState, action) {
     switch (action.type) {
+        case UPDATE_COMPONENT_DISTANCES_TO_TOP:
+            return Object.assign({}, state, {
+                updateComponentDistancesToTop: action.payload
+            });
         case UPDATE_TAB_INDEX:
             return Object.assign({}, state, {
                 tabIndex: action.payload

@@ -6,15 +6,15 @@ import {
     Grid,
     Step,
     StepContent,
-    Stepper,
     StepLabel,
+    Stepper,
     Toolbar,
     Tooltip,
     Typography,
     withStyles,
     withWidth
 } from "@material-ui/core";
-import {updateExperience} from "../redux/actions";
+import {updateComponentDistancesToTop, updateExperience} from "../redux/actions";
 import EntrepreneurIcon from '@iconify/react/fa-solid/code';
 import MubalooLogo from "./media/mubaloo-logo.svg";
 import BathCollegeLogo from "./media/bath-college-logo.svg";
@@ -26,6 +26,11 @@ import {Icon} from "@iconify/react";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
 
 const styles = () => ({
+    border: {
+        borderColor: "transparent",
+        borderStyle: "solid",
+        borderWidth: "1px"
+    },
     card: {
         marginTop: 20,
         maxWidth: 500
@@ -36,13 +41,19 @@ const styles = () => ({
     companyTitle: {
         flexGrow: 1
     },
+    descriptionBottomMargin: {
+        marginBottom: 20
+    },
     media: {
         height: 200
     }
 });
 
 const mapDispatchToProps = dispatch => {
-    return {updateExperience: dimensions => dispatch(updateExperience(dimensions))}
+    return {
+        updateComponentDistancesToTop: status => dispatch(updateComponentDistancesToTop(status)),
+        updateExperience: dimensions => dispatch(updateExperience(dimensions)),
+    }
 };
 
 class Experience extends Component {
@@ -472,20 +483,24 @@ class Experience extends Component {
     }
 
     componentDidMount() {
-        this.setComponentMeasurements();
+        window.addEventListener('resize', this.setComponentMeasurements);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
     setComponentMeasurements = () => {
         const height = this.experienceRef.current.scrollHeight;
-        const distanceToTop = this.experienceRef.current.offsetTop;
-        this.props.updateExperience({height, distanceToTop});
+        this.props.updateExperience({height: height});
+        this.props.updateComponentDistancesToTop({updateComponentDistancesToTop: true});
     };
 
     render() {
         const {classes} = this.props;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
-            <div ref={this.experienceRef}>
+            <div className={classes.border} ref={this.experienceRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={12} xs={12}>
                         <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
@@ -522,7 +537,8 @@ class Experience extends Component {
                                                             variant={widthSmDown ? "h6" : "h5"}>
                                                     {position.company}
                                                 </Typography>
-                                                <Typography color="textSecondary" variant={widthSmDown ? "h6" : "h5"}>
+                                                <Typography color="textSecondary"
+                                                            variant={widthSmDown ? "h6" : "h5"}>
                                                     {position.dates}
                                                 </Typography>
                                             </Toolbar>
@@ -530,14 +546,17 @@ class Experience extends Component {
                                                         variant={widthSmDown ? "subtitle1" : "h6"}>
                                                 {position.role}
                                             </Typography>
-                                            <Typography color="secondary" variant="body1">
+                                            <Typography
+                                                className={position.mediaAvailable ? classes.descriptionBottomMargin : null}
+                                                color="secondary" gutterBottom variant="body1">
                                                 {position.description}
                                             </Typography>
                                             {position.mediaAvailable &&
                                             <Grid container justify="center" spacing={24}>
                                                 <Grid item>
                                                     <CardMediaSingle gridJustifyPosition="center"
-                                                                     media={position.media}/>
+                                                                     media={position.media} square={false}
+                                                                     setComponentMeasurements={this.setComponentMeasurements}/>
                                                 </Grid>
                                             </Grid>}
                                         </StepContent>
