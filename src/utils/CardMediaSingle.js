@@ -3,7 +3,6 @@ import {
     Avatar,
     Button,
     Card,
-    CardActionArea,
     CardActions,
     CardContent,
     CardHeader,
@@ -40,6 +39,7 @@ const styles = () => ({
         whiteSpace: "pre-line"
     },
     cardMedia: {
+        cursor: "pointer",
         height: 250,
         maxHeight: 250
     },
@@ -47,6 +47,7 @@ const styles = () => ({
         width: "auto",
     },
     cardSmUp: {
+        marginBottom: 5,
         maxWidth: 400,
         width: "auto"
     },
@@ -103,7 +104,7 @@ class CardMediaSingle extends Component {
                         {dialogImageAlt}
                     </DialogTitle>
                     <DialogContent>
-                        <img alt={dialogImageAlt} height="100%" src={dialogImage} width="100%"/>
+                        <img alt={dialogImageAlt} height="auto" src={dialogImage} width="100%"/>
                     </DialogContent>
                     <DialogActions className={classes.dialogAction}>
                         <Button color="secondary" onClick={this.handleImageDialogClose}>
@@ -129,29 +130,27 @@ class CardMediaSingle extends Component {
                             titleTypographyProps={{color: "secondary", variant: "h6"}}
                         />
                     }
-                    <CardActionArea>
-                        {item.cardMedia.mediaType === mediaType.VIDEO ?
-                            <CardMedia
-                                alt={item.cardMedia.alt}
-                                className={classes.cardMedia}
-                                component="iframe"
-                                image={item.cardMedia.media}
-                                title={item.cardMedia.title}
-                            />
-                            :
-                            <CardMedia
-                                alt={item.cardMedia.alt}
-                                className={classes.cardMedia}
-                                image={item.cardMedia.media}
-                                onClick={() => this.setState({
-                                    dialogImage: item.cardMedia.media,
-                                    dialogImageAlt: item.cardMedia.alt,
-                                    showSelectedImageDialog: true
-                                })}
-                                title={item.cardMedia.title}
-                            />
-                        }
-                    </CardActionArea>
+                    {item.cardMedia.mediaType === mediaType.VIDEO ?
+                        <CardMedia
+                            alt={item.cardMedia.alt}
+                            className={classes.cardMedia}
+                            component="iframe"
+                            image={item.cardMedia.media}
+                            title={item.cardMedia.title}
+                        />
+                        :
+                        <CardMedia
+                            alt={item.cardMedia.alt}
+                            className={classes.cardMedia}
+                            image={item.cardMedia.media}
+                            onClick={() => this.setState({
+                                dialogImage: item.cardMedia.media,
+                                dialogImageAlt: item.cardMedia.alt,
+                                showSelectedImageDialog: true
+                            })}
+                            title={item.cardMedia.title}
+                        />
+                    }
                     <CardContent>
                         <Typography color="secondary" component="h2" gutterBottom variant="h5">
                             {item.cardContent.title}
