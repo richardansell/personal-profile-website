@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AppBar, Button, Hidden, Tab, Tabs, Toolbar, Typography, withStyles, withWidth} from "@material-ui/core";
-import * as Icon from "@material-ui/icons";
+import CodeIcon from "@material-ui/icons/Code";
 import {connect} from "react-redux";
 import {updateAppBar} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
@@ -55,16 +55,17 @@ class Navigation extends Component {
         window.addEventListener('resize', this.setComponentMeasurements);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.navigation.appBarComponent.height !== this.appBarRef.current.scrollHeight) this.setComponentMeasurements();
+    }
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
     setComponentMeasurements = () => {
         const height = this.appBarRef.current.scrollHeight;
-        const appBarStyle = window.getComputedStyle(this.appBarRef.current);
-        const appBarTopPadding = parseInt(appBarStyle.getPropertyValue('padding-top'));
-        const totalHeight = height + appBarTopPadding;
-        this.props.updateAppBar({height: totalHeight});
+        this.props.updateAppBar({height: height});
     };
 
     handleTabChange = (event, value) => {
@@ -116,7 +117,7 @@ class Navigation extends Component {
             <div className={classes.root} ref={this.appBarRef}>
                 <AppBar color="inherit" position="static">
                     <Toolbar>
-                        <Icon.Code className={classes.codeIcon} color="secondary"/>
+                        <CodeIcon className={classes.codeIcon} color="secondary"/>
                         <Typography className={classes.appBarName} color="secondary"
                                     variant={widthSmDown ? "body1" : "h6"}>
                             Richard

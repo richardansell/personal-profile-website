@@ -15,7 +15,7 @@ import {
     withWidth
 } from "@material-ui/core";
 import {updateComponentDistancesToTop, updateExperience} from "../redux/actions";
-import EntrepreneurIcon from '@iconify/react/fa-solid/code';
+import CodeIcon from '@iconify/react/fe/code';
 import MubalooLogo from "./media/mubaloo-logo.svg";
 import BathCollegeLogo from "./media/bath-college-logo.svg";
 import VaxLogo from "./media/vax-logo.svg";
@@ -49,9 +49,13 @@ const styles = () => ({
     }
 });
 
+const mapStateToProps = state => {
+    return {experienceComponent: state.navigation.experienceComponent};
+};
+
 const mapDispatchToProps = dispatch => {
     return {
-        updateComponentDistancesToTop: status => dispatch(updateComponentDistancesToTop(status)),
+        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
         updateExperience: dimensions => dispatch(updateExperience(dimensions)),
     }
 };
@@ -65,12 +69,12 @@ class Experience extends Component {
                 {
                     key: 0,
                     company: "Freelance Work",
-                    logo: EntrepreneurIcon,
+                    logo: CodeIcon,
                     logoDetails: {
-                        height: 36,
+                        height: 48,
                         iconColor: colors.blueGrey[900],
                         isIcon: true,
-                        width: 36
+                        width: 48
                     },
                     role: "Android / Front End Developer - Self-Employed",
                     dates: "2012 - " + new Date().getFullYear(),
@@ -483,7 +487,14 @@ class Experience extends Component {
     }
 
     componentDidMount() {
+        this.setComponentMeasurements();
         window.addEventListener('resize', this.setComponentMeasurements);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.experienceComponent.height !== this.experienceRef.current.scrollHeight) {
+            this.setComponentMeasurements();
+        }
     }
 
     componentWillUnmount() {
@@ -493,7 +504,7 @@ class Experience extends Component {
     setComponentMeasurements = () => {
         const height = this.experienceRef.current.scrollHeight;
         this.props.updateExperience({height: height});
-        this.props.updateComponentDistancesToTop({updateComponentDistancesToTop: true});
+        this.props.updateComponentDistancesToTop(true);
     };
 
     render() {
@@ -554,8 +565,7 @@ class Experience extends Component {
                                             {position.mediaAvailable &&
                                             <Grid container justify="center" spacing={24}>
                                                 <Grid item>
-                                                    <CardMediaSingle gridJustifyPosition="center"
-                                                                     media={position.media} square={false}
+                                                    <CardMediaSingle media={position.media} square={false}
                                                                      setComponentMeasurements={this.setComponentMeasurements}/>
                                                 </Grid>
                                             </Grid>}
@@ -571,4 +581,4 @@ class Experience extends Component {
     }
 }
 
-export default withWidth()(withStyles(styles, {withTheme: true})(connect(null, mapDispatchToProps)(Experience)));
+export default withWidth()(withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(Experience)));
