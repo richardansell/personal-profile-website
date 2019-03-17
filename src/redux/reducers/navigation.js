@@ -11,7 +11,7 @@ import {
 } from "../constants/action-types";
 
 const navigationState = {
-    updateComponentDistancesToTop: false,
+    componentDistancesToTop: false,
     tabIndex: 0,
     appBarComponent: {
         height: 0
@@ -45,7 +45,7 @@ function navigation(state = navigationState, action) {
     switch (action.type) {
         case UPDATE_COMPONENT_DISTANCES_TO_TOP:
             return Object.assign({}, state, {
-                updateComponentDistancesToTop: action.payload
+                componentDistancesToTop: action.payload
             });
         case UPDATE_TAB_INDEX:
             return Object.assign({}, state, {

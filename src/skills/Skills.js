@@ -14,7 +14,7 @@ import {
     withStyles,
     withWidth
 } from "@material-ui/core";
-import {updateSkills} from "../redux/actions";
+import {updateComponentDistancesToTop, updateSkills} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import {ProjectIcon} from "./media/ProjectIcon";
 import {VisioIcon} from "./media/VisioIcon";
@@ -78,8 +78,15 @@ const styles = theme => ({
     }
 });
 
+const mapStateToProps = state => {
+    return {skillsComponent: state.navigation.skillsComponent};
+};
+
 const mapDispatchToProps = dispatch => {
-    return {updateSkills: dimensions => dispatch(updateSkills(dimensions))}
+    return {
+        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
+        updateSkills: dimensions => dispatch(updateSkills(dimensions))
+    }
 };
 
 class Skills extends Component {
@@ -153,13 +160,18 @@ class Skills extends Component {
         window.addEventListener('resize', this.setComponentMeasurements);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.skillsComponent.height !== this.skillsRef.current.scrollHeight) this.setComponentMeasurements();
+    }
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
     setComponentMeasurements = () => {
         const height = this.skillsRef.current.scrollHeight;
-        this.props.updateSkills({height});
+        this.props.updateSkills({height: height});
+        this.props.updateComponentDistancesToTop(true);
     };
 
     openLink = url => window.open(url, "", "", false);
@@ -270,4 +282,4 @@ class Skills extends Component {
     }
 }
 
-export default withWidth()(withStyles(styles)(connect(null, mapDispatchToProps)(Skills)));
+export default withWidth()(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Skills)));

@@ -39,7 +39,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateComponentDistancesToTop: status => dispatch(updateComponentDistancesToTop(status)),
+        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
         updateTabIndex: tabIndex => dispatch(updateTabIndex(tabIndex)),
         updateSkills: dimensions => dispatch(updateSkills(dimensions)),
         updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions)),
@@ -51,76 +51,69 @@ const mapDispatchToProps = dispatch => {
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
-        this.resizeSectionComponentsTimer = null;
-    }
-
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
-        window.addEventListener('resize', this.setSectionComponentsDistancesToTop);
+        setTimeout(() => {
+            this.props.updateTabIndex(tabs.ABOUT);
+        }, 100);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.navigation.componentDistancesToTop === true) this.setSectionComponentDistancesToTop();
     }
 
     componentWillUnmount() {
-        this.clearResizeSectionComponentsTimer();
         window.removeEventListener('scroll', this.handleScroll);
-        window.removeEventListener('resize', this.setSectionComponentsDistancesToTop);
     }
 
-    clearResizeSectionComponentsTimer = () => {
-        if (this.resizeSectionComponentsTimer !== null) {
-            clearTimeout(this.resizeSectionComponentsTimer);
-            this.resizeSectionComponentsTimer = null;
-        }
-        this.setSectionComponentsDistancesToTop();
-    };
-
-    setSectionComponentsDistancesToTop = () => {
-        this.resizeSectionComponentsTimer = setTimeout(() => {
-            const {appBarComponent, aboutComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
-            const componentSections = [skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent];
-            let distanceToTop = 200 + aboutComponent.height - appBarComponent.height;
-            let margin = 24;
-            componentSections.forEach(component => {
-                if (component === skillsComponent) {
-                    this.props.updateSkills({distanceToTop: distanceToTop + margin, height: component.height});
-                } else {
-                    switch (component) {
-                        case portfolioComponent:
-                            this.props.updatePortfolio({distanceToTop: distanceToTop, height: component.height});
-                            break;
-                        case educationComponent:
-                            this.props.updateEducation({
-                                distanceToTop: distanceToTop,
-                                height: component.height
-                            });
-                            break;
-                        case experienceComponent:
-                            this.props.updateExperience({
-                                distanceToTop: distanceToTop,
-                                height: component.height
-                            });
-                            break;
-                        case contactComponent:
-                            this.props.updateContact({
-                                distanceToTop: distanceToTop,
-                                height: component.height
-                            });
-                            break;
-                        default:
-                            break;
-                    }
+    setSectionComponentDistancesToTop = () => {
+        const {appBarComponent, aboutComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
+        const componentSections = [skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent];
+        let distanceToTop = 200 + aboutComponent.height - appBarComponent.height;
+        let margin = 24;
+        componentSections.forEach(component => {
+            if (component === skillsComponent) {
+                this.props.updateSkills({distanceToTop: distanceToTop + margin, height: component.height});
+                distanceToTop += component.height;
+            } else {
+                switch (component) {
+                    case portfolioComponent:
+                        this.props.updatePortfolio({
+                            distanceToTop: distanceToTop + margin,
+                            height: component.height
+                        });
+                        break;
+                    case educationComponent:
+                        this.props.updateEducation({
+                            distanceToTop: distanceToTop + margin,
+                            height: component.height
+                        });
+                        break;
+                    case experienceComponent:
+                        this.props.updateExperience({
+                            distanceToTop: distanceToTop + margin,
+                            height: component.height
+                        });
+                        break;
+                    case contactComponent:
+                        this.props.updateContact({
+                            distanceToTop: distanceToTop,
+                            height: component.height
+                        });
+                        break;
+                    default:
+                        break;
                 }
                 distanceToTop += component.height + margin;
-            });
-            this.props.updateComponentDistancesToTop({updateComponentDistancesToTop: false});
-        }, 500);
+            }
+        });
+        this.props.updateComponentDistancesToTop({componentDistancesToTop: false});
     };
 
     handleScroll = () => {
         const {appBarComponent, aboutComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
         const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
-        const scrollPoint = document.documentElement.scrollTop;
+        const scrollPoint = document.scrollingElement.scrollTop || document.documentElement.scrollTop;
         const initialDistance = 200 + aboutComponent.height - appBarComponent.height;
         if (scrollPoint <= initialDistance) {
             if (this.props.navigation.tabIndex === ABOUT) return;
@@ -144,30 +137,29 @@ class App extends Component {
     };
 
     render() {
-        if (this.props.navigation.updateComponentDistancesToTop) this.clearResizeSectionComponentsTimer();
         return (
             <div>
                 <MuiThemeProvider theme={theme}>
                     <BackgroundVideo/>
                     <div id="navigation-bar">
-                        <Grid container justify="center" spacing={24}>
+                        <Grid container justify="center">
                             <Grid item lg={8} xs={9}>
                                 <Navigation/>
                             </Grid>
                         </Grid>
                     </div>
                     <div id="content">
-                        <Grid container justify="center" spacing={24}>
-                            <Grid item lg={8} xs={9}>
+                        <Grid container justify="center">
+                            <Grid className="section" item lg={8} xs={9}>
                                 <About/>
                             </Grid>
-                            <Grid item lg={8} xs={9}>
+                            <Grid className="section" item lg={8} xs={9}>
                                 <Skills/>
                             </Grid>
-                            <Grid item lg={8} xs={9}>
+                            <Grid className="section" item lg={8} xs={9}>
                                 <Education/>
                             </Grid>
-                            <Grid item lg={8} xs={9}>
+                            <Grid className="section" item lg={8} xs={9}>
                                 <Experience/>
                             </Grid>
                         </Grid>

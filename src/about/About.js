@@ -6,7 +6,6 @@ import {
     colors,
     createMuiTheme,
     Grid,
-    IconButton,
     MuiThemeProvider,
     Paper,
     Tooltip,
@@ -33,16 +32,13 @@ const styles = theme => ({
     emailHover: {
         cursor: "pointer"
     },
-    iconButton: {
-        paddingTop: 20,
-        "&:hover": {
-            backgroundColor: "transparent"
-        }
-    },
     githubIconHover: {
         "&:hover": {
             color: "#6e5494"
-        }
+        },
+        color: colors.blueGrey[900],
+        cursor: "pointer",
+        padding: 8
     },
     locationHover: {
         cursor: "pointer"
@@ -50,7 +46,10 @@ const styles = theme => ({
     linkedInIconHover: {
         "&:hover": {
             color: "#0077B5"
-        }
+        },
+        color: colors.blueGrey[900],
+        cursor: "pointer",
+        padding: 8
     },
     paper: {
         ...theme.mixins.gutters(),
@@ -60,7 +59,10 @@ const styles = theme => ({
     stackOverflowIconHover: {
         "&:hover": {
             color: "#E5853D"
-        }
+        },
+        color: colors.blueGrey[900],
+        cursor: "pointer",
+        padding: 8
     }
 });
 
@@ -111,6 +113,10 @@ class About extends Component {
     componentDidMount() {
         this.setComponentMeasurements();
         window.addEventListener('resize', this.setComponentMeasurements);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.navigation.aboutComponent.height !== this.aboutRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
@@ -164,25 +170,21 @@ class About extends Component {
                                     <Avatar alt={this.state.name} src={ProfilePicture} style={avatarStyle}/>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <IconButton aria-label="GitHub" className={classes.iconButton}
-                                                onClick={() => this.openLink(this.state.githubUrl)}>
-                                        <Tooltip title="Github">
-                                            <FontAwesomeIcon className={classes.githubIconHover} icon={GithubIcon}/>
-                                        </Tooltip>
-                                    </IconButton>
-                                    <IconButton aria-label="LinkedIn" className={classes.iconButton}
-                                                onClick={() => this.openLink(this.state.linkedInUrl)}>
-                                        <Tooltip title="LinkedIn">
-                                            <FontAwesomeIcon className={classes.linkedInIconHover} icon={LinkedInIcon}/>
-                                        </Tooltip>
-                                    </IconButton>
-                                    <IconButton aria-label="Stack Overflow" className={classes.iconButton}
-                                                onClick={() => this.openLink(this.state.stackOverflowUrl)}>
-                                        <Tooltip title="Stack Overflow">
-                                            <FontAwesomeIcon className={classes.stackOverflowIconHover}
-                                                             icon={StackOverflowIcon}/>
-                                        </Tooltip>
-                                    </IconButton>
+                                    <Tooltip title="Github">
+                                        <FontAwesomeIcon className={classes.githubIconHover} icon={GithubIcon}
+                                                         onClick={() => this.openLink(this.state.githubUrl)} size="2x"/>
+                                    </Tooltip>
+                                    <Tooltip title="LinkedIn">
+                                        <FontAwesomeIcon className={classes.linkedInIconHover} icon={LinkedInIcon}
+                                                         onClick={() => this.openLink(this.state.linkedInUrl)}
+                                                         size="2x"/>
+                                    </Tooltip>
+                                    <Tooltip title="Stack Overflow">
+                                        <FontAwesomeIcon className={classes.stackOverflowIconHover}
+                                                         icon={StackOverflowIcon}
+                                                         onClick={() => this.openLink(this.state.stackOverflowUrl)}
+                                                         size="2x"/>
+                                    </Tooltip>
                                 </Grid>
                             </Grid>
                         </Grid>

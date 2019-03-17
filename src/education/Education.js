@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Grid, Hidden, Paper, Toolbar, Tooltip, Typography, withStyles, withWidth} from "@material-ui/core";
-import {updateEducation} from "../redux/actions";
+import {updateComponentDistancesToTop, updateEducation} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import UoBLogo from "./media/uob-logo-slate-grey.png";
 
@@ -27,8 +27,15 @@ const styles = theme => ({
     }
 });
 
+const mapStateToProps = state => {
+    return {educationComponent: state.navigation.educationComponent};
+};
+
 const mapDispatchToProps = dispatch => {
-    return {updateEducation: dimensions => dispatch(updateEducation(dimensions))}
+    return {
+        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
+        updateEducation: dimensions => dispatch(updateEducation(dimensions))
+    }
 };
 
 class Education extends Component {
@@ -50,6 +57,10 @@ class Education extends Component {
         window.addEventListener('resize', this.setComponentMeasurements);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.educationComponent.height !== this.educationRef.current.scrollHeight) this.setComponentMeasurements();
+    }
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.setComponentMeasurements);
     }
@@ -57,6 +68,7 @@ class Education extends Component {
     setComponentMeasurements = () => {
         const height = this.educationRef.current.scrollHeight;
         this.props.updateEducation({height: height});
+        this.props.updateComponentDistancesToTop(true);
     };
 
     universityOfBathLogo = style => (
@@ -111,4 +123,4 @@ class Education extends Component {
     }
 }
 
-export default withWidth()(withStyles(styles)(connect(null, mapDispatchToProps)(Education)));
+export default withWidth()(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Education)));
