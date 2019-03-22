@@ -18,6 +18,8 @@ import {updateComponentDistancesToTop, updateSkills} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import {ProjectIcon} from "./media/ProjectIcon";
 import {VisioIcon} from "./media/VisioIcon";
+import {CPlusPlusIcon} from "./media/CPlusPlusIcon";
+import {CSharpIcon} from "./media/CSharpIcon";
 import {Icon} from '@iconify/react';
 
 import JavaIcon from '@iconify/react/logos/java';
@@ -32,11 +34,13 @@ import CssIcon from '@iconify/react/logos/css-3';
 
 import AndroidStudioIcon from '@iconify/react/flat-color-icons/android-os';
 import IntelliJIdeaIcon from '@iconify/react/logos/intellij-idea';
+import FirebaseIcon from '@iconify/react/logos/firebase';
 import EclipseIcon from '@iconify/react/logos/eclipse';
 import WordPressIcon from '@iconify/react/dashicons/wordpress';
 import AdobeCsIcon from '@iconify/react/fa-brands/adobe';
 import MicrosoftOfficeIcon from '@iconify/react/whh/microsoftoffice';
 import VisualStudioIcon from '@iconify/react/logos/visual-studio';
+import UnrealEngineIcon from '@iconify/react/mdi/unreal';
 
 import DecisionIcon from '@iconify/react/mdi/arrow-decision';
 import HandshakeIcon from '@iconify/react/vaadin/handshake';
@@ -114,42 +118,121 @@ class Skills extends Component {
                 }
             ],
             programmingSkills: [
-                {key: 0, label: 'Java', icon: JavaIcon, link: "https://www.java.com"},
-                {key: 1, label: 'Kotlin', icon: KotlinIcon, link: "https://kotlinlang.org/"},
-                {key: 2, label: 'XML', icon: XmlIcon, link: "https://www.w3.org/TR/REC-xml/", color: "#E07A2E"},
+                {
+                    key: 0, label: 'Java', icon: JavaIcon, isCustomIcon: false, link: "https://www.java.com"
+                },
+                {key: 1, label: 'Kotlin', icon: KotlinIcon, isCustomIcon: false, link: "https://kotlinlang.org/"},
+                {
+                    key: 2,
+                    label: 'XML',
+                    icon: XmlIcon,
+                    isCustomIcon: false,
+                    link: "https://www.w3.org/TR/REC-xml/",
+                    color: "#E07A2E"
+                },
                 {
                     key: 3,
                     label: 'JavaScript',
                     icon: JavaScriptIcon,
+                    isCustomIcon: false,
                     link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
                 },
-                {key: 4, label: 'React', icon: ReactIcon, link: "https://reactjs.org/"},
-                {key: 5, label: 'AngularJS', icon: AngularIcon, link: "https://angularjs.org/"},
-                {key: 6, label: 'PHP', icon: PhpIcon, link: "http://php.net/"},
-                {key: 7, label: 'HTML', icon: HtmlIcon, link: "https://www.w3.org/html/"},
-                {key: 8, label: 'CSS', icon: CssIcon, link: "https://www.w3.org/TR/CSS/#css"}
+                {key: 4, label: 'React', icon: ReactIcon, isCustomIcon: false, link: "https://reactjs.org/"},
+                {key: 5, label: 'AngularJS', icon: AngularIcon, isCustomIcon: false, link: "https://angularjs.org/"},
+                {key: 6, label: 'PHP', icon: PhpIcon, isCustomIcon: false, link: "http://php.net/"},
+                {key: 7, label: 'HTML', icon: HtmlIcon, isCustomIcon: false, link: "https://www.w3.org/html/"},
+                {key: 8, label: 'CSS', icon: CssIcon, isCustomIcon: false, link: "https://www.w3.org/TR/CSS/#css"},
+                {
+                    key: 9,
+                    label: 'C#',
+                    icon: <CSharpIcon/>,
+                    isCustomIcon: true,
+                    link: "https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/"
+                },
+                {key: 10, label: 'C++', icon: <CPlusPlusIcon/>, isCustomIcon: true, link: "http://www.cplusplus.com/"}
             ],
             softwareSkills: [
                 {
                     key: 0,
                     label: 'Android Studio',
                     icon: AndroidStudioIcon,
+                    isCustomIcon: false,
                     link: "https://developer.android.com/studio"
                 },
-                {key: 1, label: 'IntelliJ IDEA', icon: IntelliJIdeaIcon, link: "https://www.jetbrains.com/idea/"},
-                {key: 2, label: 'Eclipse', icon: EclipseIcon, link: "https://www.eclipse.org/ide/"},
+                {
+                    key: 1,
+                    label: 'IntelliJ IDEA',
+                    icon: IntelliJIdeaIcon,
+                    isCustomIcon: false,
+                    link: "https://www.jetbrains.com/idea/"
+                },
+                {
+                    key: 2,
+                    label: 'Firebase',
+                    icon: FirebaseIcon,
+                    isCustomIcon: false,
+                    link: "https://firebase.google.com/"
+                },
                 {
                     key: 3,
+                    label: 'Eclipse',
+                    icon: EclipseIcon,
+                    isCustomIcon: false,
+                    link: "https://www.eclipse.org/ide/"
+                },
+                {
+                    key: 4,
                     label: 'WordPress',
                     icon: WordPressIcon,
+                    isCustomIcon: false,
                     color: "#2F73A5",
                     link: "https://en-gb.wordpress.org/"
                 },
-                {key: 4, label: 'Adobe CS', icon: AdobeCsIcon, color: "#EB3223", link: "https://www.adobe.com/uk/"},
-                {key: 5, label: 'Microsoft Office', icon: MicrosoftOfficeIcon, color: "#C84721", link: ""},
-                {key: 6, label: 'Visual Studio', icon: VisualStudioIcon, link: "https://www.office.com/"},
-                {key: 7, label: 'Project', icon: null, link: "https://products.office.com/en-gb/project/"},
-                {key: 8, label: 'Visio', icon: null, link: "https://products.office.com/en-gb/visio/"}
+                {
+                    key: 5,
+                    label: 'Adobe CS',
+                    icon: AdobeCsIcon,
+                    isCustomIcon: false,
+                    color: "#EB3223",
+                    link: "https://www.adobe.com/uk/"
+                },
+                {
+                    key: 6,
+                    label: 'Microsoft Office',
+                    icon: MicrosoftOfficeIcon,
+                    isCustomIcon: false,
+                    color: "#C84721",
+                    link: ""
+                },
+                {
+                    key: 7,
+                    label: 'Visual Studio',
+                    icon: VisualStudioIcon,
+                    isCustomIcon: false,
+                    link: "https://www.office.com/"
+                },
+                {
+                    key: 8,
+                    label: 'Project',
+                    icon: <ProjectIcon/>,
+                    isCustomIcon: true,
+                    link: "https://products.office.com/en-gb/project/"
+                },
+                {
+                    key: 9,
+                    label: 'Visio',
+                    icon: <VisioIcon/>,
+                    isCustomIcon: true,
+                    link: "https://products.office.com/en-gb/visio/"
+                },
+                {
+                    key: 10,
+                    label: 'Unreal Engine',
+                    icon: UnrealEngineIcon,
+                    isCustomIcon: false,
+                    color: "#2A2A2A",
+                    link: "https://www.unrealengine.com/en-US/what-is-unreal-engine-4"
+                }
             ]
         };
         this.skillsRef = React.createRef();
@@ -198,7 +281,8 @@ class Skills extends Component {
                                             <Chip
                                                 avatar={
                                                     <Avatar className={classes.avatarBackground}>
-                                                        <Icon color={chip.color} icon={chip.icon}/>
+                                                        {chip.isCustomIcon ? chip.icon :
+                                                            <Icon color={chip.color} icon={chip.icon}/>}
                                                     </Avatar>
                                                 }
                                                 className={classes.chip}
@@ -218,24 +302,13 @@ class Skills extends Component {
                             </Typography>
                             <div className={classes.chipContainer}>
                                 {this.state.softwareSkills.map(chip => {
-                                    let icon = null;
-                                    switch (chip.label) {
-                                        case "Project":
-                                            icon = <ProjectIcon/>;
-                                            break;
-                                        case "Visio":
-                                            icon = <VisioIcon/>;
-                                            break;
-                                        default:
-                                            icon = <Icon color={chip.color} icon={chip.icon}/>;
-                                            break;
-                                    }
                                     return (
                                         <Tooltip key={chip.key} title="Learn more">
                                             <Chip
                                                 avatar={
                                                     <Avatar className={classes.avatarBackground}>
-                                                        {icon}
+                                                        {chip.isCustomIcon ? chip.icon :
+                                                            <Icon color={chip.color} icon={chip.icon}/>}
                                                     </Avatar>
                                                 }
                                                 className={classes.chip}
