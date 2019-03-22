@@ -16,6 +16,7 @@ import Navigation, {tabs} from "./navigation/Navigation";
 import BackToTopButton from "./back_to_top_button/BackToTopButton";
 import About from "./about/About";
 import Skills from "./skills/Skills";
+import Portfolio from "./portfolio/Portfolio";
 import Education from "./education/Education";
 import Experience from "./experience/Experience";
 
@@ -155,6 +156,9 @@ class App extends Component {
                             </Grid>
                             <Grid className="section" item lg={8} xs={9}>
                                 <Skills/>
+                            </Grid>
+                            <Grid className="section" item lg={8} xs={9}>
+                                <Portfolio/>
                             </Grid>
                             <Grid className="section" item lg={8} xs={9}>
                                 <Education/>
