@@ -39,6 +39,10 @@ const styles = () => ({
         whiteSpace: "pre-line"
     },
     cardMedia: {
+        borderColor: "#bdbdbd",
+        borderBottomStyle: "solid",
+        borderTopStyle: "solid",
+        borderWidth: "0.5px",
         cursor: "pointer",
         height: 250,
         maxHeight: 250
@@ -57,7 +61,8 @@ const styles = () => ({
     iconContainer: {
         display: 'flex',
         justifyContent: 'start',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        paddingTop: 20
     }
 });
 
@@ -80,23 +85,57 @@ class CardMediaSingle extends Component {
         this.props.setComponentMeasurements();
     }
 
-    handleNext = media => this.setState(prevState => ({activeStep: prevState.activeStep !== media.count - 1 ? prevState.activeStep + 1 : 0}));
+    handleNext = mediaLength => this.setState(prevState => ({activeStep: prevState.activeStep !== mediaLength - 1 ? prevState.activeStep + 1 : 0}));
 
-    handleBack = media => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? media.count - 1 : prevState.activeStep - 1}));
+    handleBack = mediaLength => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? mediaLength - 1 : prevState.activeStep - 1}));
 
     handleImageDialogClose = () => this.setState({showSelectedImageDialog: false});
 
     openLink = url => window.open(url, "", "", false);
 
+    setMobileStepper = (activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp) => {
+        if (isCycleOnlyMedia) {
+            if (item.cardMedia.length < 2) return null;
+        } else {
+            if (media.items.length < 2) return null;
+        }
+        const variant = isCycleOnlyMedia ? item.cardMedia.length <= 20 : media.items.length <= 20;
+        return (
+            <MobileStepper
+                activeStep={activeStep}
+                backButton={
+                    <Button
+                        onClick={() => this.handleBack(isCycleOnlyMedia ? item.cardMedia.length : media.items.length)}
+                        size="small">
+                        {theme.direction === 'rtl' ? <KeyboardArrowRight/> :
+                            <KeyboardArrowLeft/>}
+                        {widthSmUp ? "Back" : null}
+                    </Button>
+                }
+                nextButton={
+                    <Button
+                        onClick={() => this.handleNext(isCycleOnlyMedia ? item.cardMedia.length : media.items.length)}
+                        size="small">
+                        {widthSmUp ? "Next" : null}
+                        {theme.direction === 'rtl' ? <KeyboardArrowLeft/> :
+                            <KeyboardArrowRight/>}
+                    </Button>
+                }
+                position="static"
+                steps={isCycleOnlyMedia ? item.cardMedia.length : media.items.length}
+                variant={widthSmUp && variant ? "dots" : null}/>
+        )
+    };
+
     render() {
         const widthSmUp = isWidthUp("sm", this.props.width);
-        const {classes, theme, media, square} = this.props;
+        const {classes, cycleOnlyMediaPosition, media, isCycleOnlyMedia, square, theme} = this.props;
         const {activeStep, dialogImage, dialogImageAlt, name, showSelectedImageDialog} = this.state;
-        const item = media.items[activeStep];
+        const item = isCycleOnlyMedia ? media.items[cycleOnlyMediaPosition] : media.items[activeStep];
         return (
             <div>
                 <Dialog
-                    aria-labelledby="image-dialog-title"
+                    aria-labelledby="image-dialog-title" maxWidth="md"
                     onBackdropClick={this.handleImageDialogClose}
                     open={showSelectedImageDialog}
                     transitionDuration={{enter: 0, exit: 500}}>
@@ -104,7 +143,7 @@ class CardMediaSingle extends Component {
                         {dialogImageAlt}
                     </DialogTitle>
                     <DialogContent>
-                        <img alt={dialogImageAlt} height="auto" src={dialogImage} width="100%"/>
+                        <img alt={dialogImageAlt} height="100%" src={dialogImage} width="100%"/>
                     </DialogContent>
                     <DialogActions className={classes.dialogAction}>
                         <Button color="secondary" onClick={this.handleImageDialogClose}>
@@ -113,7 +152,7 @@ class CardMediaSingle extends Component {
                     </DialogActions>
                 </Dialog>
 
-                <Card className={widthSmUp ? classes.cardSmUp : classes.cardSmDown} square={square}>
+                <Card className={widthSmUp ? classes.cardSmUp : classes.cardSmDown} elevation={6} square={square}>
                     {widthSmUp ?
                         <CardHeader
                             avatar={
@@ -130,27 +169,49 @@ class CardMediaSingle extends Component {
                             titleTypographyProps={{color: "secondary", variant: "h6"}}
                         />
                     }
-                    {item.cardMedia.mediaType === mediaType.VIDEO ?
-                        <CardMedia
-                            alt={item.cardMedia.alt}
-                            className={classes.cardMedia}
-                            component="iframe"
-                            image={item.cardMedia.media}
-                            title={item.cardMedia.title}
-                        />
+
+                    {isCycleOnlyMedia ?
+                        item.cardMedia[activeStep].mediaType === mediaType.VIDEO ?
+                            <CardMedia
+                                alt={item.cardMedia[activeStep].alt}
+                                className={classes.cardMedia}
+                                component="iframe"
+                                image={item.cardMedia[activeStep].media}
+                            />
+                            :
+                            <CardMedia
+                                alt={item.cardMedia[activeStep].alt}
+                                className={classes.cardMedia}
+                                image={item.cardMedia[activeStep].media}
+                                onClick={() => this.setState({
+                                    dialogImage: item.cardMedia[activeStep].media,
+                                    dialogImageAlt: item.cardMedia[activeStep].alt,
+                                    showSelectedImageDialog: true
+                                })}
+                            />
                         :
-                        <CardMedia
-                            alt={item.cardMedia.alt}
-                            className={classes.cardMedia}
-                            image={item.cardMedia.media}
-                            onClick={() => this.setState({
-                                dialogImage: item.cardMedia.media,
-                                dialogImageAlt: item.cardMedia.alt,
-                                showSelectedImageDialog: true
-                            })}
-                            title={item.cardMedia.title}
-                        />
+                        item.cardMedia.mediaType === mediaType.VIDEO ?
+                            <CardMedia
+                                alt={item.cardMedia.alt}
+                                className={classes.cardMedia}
+                                component="iframe"
+                                image={item.cardMedia.media}
+                            />
+                            :
+                            <CardMedia
+                                alt={item.cardMedia.alt}
+                                className={classes.cardMedia}
+                                image={item.cardMedia.media}
+                                onClick={() => this.setState({
+                                    dialogImage: item.cardMedia.media,
+                                    dialogImageAlt: item.cardMedia.alt,
+                                    showSelectedImageDialog: true
+                                })}
+                            />
                     }
+
+                    {isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
+
                     <CardContent>
                         <Typography color="secondary" component="h2" gutterBottom variant="h5">
                             {item.cardContent.title}
@@ -158,15 +219,6 @@ class CardMediaSingle extends Component {
                         <Typography className={classes.cardContentDescription} component="p">
                             {item.cardContent.description}
                         </Typography>
-                    </CardContent>
-                    <CardActions>
-                        {item.cardAction.link !== null &&
-                        <Button color="secondary"
-                                onClick={() => this.openLink(item.cardAction.link)}
-                                size="small">
-                            {item.cardAction.link !== null}
-                        </Button>}
-
                         {item.cardAction.iconButtonsAvailable &&
                         <div className={classes.iconContainer}>
                             {item.cardAction.iconButtons.map(iconButton => {
@@ -182,31 +234,18 @@ class CardMediaSingle extends Component {
                                     </Tooltip>
                                 );
                             })}
-                        </div>
-                        }
-
+                        </div>}
+                    </CardContent>
+                    <CardActions>
+                        {item.cardAction.link !== null &&
+                        <Button color="secondary"
+                                onClick={() => this.openLink(item.cardAction.link)}
+                                size="small">
+                            {item.cardAction.linkButtonText}
+                        </Button>}
                     </CardActions>
-                    {media.count > 1 &&
-                    <MobileStepper
-                        activeStep={activeStep}
-                        backButton={
-                            <Button onClick={() => this.handleBack(media)} size="small">
-                                {theme.direction === 'rtl' ? <KeyboardArrowRight/> :
-                                    <KeyboardArrowLeft/>}
-                                {widthSmUp ? "Back" : null}
-                            </Button>
-                        }
-                        nextButton={
-                            <Button onClick={() => this.handleNext(media)}
-                                    size="small">
-                                {widthSmUp ? "Next" : null}
-                                {theme.direction === 'rtl' ? <KeyboardArrowLeft/> :
-                                    <KeyboardArrowRight/>}
-                            </Button>
-                        }
-                        position="static"
-                        steps={media.count}
-                        variant={widthSmUp ? "dots" : null}/>}
+
+                    {!isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
                 </Card>
             </div>
         )

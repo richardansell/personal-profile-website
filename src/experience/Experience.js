@@ -44,6 +44,9 @@ const styles = () => ({
     descriptionBottomMargin: {
         marginBottom: 20
     },
+    noteBottomMargin: {
+        marginTop: 30
+    },
     media: {
         height: 200
     }
@@ -78,7 +81,8 @@ class Experience extends Component {
                     },
                     role: "Android / Front End Developer - Self-Employed",
                     dates: "2012 - " + new Date().getFullYear(),
-                    description: "Created and deployed over 20 Android mobile applications to the major app stores (Google Play Store and Amazon Appstore) achieving in excess of 250,000 downloads, built using Android Studio. Additional development work has included the creation and maintenance of several websites for various clients, built in React and WordPress.",
+                    description: "Created and deployed over 20 Android mobile applications to the major app stores (Google Play Store and Amazon Appstore) built using Android Studio; achieving in excess of 250,000 downloads and maintaining 'Top 10' app-store rankings for broad keywords. Additional development work has included the creation and maintenance of several websites for various clients, built in React and WordPress.",
+                    note: "Note: All of my Android applications described here are purposely excluded from my Portfolio above for the reasons of protecting my interests and work from copyright.",
                     link: null,
                     mediaAvailable: false
                 },
@@ -94,6 +98,7 @@ class Experience extends Component {
                     role: "Junior Android Developer",
                     dates: "2018",
                     description: "Developed Android applications as per specifications for various clients within an Agile environment, including banking, investment and transport applications.",
+                    note: null,
                     link: "https://mubaloo.com/",
                     mediaAvailable: false
                 },
@@ -109,6 +114,7 @@ class Experience extends Component {
                     role: "Lecturer (Information Technology) - Self-Employed",
                     dates: "2017 - 2019",
                     description: "Delivered interactive lectures to groups of students from levels 3 to 5, including Java and Android programming.",
+                    note: null,
                     link: "https://www.bathcollege.ac.uk/",
                     mediaAvailable: false
                 },
@@ -124,6 +130,7 @@ class Experience extends Component {
                     role: "Territory Manager",
                     dates: "2013 - 2014",
                     description: "Provided leadership, motivation and strategic direction to a team of demonstrators to support key accounts.",
+                    note: null,
                     link: "https://www.vax.co.uk/",
                     mediaAvailable: false
                 },
@@ -139,19 +146,19 @@ class Experience extends Component {
                     role: "Field Support Executive",
                     dates: "2010 - 2013",
                     description: "Supported the National Field Sales Manager by merchandising displays and delivering training programmes.",
+                    note: null,
                     link: "https://www.vax.co.uk/",
                     mediaAvailable: true,
                     media: {
                         cardTitle: "Highlights",
-                        count: 7,
+                        cycleOnlyMedia: false,
                         items: [
                             {
                                 key: 0,
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/AYwpzcl_B-A",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/AYwpzcl_B-A"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -167,8 +174,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/W_C4fOG3ijI",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/W_C4fOG3ijI"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -184,8 +190,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/cjokUDILrnM",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/cjokUDILrnM"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -201,8 +206,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/jwnzzDPEcts",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/jwnzzDPEcts"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -218,8 +222,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/j0-vodPFDK4",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/j0-vodPFDK4"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -235,8 +238,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/AOd4VgTgWnY",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/AOd4VgTgWnY"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -252,8 +254,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/p3iKKSvD28k",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/p3iKKSvD28k"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -279,6 +280,7 @@ class Experience extends Component {
                     role: "Training Officer",
                     dates: "2008 - 2010",
                     description: "Introduced a highly-structured induction programme alongside carrying out product training across the company.",
+                    note: null,
                     link: "https://www.vax.co.uk/",
                     mediaAvailable: false
                 },
@@ -294,19 +296,19 @@ class Experience extends Component {
                     role: "Sales and Events Executive",
                     dates: "2007 - 2008",
                     description: "Planned all aspects of the company exhibitions at various venues across the UK, including setting up and managing the Ideal Home Show at Earl’s Court, alongside overseeing staff training and incentivisation.",
+                    note: null,
                     link: "https://www.vax.co.uk/",
                     mediaAvailable: true,
                     media: {
                         cardTitle: "Highlights",
-                        count: 1,
+                        cycleOnlyMedia: false,
                         items: [
                             {
                                 key: 0,
                                 cardMedia: {
                                     mediaType: mediaType.IMAGE,
                                     alt: "Idea of the Quarter 2008 Award",
-                                    media: IdeaOfTheQuarter2008Award,
-                                    title: "Idea of the Quarter 2008 Award"
+                                    media: IdeaOfTheQuarter2008Award
                                 },
                                 cardContent: {
                                     title: "Idea of the Quarter 2008 Award",
@@ -332,19 +334,19 @@ class Experience extends Component {
                     role: "Commercial Account Manager",
                     dates: "2007",
                     description: "Travelled extensively across the UK visiting prospective customers to present Vax’s new commercial product range, alongside opening and managing new commercial accounts.",
+                    note: null,
                     link: "https://www.vax.co.uk/",
                     mediaAvailable: true,
                     media: {
                         cardTitle: "Highlights",
-                        count: 5,
+                        cycleOnlyMedia: false,
                         items: [
                             {
                                 key: 0,
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/G4GZKIOFxyY",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/G4GZKIOFxyY"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -360,8 +362,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/RlMQRSj4kdU",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/RlMQRSj4kdU"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -377,8 +378,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/nJFoMTWTunc",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/nJFoMTWTunc"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -394,8 +394,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/6ExalnrEkVs",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/6ExalnrEkVs"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -411,8 +410,7 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/B6u6rYx_ON4",
-                                    title: "QVC Live Guest Appearance"
+                                    media: "https://www.youtube.com/embed/B6u6rYx_ON4"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -438,37 +436,27 @@ class Experience extends Component {
                     role: "Regional Sales and Merchandising Executive (UK-wide)",
                     dates: "2005 - 2007",
                     description: "Reinforced brand presence in retail stores merchandising product displays, organising and carrying out staff training events and conducted product demonstrations.",
+                    note: null,
                     link: "https://www.vax.co.uk/",
                     mediaAvailable: true,
                     media: {
                         cardTitle: "Highlights",
-                        count: 2,
+                        cycleOnlyMedia: true,
                         items: [
                             {
                                 key: 0,
-                                cardMedia: {
-                                    mediaType: mediaType.IMAGE,
-                                    alt: "Idea of the Year 2006 Award",
-                                    media: IdeaOfTheYear2006AwardOne,
-                                    title: "Idea of the Year 2006 Award"
-                                },
-                                cardContent: {
-                                    title: "Idea of the Year 2006 Award",
-                                    description: "Received ‘Idea of the Year’ award by the Board of Directors in recognition of innovation and creativity."
-                                },
-                                cardAction: {
-                                    link: null,
-                                    iconButtonsAvailable: false
-                                }
-                            },
-                            {
-                                key: 1,
-                                cardMedia: {
-                                    mediaType: mediaType.IMAGE,
-                                    alt: "Idea of the Year 2006 Award",
-                                    media: IdeaOfTheYear2006AwardTwo,
-                                    title: "Idea of the Year 2006 Award"
-                                },
+                                cardMedia: [
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "Idea of the Year 2006 Award",
+                                        media: IdeaOfTheYear2006AwardOne
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "Idea of the Year 2006 Award",
+                                        media: IdeaOfTheYear2006AwardTwo
+                                    }
+                                ],
                                 cardContent: {
                                     title: "Idea of the Year 2006 Award",
                                     description: "Received ‘Idea of the Year’ award by the Board of Directors in recognition of innovation and creativity."
@@ -562,11 +550,21 @@ class Experience extends Component {
                                                 color="secondary" gutterBottom variant="body1">
                                                 {position.description}
                                             </Typography>
+                                            {position.note &&
+                                            <Typography
+                                                className={classes.noteBottomMargin}
+                                                color="secondary" gutterBottom variant="caption">
+                                                {position.note}
+                                            </Typography>}
                                             {position.mediaAvailable &&
                                             <Grid container justify="center" spacing={24}>
                                                 <Grid item>
-                                                    <CardMediaSingle media={position.media} square={false}
-                                                                     setComponentMeasurements={this.setComponentMeasurements}/>
+                                                    <CardMediaSingle
+                                                        cycleOnlyMediaPosition={position.media.cycleOnlyMedia ? position.media.items[0].key : null}
+                                                        media={position.media}
+                                                        isCycleOnlyMedia={position.media.cycleOnlyMedia}
+                                                        square={false}
+                                                        setComponentMeasurements={this.setComponentMeasurements}/>
                                                 </Grid>
                                             </Grid>}
                                         </StepContent>
