@@ -811,6 +811,7 @@ class Portfolio extends Component {
         const {classes} = this.props;
         const {portfolio} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
+        const widthXsDown = isWidthDown("xs", this.props.width);
         return (
             <div className={classes.border} ref={this.portfolioRef}>
                 <Grid alignItems="flex-start" container justify="center">
@@ -822,7 +823,7 @@ class Portfolio extends Component {
                     <Grid alignItems="flex-start" container>
                         <Grid item xs>
                             <GridList cellHeight="auto" className={classes.gridList}
-                                      cols={portfolio.length === 1 ? 1 : widthSmDown ? 1.5 : 2.5}
+                                      cols={portfolio.length === 1 ? 1 : widthXsDown ? 1.25 : widthSmDown ? 1.5 : 2.5}
                                       spacing={0}>
                                 {portfolio.map(item => (
                                     <GridListTile cols={1} key={item.key}
