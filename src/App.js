@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {connect} from "react-redux";
-import "./App.css";
 import {
     updateComponentDistancesToTop,
     updateContact,
@@ -10,7 +9,7 @@ import {
     updateSkills,
     updateTabIndex
 } from "./redux/actions";
-import {colors, createMuiTheme, Grid, MuiThemeProvider} from "@material-ui/core";
+import {colors, createMuiTheme, Grid, MuiThemeProvider, withStyles} from "@material-ui/core";
 import BackgroundVideo from "./background_video/BackgroundVideo";
 import Navigation, {tabs} from "./navigation/Navigation";
 import BackToTopButton from "./back_to_top_button/BackToTopButton";
@@ -19,6 +18,7 @@ import Skills from "./skills/Skills";
 import Portfolio from "./portfolio/Portfolio";
 import Education from "./education/Education";
 import Experience from "./experience/Experience";
+import Footer from "./footer/Footer";
 
 const theme = createMuiTheme({
     palette: {
@@ -30,7 +30,29 @@ const theme = createMuiTheme({
         }
     },
     typography: {
+        "fontFamily": "\"Montserrat\", sans-serif",
         useNextVariants: true
+    }
+});
+
+const styles = () => ({
+    navigationBar: {
+        left: 0,
+        margin: "0 auto",
+        position: "fixed",
+        right: 0,
+        top: 0,
+        zIndex: 99
+    },
+    content: {
+        left: 0,
+        margin: "0 auto",
+        position: "absolute",
+        right: 0,
+        top: "200px"
+    },
+    section: {
+        paddingBottom: "24px"
     }
 });
 
@@ -138,35 +160,37 @@ class App extends Component {
     };
 
     render() {
+        const {classes} = this.props;
         return (
             <div>
                 <MuiThemeProvider theme={theme}>
                     <BackgroundVideo/>
-                    <div id="navigation-bar">
+                    <div className={classes.navigationBar}>
                         <Grid container justify="center">
                             <Grid item lg={8} xs={9}>
                                 <Navigation/>
                             </Grid>
                         </Grid>
                     </div>
-                    <div id="content">
+                    <div className={classes.content}>
                         <Grid container justify="center">
-                            <Grid className="section" item lg={8} xs={9}>
+                            <Grid className={classes.section} item lg={8} xs={9}>
                                 <About/>
                             </Grid>
-                            <Grid className="section" item lg={8} xs={9}>
+                            <Grid className={classes.section} item lg={8} xs={9}>
                                 <Skills/>
                             </Grid>
-                            <Grid className="section" item lg={8} xs={9}>
+                            <Grid className={classes.section} item lg={8} xs={9}>
                                 <Portfolio/>
                             </Grid>
-                            <Grid className="section" item lg={8} xs={9}>
+                            <Grid className={classes.section} item lg={8} xs={9}>
                                 <Education/>
                             </Grid>
-                            <Grid className="section" item lg={8} xs={9}>
+                            <Grid className={classes.section} item lg={8} xs={9}>
                                 <Experience/>
                             </Grid>
                         </Grid>
+                        <Footer/>
                         <BackToTopButton/>
                     </div>
                 </MuiThemeProvider>
@@ -176,4 +200,4 @@ class App extends Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App));

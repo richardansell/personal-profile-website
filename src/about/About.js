@@ -77,6 +77,7 @@ const tooltipCustomTheme = createMuiTheme({
         }
     },
     typography: {
+        "fontFamily": "\"Montserrat\", sans-serif",
         useNextVariants: true,
     }
 });
@@ -99,7 +100,7 @@ class About extends Component {
             githubUrl: "https://github.com/richardansell",
             linkedInUrl: "https://www.linkedin.com/in/ransell/",
             stackOverflowUrl: "https://stackoverflow.com/users/5955426/richard-ansell",
-            introduction: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper at turpis at tempor. Donec eu vulputate magna, id cursus massa. Nullam sed quam consequat, volutpat felis sit amet, blandit arcu. Cras at nisi sed urna dapibus vulputate. Nullam et ultricies nisl, in tempor orci. Fusce odio erat, viverra non iaculis eget, placerat non nibh",
+            introduction: "Hi, I'm Richard! I'm an Android and front-end web developer with a passion for all things tech. Check out my portfolio and other info I've shared about me. Please feel free to reach out by filling out my short contact form below. Happy surfing!",
             location: "Wolverhampton, United Kingdom",
             email: "richard.ansell@bath.edu",
             toolTipSelected: false,
