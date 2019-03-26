@@ -100,7 +100,7 @@ class About extends Component {
             githubUrl: "https://github.com/richardansell",
             linkedInUrl: "https://www.linkedin.com/in/ransell/",
             stackOverflowUrl: "https://stackoverflow.com/users/5955426/richard-ansell",
-            introduction: "Hi, I'm Richard! I'm an Android and front-end web developer with a passion for all things tech. Check out my portfolio and other info I've shared about me. Please feel free to reach out by filling out my short contact form below. Happy surfing!",
+            introduction: "Hi, I'm Richard! I'm an Android and front-end web developer with a passion for all things tech. Check out my portfolio and other info I've shared about me. Please feel free to reach out by filling out my short contact form below.",
             location: "Wolverhampton, United Kingdom",
             email: "richard.ansell@bath.edu",
             toolTipSelected: false,

@@ -80,7 +80,6 @@ class Education extends Component {
         </Tooltip>
     );
 
-
     render() {
         const {classes} = this.props;
         const widthSmDown = isWidthDown("sm", this.props.width);
