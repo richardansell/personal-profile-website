@@ -9,9 +9,9 @@ const styles = () => ({
         }
     },
     backToTopButtonReveal: {
-        bottom: "20px",
+        bottom: "12px",
         position: "fixed",
-        right: "20px",
+        right: "12px",
         zIndex: "99"
     }
 });
@@ -65,7 +65,7 @@ class BackToTopButton extends Component {
                 <Zoom in={this.state.showBackToTopButton}>
                     <Tooltip aria-label="Back to top" title="Back to top">
                         <Fab aria-label="Back to top" className={classes.backToTopIconHover} color="primary"
-                             onClick={this.backToTop}>
+                             onClick={this.backToTop} size="medium">
                             <UpChevronIcon/>
                         </Fab>
                     </Tooltip>
