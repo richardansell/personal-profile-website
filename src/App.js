@@ -18,6 +18,7 @@ import Skills from "./skills/Skills";
 import Portfolio from "./portfolio/Portfolio";
 import Education from "./education/Education";
 import Experience from "./experience/Experience";
+import Contact from "./contact/Contact";
 import Footer from "./footer/Footer";
 
 const theme = createMuiTheme({
@@ -188,6 +189,9 @@ class App extends Component {
                             </Grid>
                             <Grid className={classes.section} item lg={8} xs={9}>
                                 <Experience/>
+                            </Grid>
+                            <Grid className={classes.section} item lg={8} xs={9}>
+                                <Contact/>
                             </Grid>
                         </Grid>
                         <Footer/>
