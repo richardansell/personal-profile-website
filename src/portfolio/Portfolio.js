@@ -4,6 +4,24 @@ import {Grid, GridList, GridListTile, Typography, withStyles, withWidth} from "@
 import {updateComponentDistancesToTop, updatePortfolio} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
+
+import UKMTNPromotionalPoster from "./media/traffic_news/uk_motorway_traffic_news_promotional_poster.jpg";
+import UKMTN01Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-01-incidents-phone-screenshot.jpg";
+import UKMTN02Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-02-detail-phone-screenshot.jpg";
+import UKMTN03Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-03-map-cluster-phone-screenshot.jpg";
+import UKMTN04Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-04-map-view-phone-screenshot.jpg";
+import UKMTN05Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-05-near-me-phone-screenshot.jpg";
+import UKMTN06Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-06-playback-phone-screenshot.jpg";
+import UKMTN07Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-07-search-phone-screenshot.jpg";
+import UKMTN08Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-08-voice-search-phone-screenshot.jpg";
+import UKMTN01Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-01-incidents-tablet-screenshot.jpg";
+import UKMTN02Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-02-map-cluster-tablet-screenshot.jpg";
+import UKMTN03Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-03-map-view-tablet-screenshot.jpg";
+import UKMTN04Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-04-near-me-tablet-screenshot.jpg";
+import UKMTN05Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-05-playback-tablet-screenshot.jpg";
+import UKMTN06Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-06-search-tablet-screenshot.jpg";
+import UKMTN07Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-07-voice-search-tablet-screenshot.jpg";
+
 import MomoAcademyOfDrama from "./media/momo-academy-of-drama.jpg";
 import StogurseyVintage from "./media/stogursey-vintage.jpg";
 import OOTHS01 from "./media/only_on_the_high_street/only-on-the-high-street-01-app-icon.png";
@@ -114,6 +132,138 @@ class Portfolio extends Component {
                 {
                     key: 0,
                     media: {
+                        cardTitle: "Android Development",
+                        cycleOnlyMedia: true,
+                        items: [
+                            {
+                                key: 0,
+                                cardMedia: [
+                                    {
+                                        mediaType: mediaType.VIDEO,
+                                        alt: "UK Motorway Traffic News",
+                                        media: "https://www.youtube.com/embed/9UOjG-bqu-A"
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News promotional poster",
+                                        media: UKMTNPromotionalPoster
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic events",
+                                        media: UKMTN01Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic event detail",
+                                        media: UKMTN02Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic events map clusters",
+                                        media: UKMTN03Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic event map view",
+                                        media: UKMTN04Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic events near me",
+                                        media: UKMTN05Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic event audio playback",
+                                        media: UKMTN06Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News search traffic events",
+                                        media: UKMTN07Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News voice search traffic events",
+                                        media: UKMTN08Phone
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic events",
+                                        media: UKMTN01Tablet
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic events map clusters",
+                                        media: UKMTN02Tablet
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic event map view",
+                                        media: UKMTN03Tablet
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic events near me",
+                                        media: UKMTN04Tablet
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic event audio playback",
+                                        media: UKMTN05Tablet
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News search traffic events",
+                                        media: UKMTN06Tablet
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News voice search traffic events",
+                                        media: UKMTN07Tablet
+                                    }
+                                ],
+                                cardContent: {
+                                    title: "Traffic News Applications",
+                                    description: "A range of Android applications developed from the ground-up providing traffic news to users across the UK, including the above example as one of the most popular apps created to date."
+                                },
+                                cardAction: {
+                                    link: "https://play.google.com/store/apps/dev?id=5284578463219197910",
+                                    linkButtonText: "Visit Android Apps",
+                                    iconButtonsAvailable: true,
+                                    iconButtons: [
+                                        {
+                                            key: 0,
+                                            label: "Built using Java",
+                                            icon: JavaIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.java.com"
+                                        },
+                                        {
+                                            key: 1,
+                                            label: "Built using XML",
+                                            icon: XmlIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.w3.org/TR/REC-xml/",
+                                            color: "#E07A2E"
+                                        },
+                                        {
+                                            key: 2,
+                                            label: "Built using Android Studio",
+                                            icon: AndroidStudioIcon,
+                                            isCustomIcon: false,
+                                            link: "https://developer.android.com/studio"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    key: 1,
+                    media: {
                         cardTitle: "Web Development",
                         cycleOnlyMedia: false,
                         items: [
@@ -183,7 +333,7 @@ class Portfolio extends Component {
                     }
                 },
                 {
-                    key: 1,
+                    key: 2,
                     media: {
                         cardTitle: "Web Development",
                         cycleOnlyMedia: false,
@@ -247,7 +397,7 @@ class Portfolio extends Component {
                     }
                 },
                 {
-                    key: 2,
+                    key: 3,
                     media: {
                         cardTitle: "Android & Web Development",
                         cycleOnlyMedia: true,
@@ -411,7 +561,7 @@ class Portfolio extends Component {
                     }
                 },
                 {
-                    key: 3,
+                    key: 4,
                     media: {
                         cardTitle: "Web Development",
                         cycleOnlyMedia: true,
@@ -583,7 +733,7 @@ class Portfolio extends Component {
                     }
                 },
                 {
-                    key: 4,
+                    key: 5,
                     media: {
                         cardTitle: "Web Development",
                         cycleOnlyMedia: false,
@@ -646,7 +796,7 @@ class Portfolio extends Component {
                     }
                 },
                 {
-                    key: 5,
+                    key: 6,
                     media: {
                         cardTitle: "Android Development",
                         cycleOnlyMedia: true,
@@ -748,7 +898,7 @@ class Portfolio extends Component {
                     }
                 },
                 {
-                    key: 6,
+                    key: 7,
                     media: {
                         cardTitle: "Game Development",
                         cycleOnlyMedia: false,
