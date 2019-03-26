@@ -39,16 +39,12 @@ const styles = () => ({
         whiteSpace: "pre-line"
     },
     cardMedia: {
-        borderColor: "#bdbdbd",
-        borderBottomStyle: "solid",
-        borderTopStyle: "solid",
-        borderWidth: "0.5px",
         cursor: "pointer",
         height: 250,
         maxHeight: 250
     },
     cardSmDown: {
-        width: "auto",
+        width: "auto"
     },
     cardSmUp: {
         marginBottom: 5,
@@ -59,9 +55,9 @@ const styles = () => ({
         margin: 15
     },
     iconContainer: {
-        display: 'flex',
-        justifyContent: 'start',
-        flexWrap: 'wrap',
+        display: "flex",
+        justifyContent: "start",
+        flexWrap: "wrap",
         paddingTop: 20
     }
 });
@@ -123,7 +119,7 @@ class CardMediaSingle extends Component {
                 }
                 position="static"
                 steps={isCycleOnlyMedia ? item.cardMedia.length : media.items.length}
-                variant={widthSmUp && variant ? "dots" : null}/>
+                variant={widthSmUp && variant ? "dots" : "progress"}/>
         )
     };
 
@@ -137,13 +133,12 @@ class CardMediaSingle extends Component {
                 <Dialog
                     aria-labelledby="image-dialog-title" maxWidth="md"
                     onBackdropClick={this.handleImageDialogClose}
-                    open={showSelectedImageDialog}
-                    transitionDuration={{enter: 0, exit: 500}}>
+                    open={showSelectedImageDialog} transitionDuration={{enter: 0, exit: 500}}>
                     <DialogTitle id="image-dialog-title">
                         {dialogImageAlt}
                     </DialogTitle>
                     <DialogContent>
-                        <img alt={dialogImageAlt} height="100%" src={dialogImage} width="100%"/>
+                        <img alt={dialogImageAlt} height="auto" src={dialogImage} width="100%"/>
                     </DialogContent>
                     <DialogActions className={classes.dialogAction}>
                         <Button color="secondary" onClick={this.handleImageDialogClose}>
