@@ -7,19 +7,29 @@ import {
     UPDATE_EXPERIENCE,
     UPDATE_PORTFOLIO,
     UPDATE_SKILLS,
-    UPDATE_TAB_INDEX
+    UPDATE_TAB_INDEX,
+    UPDATE_WEBP_SUPPORT_LOSSLESS,
+    UPDATE_WEBP_SUPPORT_LOSSY
 } from "../constants/action-types";
+
+export const updateWebPsupportLossy = payload => {
+    return {type: UPDATE_WEBP_SUPPORT_LOSSY, payload}
+};
+
+export const updateWebPsupportLossless = payload => {
+    return {type: UPDATE_WEBP_SUPPORT_LOSSLESS, payload}
+};
 
 export const updateComponentDistancesToTop = payload => {
     return {type: UPDATE_COMPONENT_DISTANCES_TO_TOP, payload}
 };
 
 export const updateTabIndex = payload => {
-  return {type: UPDATE_TAB_INDEX, payload}
+    return {type: UPDATE_TAB_INDEX, payload}
 };
 
 export const updateAppBar = payload => {
-  return {type: UPDATE_APP_BAR, payload}
+    return {type: UPDATE_APP_BAR, payload}
 };
 
 export const updateAbout = payload => {

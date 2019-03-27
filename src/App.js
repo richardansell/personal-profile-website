@@ -7,7 +7,9 @@ import {
     updateExperience,
     updatePortfolio,
     updateSkills,
-    updateTabIndex
+    updateTabIndex,
+    updateWebPsupportLossless,
+    updateWebPsupportLossy
 } from "./redux/actions";
 import {colors, createMuiTheme, Grid, MuiThemeProvider, withStyles} from "@material-ui/core";
 import BackgroundVideo from "./background_video/BackgroundVideo";
@@ -69,14 +71,17 @@ const mapDispatchToProps = dispatch => {
         updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions)),
         updateEducation: dimensions => dispatch(updateEducation(dimensions)),
         updateExperience: dimensions => dispatch(updateExperience(dimensions)),
-        updateContact: dimensions => dispatch(updateContact(dimensions))
+        updateContact: dimensions => dispatch(updateContact(dimensions)),
+        updateWebPsupportLossy: supported => dispatch(updateWebPsupportLossy(supported)),
+        updateWebPsupportLossless: supported => dispatch(updateWebPsupportLossless(supported))
     }
 };
 
 class App extends Component {
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
+        this.checkWebPSupport();
+        window.addEventListener("scroll", this.handleScroll);
         setTimeout(() => {
             this.props.updateTabIndex(tabs.ABOUT);
         }, 100);
@@ -87,8 +92,34 @@ class App extends Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener("scroll", this.handleScroll);
     }
+
+    checkWebPSupport = () => {
+        const testImages = [
+            {
+                format: "lossy",
+                data: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"
+            },
+            {
+                format: "lossless",
+                data: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=="
+            }
+        ];
+        testImages.forEach(testImage => {
+            const image = new Image();
+            image.onload = () => {
+                const result = (image.width > 0) && (image.height > 0);
+                if (!result) return;
+                if (testImage.format === "lossy") {
+                    this.props.updateWebPsupportLossy(result);
+                } else {
+                    this.props.updateWebPsupportLossless(result);
+                }
+            };
+            image.src = "data:image/webp;base64," + testImage.data;
+        });
+    };
 
     setSectionComponentDistancesToTop = () => {
         const {appBarComponent, aboutComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;

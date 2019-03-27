@@ -4,6 +4,7 @@ import {Grid, Hidden, Paper, Toolbar, Tooltip, Typography, withStyles, withWidth
 import {updateComponentDistancesToTop, updateEducation} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import UoBLogo from "./media/uob-logo-slate-grey.png";
+import UoBLogoWp from "./media/uob-logo-slate-grey.webp";
 
 const styles = theme => ({
     border: {
@@ -73,15 +74,20 @@ class Education extends Component {
 
     universityOfBathLogo = style => (
         <Tooltip title={this.state.tooltipVisitInstituteTitle}>
-            <img alt={this.state.instituteName}
-                 className={style}
-                 onClick={() => window.open(this.state.instituteUrl, "", "", false)}
-                 src={UoBLogo}/>
+            <picture>
+                <source type="image/webp" srcSet={UoBLogoWp}/>
+                <source type="image/png" srcSet={UoBLogo}/>
+                <img alt={this.state.instituteName}
+                     className={style}
+                     onClick={() => window.open(this.state.instituteUrl, "", "", false)}
+                     src={UoBLogo}/>
+            </picture>
         </Tooltip>
     );
 
     render() {
         const {classes} = this.props;
+        const {instituteName, courseDetails, courseContent} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
             <div className={classes.border} ref={this.educationRef}>
@@ -102,17 +108,17 @@ class Education extends Component {
                             <Toolbar disableGutters={true}>
                                 <Typography className={classes.universityTitle} color="secondary"
                                             variant={widthSmDown ? "h6" : "h5"}>
-                                    {this.state.instituteName}
+                                    {instituteName}
                                 </Typography>
                                 <Hidden smDown>
                                     {this.universityOfBathLogo(classes.universityOfBathLogo)}
                                 </Hidden>
                             </Toolbar>
                             <Typography color="textSecondary" variant={widthSmDown ? "subtitle1" : "h6"}>
-                                {this.state.courseDetails}
+                                {courseDetails}
                             </Typography>
                             <Typography className={classes.courseContentText} color="secondary" variant="body1">
-                                {this.state.courseContent}
+                                {courseContent}
                             </Typography>
                         </Paper>
                     </Grid>
