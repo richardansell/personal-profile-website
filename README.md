@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React, Redux, Material UI template used to display a personal profile (ideal for developers!) showcasing various key personal information, including a portfolio of work, an education and experience section and a handy contact form.   
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and all available scripts are listed below.
 
 ## Available Scripts
 
