@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core";
 import BgVideoOne from "./media/background-video-one.mp4";
 import BgVideoTwo from "./media/background-video-two.mp4";
@@ -8,6 +9,7 @@ import BgVideoFive from "./media/background-video-five.mp4";
 import BgVideoSix from "./media/background-video-six.mp4";
 import BgVideoSeven from "./media/background-video-seven.mp4";
 import BgImageFallback from "./media/background-image-fallback.jpg";
+import BgImageFallbackWp from "./media/background-image-fallback.webp";
 
 const styles = () => ({
     backgroundContainer: {
@@ -31,7 +33,6 @@ const styles = () => ({
         width: "auto"
     },
     backgroundImageFallback: {
-        background: "url(" + BgImageFallback + ") center",
         backgroundSize: "cover",
         height: "500px",
         marginLeft: "-10px",
@@ -42,12 +43,17 @@ const styles = () => ({
     }
 });
 
+const mapStateToProps = state => {
+    return {webpsupport: state.webpsupport};
+};
+
 const bgVideos = [BgVideoOne, BgVideoTwo, BgVideoThree, BgVideoFour, BgVideoFive, BgVideoSix, BgVideoSeven];
 
 class BackgroundVideo extends Component {
     render() {
-        const {classes} = this.props;
+        const {classes, webpsupport} = this.props;
         const chromeDataSavingEnabled = ("connection" in navigator) ? !!(navigator.connection.saveData) : false;
+        const fallbackBgImage = !chromeDataSavingEnabled ? webpsupport.lossless ? BgImageFallbackWp : BgImageFallback : null;
         const videoPosition = new Date().getDay();
         return (
             <div>
@@ -57,10 +63,11 @@ class BackgroundVideo extends Component {
                                muted={true}>
                             <source src={bgVideos[videoPosition]} type="video/mp4"/>
                         </video>
-                    </div> : <div className={classes.backgroundImageFallback}/>}
+                    </div> : <div className={classes.backgroundImageFallback}
+                                  style={{background: "url(" + fallbackBgImage + ") center"}}/>}
             </div>
         )
     }
 }
 
-export default withStyles(styles)(BackgroundVideo);
+export default withStyles(styles)(connect(mapStateToProps)(BackgroundVideo));

@@ -22,6 +22,9 @@ import VaxLogo from "./media/vax-logo.svg";
 import IdeaOfTheYear2006AwardOne from "./media/idea-of-the-year-2006-award-one.jpeg";
 import IdeaOfTheYear2006AwardTwo from "./media/idea-of-the-year-2006-award-two.jpeg";
 import IdeaOfTheQuarter2008Award from "./media/idea-of-the-quarter-2008-award.jpeg";
+import IdeaOfTheYear2006AwardOneWp from "./media/idea-of-the-year-2006-award-one.webp";
+import IdeaOfTheYear2006AwardTwoWp from "./media/idea-of-the-year-2006-award-two.webp";
+import IdeaOfTheQuarter2008AwardWp from "./media/idea-of-the-quarter-2008-award.webp";
 import {Icon} from "@iconify/react";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
 
@@ -301,7 +304,9 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.IMAGE,
                                     alt: "Idea of the Quarter 2008 Award",
-                                    media: IdeaOfTheQuarter2008Award
+                                    media: IdeaOfTheQuarter2008Award,
+                                    mediaWp: IdeaOfTheQuarter2008AwardWp,
+                                    originalMediaType: "image/jpeg"
                                 },
                                 cardContent: {
                                     title: "Idea of the Quarter 2008 Award",
@@ -440,12 +445,16 @@ class Experience extends Component {
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Idea of the Year 2006 Award",
-                                        media: IdeaOfTheYear2006AwardOne
+                                        media: IdeaOfTheYear2006AwardOne,
+                                        mediaWp: IdeaOfTheYear2006AwardOneWp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Idea of the Year 2006 Award",
-                                        media: IdeaOfTheYear2006AwardTwo
+                                        media: IdeaOfTheYear2006AwardTwo,
+                                        mediaWp: IdeaOfTheYear2006AwardTwoWp,
+                                        originalMediaType: "image/jpeg"
                                     }
                                 ],
                                 cardContent: {
@@ -488,6 +497,7 @@ class Experience extends Component {
 
     render() {
         const {classes} = this.props;
+        const {positions} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
             <div className={classes.border} ref={this.experienceRef}>
@@ -497,7 +507,7 @@ class Experience extends Component {
                             Experience
                         </Typography>
                         <Stepper elevation={2} orientation="vertical" square={true}>
-                            {this.state.positions.map(position => {
+                            {positions.map(position => {
                                 return (
                                     <Step active key={position.key}>
                                         <StepLabel icon={
@@ -542,8 +552,8 @@ class Experience extends Component {
                                                 {position.description}
                                             </Typography>
                                             {position.mediaAvailable &&
-                                            <Grid container justify="center" spacing={24}>
-                                                <Grid item>
+                                            <Grid alignContent="center" container direction="column" spacing={24}>
+                                                <Grid item xs>
                                                     <CardMediaSingle
                                                         cycleOnlyMediaPosition={position.media.cycleOnlyMedia ? position.media.items[0].key : null}
                                                         media={position.media}

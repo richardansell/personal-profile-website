@@ -5,33 +5,33 @@ import {updateComponentDistancesToTop, updatePortfolio} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
 
-import UKMTNPromotionalPoster from "./media/traffic_news/uk_motorway_traffic_news_promotional_poster.jpg";
-import UKMTN01Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-01-incidents-phone-screenshot.jpg";
-import UKMTN02Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-02-detail-phone-screenshot.jpg";
-import UKMTN03Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-03-map-cluster-phone-screenshot.jpg";
-import UKMTN04Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-04-map-view-phone-screenshot.jpg";
-import UKMTN05Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-05-near-me-phone-screenshot.jpg";
-import UKMTN06Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-06-playback-phone-screenshot.jpg";
-import UKMTN07Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-07-search-phone-screenshot.jpg";
-import UKMTN08Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-08-voice-search-phone-screenshot.jpg";
-import UKMTN01Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-01-incidents-tablet-screenshot.jpg";
-import UKMTN02Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-02-map-cluster-tablet-screenshot.jpg";
-import UKMTN03Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-03-map-view-tablet-screenshot.jpg";
-import UKMTN04Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-04-near-me-tablet-screenshot.jpg";
-import UKMTN05Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-05-playback-tablet-screenshot.jpg";
-import UKMTN06Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-06-search-tablet-screenshot.jpg";
-import UKMTN07Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-07-voice-search-tablet-screenshot.jpg";
+import UKMTNPromotionalPoster from "./media/traffic_news/uk_motorway_traffic_news_promotional_poster.png";
+import UKMTN01Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-01-events-phone.png";
+import UKMTN02Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-02-near-me-phone.png";
+import UKMTN03Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-03-search-phone.png";
+import UKMTN04Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-04-voice-search-phone.png";
+import UKMTN05Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-05-audio-playback-phone.png";
+import UKMTN06Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-06-detail-phone.png";
+import UKMTN07Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-07-map-view-phone.png";
+import UKMTN08Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-08-map-clusters-phone.png";
+import UKMTN01Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-01-events-and-detail-tablet.png";
+import UKMTN02Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-02-near-me-tablet.png";
+import UKMTN03Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-03-search-tablet.png";
+import UKMTN04Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-04-voice-search-tablet.png";
+import UKMTN05Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-05-audio-playback-tablet.png";
+import UKMTN06Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-06-map-view-tablet.png";
+import UKMTN07Tablet from "./media/traffic_news/tablet/uk-motorway-traffic-news-07-map-clusters-tablet.png";
 
 import MomoAcademyOfDrama from "./media/momo-academy-of-drama.jpg";
 import StogurseyVintage from "./media/stogursey-vintage.jpg";
 import OOTHS01 from "./media/only_on_the_high_street/only-on-the-high-street-01-app-icon.png";
-import OOTHS02 from "./media/only_on_the_high_street/only-on-the-high-street-02-app-upcoming-events.jpg";
-import OOTHS03 from "./media/only_on_the_high_street/only-on-the-high-street-03-app-event-details.jpg";
-import OOTHS04 from "./media/only_on_the_high_street/only-on-the-high-street-04-app-event-location.jpg";
-import OOTHS05 from "./media/only_on_the_high_street/only-on-the-high-street-05-app-event-retailer-offers.jpg";
-import OOTHS06 from "./media/only_on_the_high_street/only-on-the-high-street-06-app-event-treasure-hunt.jpg";
-import OOTHS07 from "./media/only_on_the_high_street/only-on-the-high-street-07-app-menu.jpg";
-import OOTHS08 from "./media/only_on_the_high_street/only-on-the-high-street-08-app-feedback.jpg";
+import OOTHS02 from "./media/only_on_the_high_street/only-on-the-high-street-02-app-upcoming-events.png";
+import OOTHS03 from "./media/only_on_the_high_street/only-on-the-high-street-03-app-event-details.png";
+import OOTHS04 from "./media/only_on_the_high_street/only-on-the-high-street-04-app-event-location.png";
+import OOTHS05 from "./media/only_on_the_high_street/only-on-the-high-street-05-app-event-retailer-offers.png";
+import OOTHS06 from "./media/only_on_the_high_street/only-on-the-high-street-06-app-event-treasure-hunt.png";
+import OOTHS07 from "./media/only_on_the_high_street/only-on-the-high-street-07-app-menu.png";
+import OOTHS08 from "./media/only_on_the_high_street/only-on-the-high-street-08-app-feedback.png";
 import OOTHS09 from "./media/only_on_the_high_street/only-on-the-high-street-09-website-backend-login.jpg";
 import OOTHS10 from "./media/only_on_the_high_street/only-on-the-high-street-10-website-backend-dashboard.jpg";
 import OOTHS11 from "./media/only_on_the_high_street/only-on-the-high-street-11-website-backend-add-event-booking.jpg";
@@ -70,19 +70,98 @@ import SammyHayes21 from "./media/sammy_hayes/sammy-hayes-21-booking-calendar-do
 
 import SpaceExplorer from "./media/space-explorer.jpg";
 
-import SpellBound01 from "./media/spellbound/spellbound-01-home.jpg";
-import SpellBound02 from "./media/spellbound/spellbound-02-select-difficulty-level.jpg";
-import SpellBound03 from "./media/spellbound/spellbound-03-chosen-difficulty-level-message.jpg";
-import SpellBound04 from "./media/spellbound/spellbound-04-sound-effects-off.jpg";
-import SpellBound05 from "./media/spellbound/spellbound-05-play-game-instruction-message.jpg";
-import SpellBound06 from "./media/spellbound/spellbound-06-no-text-entered-message.jpg";
-import SpellBound07 from "./media/spellbound/spellbound-07-remaining-attempts-message.jpg";
-import SpellBound08 from "./media/spellbound/spellbound-08-time-expired-message.jpg";
-import SpellBound09 from "./media/spellbound/spellbound-09-media-volume-off-message.jpg";
-import SpellBound10 from "./media/spellbound/spellbound-10-correct-answer-message.jpg";
-import SpellBound11 from "./media/spellbound/spellbound-11-game-completed.jpg";
-import SpellBoundAPK from "./media/spellbound/spellbound.apk";
+import SpellBound01 from "./media/spellbound/spellbound-01-home.png";
+import SpellBound02 from "./media/spellbound/spellbound-02-select-difficulty-level.png";
+import SpellBound03 from "./media/spellbound/spellbound-03-chosen-difficulty-level-message.png";
+import SpellBound04 from "./media/spellbound/spellbound-04-sound-effects-off.png";
+import SpellBound05 from "./media/spellbound/spellbound-05-play-game-instruction-message.png";
+import SpellBound06 from "./media/spellbound/spellbound-06-no-text-entered-message.png";
+import SpellBound07 from "./media/spellbound/spellbound-07-remaining-attempts-message.png";
+import SpellBound08 from "./media/spellbound/spellbound-08-time-expired-message.png";
+import SpellBound09 from "./media/spellbound/spellbound-09-media-volume-off-message.png";
+import SpellBound10 from "./media/spellbound/spellbound-10-correct-answer-message.png";
+import SpellBound11 from "./media/spellbound/spellbound-11-game-completed.png";
 
+import UKMTNPromotionalPosterWp from "./media/traffic_news/uk_motorway_traffic_news_promotional_poster.webp";
+import UKMTN01PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-01-events-phone.webp";
+import UKMTN02PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-02-near-me-phone.webp";
+import UKMTN03PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-03-search-phone.webp";
+import UKMTN04PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-04-voice-search-phone.webp";
+import UKMTN05PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-05-audio-playback-phone.webp";
+import UKMTN06PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-06-detail-phone.webp";
+import UKMTN07PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-07-map-view-phone.webp";
+import UKMTN08PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-08-map-clusters-phone.webp";
+import UKMTN01TabletWp from "./media/traffic_news/tablet/uk-motorway-traffic-news-01-events-and-detail-tablet.webp";
+import UKMTN02TabletWp from "./media/traffic_news/tablet/uk-motorway-traffic-news-02-near-me-tablet.webp";
+import UKMTN03TabletWp from "./media/traffic_news/tablet/uk-motorway-traffic-news-03-search-tablet.webp";
+import UKMTN04TabletWp from "./media/traffic_news/tablet/uk-motorway-traffic-news-04-voice-search-tablet.webp";
+import UKMTN05TabletWp from "./media/traffic_news/tablet/uk-motorway-traffic-news-05-audio-playback-tablet.webp";
+import UKMTN06TabletWp from "./media/traffic_news/tablet/uk-motorway-traffic-news-06-map-view-tablet.webp";
+import UKMTN07TabletWp from "./media/traffic_news/tablet/uk-motorway-traffic-news-07-map-clusters-tablet.webp";
+
+import MomoAcademyOfDramaWp from "./media/momo-academy-of-drama.webp";
+import StogurseyVintageWp from "./media/stogursey-vintage.webp";
+import OOTHS01Wp from "./media/only_on_the_high_street/only-on-the-high-street-01-app-icon.webp";
+import OOTHS02Wp from "./media/only_on_the_high_street/only-on-the-high-street-02-app-upcoming-events.webp";
+import OOTHS03Wp from "./media/only_on_the_high_street/only-on-the-high-street-03-app-event-details.webp";
+import OOTHS04Wp from "./media/only_on_the_high_street/only-on-the-high-street-04-app-event-location.webp";
+import OOTHS05Wp from "./media/only_on_the_high_street/only-on-the-high-street-05-app-event-retailer-offers.webp";
+import OOTHS06Wp from "./media/only_on_the_high_street/only-on-the-high-street-06-app-event-treasure-hunt.webp";
+import OOTHS07Wp from "./media/only_on_the_high_street/only-on-the-high-street-07-app-menu.webp";
+import OOTHS08Wp from "./media/only_on_the_high_street/only-on-the-high-street-08-app-feedback.webp";
+import OOTHS09Wp from "./media/only_on_the_high_street/only-on-the-high-street-09-website-backend-login.webp";
+import OOTHS10Wp from "./media/only_on_the_high_street/only-on-the-high-street-10-website-backend-dashboard.webp";
+import OOTHS11Wp
+    from "./media/only_on_the_high_street/only-on-the-high-street-11-website-backend-add-event-booking.webp";
+import OOTHS12Wp
+    from "./media/only_on_the_high_street/only-on-the-high-street-12-website-backend-add-event-booking-with-date.webp";
+import OOTHS13Wp
+    from "./media/only_on_the_high_street/only-on-the-high-street-13-website-backend-add-event-booking-with-google-location-search.webp";
+import OOTHS14Wp from "./media/only_on_the_high_street/only-on-the-high-street-14-website-backend-dashboard-menu.webp";
+import OOTHS15Wp from "./media/only_on_the_high_street/only-on-the-high-street-15-website-backend-event-offers.webp";
+
+import SammyHayes01Wp from "./media/sammy_hayes/sammy-hayes-01-home.webp";
+import SammyHayes02Wp from "./media/sammy_hayes/sammy-hayes-02-about.webp";
+import SammyHayes03Wp from "./media/sammy_hayes/sammy-hayes-03-contact.webp";
+import SammyHayes04Wp from "./media/sammy_hayes/sammy-hayes-04-booking-requests.webp";
+import SammyHayes05Wp from "./media/sammy_hayes/sammy-hayes-05-follow-and-footer.webp";
+import SammyHayes06Wp from "./media/sammy_hayes/sammy-hayes-06-menu.webp";
+import SammyHayes07Wp from "./media/sammy_hayes/sammy-hayes-07-frequently-asked-questions.webp";
+import SammyHayes08Wp from "./media/sammy_hayes/sammy-hayes-08-newsletter-sign-up.webp";
+import SammyHayes09Wp from "./media/sammy_hayes/sammy-hayes-09-share.webp";
+import SammyHayes10Wp from "./media/sammy_hayes/sammy-hayes-10-website-backend-login.webp";
+import SammyHayes11Wp from "./media/sammy_hayes/sammy-hayes-11-website-backend-login-verification.webp";
+import SammyHayes12Wp from "./media/sammy_hayes/sammy-hayes-12-website-backend-dashboard.webp";
+import SammyHayes13Wp from "./media/sammy_hayes/sammy-hayes-13-website-backend-add-event-booking.webp";
+import SammyHayes14Wp from "./media/sammy_hayes/sammy-hayes-14-website-backend-add-event-booking-with-date.webp";
+import SammyHayes15Wp
+    from "./media/sammy_hayes/sammy-hayes-15-website-backend-add-event-booking-with-google-location-search.webp";
+import SammyHayes16Wp
+    from "./media/sammy_hayes/sammy-hayes-16-website-backend-event-booking-added-to-google-calendar.webp";
+import SammyHayes17Wp
+    from "./media/sammy_hayes/sammy-hayes-17-website-backend-new-event-booking-added-to-dashboard.webp";
+import SammyHayes18Wp
+    from "./media/sammy_hayes/sammy-hayes-18-website-backend-additional-new-event-booking-added-to-dashboard.webp";
+import SammyHayes19Wp
+    from "./media/sammy_hayes/sammy-hayes-19-website-backend-existing-event-booking-confirm-deletion.webp";
+import SammyHayes20Wp from "./media/sammy_hayes/sammy-hayes-20-website-backend-dashboard-menu.webp";
+import SammyHayes21Wp from "./media/sammy_hayes/sammy-hayes-21-booking-calendar-downloaded.webp";
+
+import SpaceExplorerWp from "./media/space-explorer.webp";
+
+import SpellBound01Wp from "./media/spellbound/spellbound-01-home.webp";
+import SpellBound02Wp from "./media/spellbound/spellbound-02-select-difficulty-level.webp";
+import SpellBound03Wp from "./media/spellbound/spellbound-03-chosen-difficulty-level-message.webp";
+import SpellBound04Wp from "./media/spellbound/spellbound-04-sound-effects-off.webp";
+import SpellBound05Wp from "./media/spellbound/spellbound-05-play-game-instruction-message.webp";
+import SpellBound06Wp from "./media/spellbound/spellbound-06-no-text-entered-message.webp";
+import SpellBound07Wp from "./media/spellbound/spellbound-07-remaining-attempts-message.webp";
+import SpellBound08Wp from "./media/spellbound/spellbound-08-time-expired-message.webp";
+import SpellBound09Wp from "./media/spellbound/spellbound-09-media-volume-off-message.webp";
+import SpellBound10Wp from "./media/spellbound/spellbound-10-correct-answer-message.webp";
+import SpellBound11Wp from "./media/spellbound/spellbound-11-game-completed.webp";
+
+import SpellBoundAPK from "./media/spellbound/spellbound.apk";
 import Area51APK from "./media/area-51.apk";
 
 import JavaIcon from '@iconify/react/logos/java';
@@ -146,82 +225,114 @@ class Portfolio extends Component {
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "UK Motorway Traffic News promotional poster",
-                                        media: UKMTNPromotionalPoster
+                                        media: UKMTNPromotionalPoster,
+                                        mediaWp: UKMTNPromotionalPosterWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "UK Motorway Traffic News traffic events",
-                                        media: UKMTN01Phone
-                                    },
-                                    {
-                                        mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News traffic event detail",
-                                        media: UKMTN02Phone
-                                    },
-                                    {
-                                        mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News traffic events map clusters",
-                                        media: UKMTN03Phone
-                                    },
-                                    {
-                                        mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News traffic event map view",
-                                        media: UKMTN04Phone
+                                        media: UKMTN01Phone,
+                                        mediaWp: UKMTN01PhoneWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "UK Motorway Traffic News traffic events near me",
-                                        media: UKMTN05Phone
-                                    },
-                                    {
-                                        mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News traffic event audio playback",
-                                        media: UKMTN06Phone
+                                        media: UKMTN02Phone,
+                                        mediaWp: UKMTN02PhoneWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "UK Motorway Traffic News search traffic events",
-                                        media: UKMTN07Phone
+                                        media: UKMTN03Phone,
+                                        mediaWp: UKMTN03PhoneWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "UK Motorway Traffic News voice search traffic events",
-                                        media: UKMTN08Phone
+                                        media: UKMTN04Phone,
+                                        mediaWp: UKMTN04PhoneWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News traffic events",
-                                        media: UKMTN01Tablet
+                                        alt: "UK Motorway Traffic News audio playback of traffic events",
+                                        media: UKMTN05Phone,
+                                        mediaWp: UKMTN05PhoneWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News traffic events map clusters",
-                                        media: UKMTN02Tablet
+                                        alt: "UK Motorway Traffic News traffic event details",
+                                        media: UKMTN06Phone,
+                                        mediaWp: UKMTN06PhoneWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "UK Motorway Traffic News traffic event map view",
-                                        media: UKMTN03Tablet
+                                        media: UKMTN07Phone,
+                                        mediaWp: UKMTN07PhoneWp,
+                                        originalMediaType: "image/png"
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic event map clusters",
+                                        media: UKMTN08Phone,
+                                        mediaWp: UKMTN08PhoneWp,
+                                        originalMediaType: "image/png"
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic events and detail screen",
+                                        media: UKMTN01Tablet,
+                                        mediaWp: UKMTN01TabletWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "UK Motorway Traffic News traffic events near me",
-                                        media: UKMTN04Tablet
+                                        media: UKMTN02Tablet,
+                                        mediaWp: UKMTN02TabletWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News traffic event audio playback",
-                                        media: UKMTN05Tablet
+                                        alt: "UK Motorway Traffic News traffic search traffic events",
+                                        media: UKMTN03Tablet,
+                                        mediaWp: UKMTN03TabletWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News search traffic events",
-                                        media: UKMTN06Tablet
+                                        alt: "UK Motorway Traffic News traffic voice search traffic events",
+                                        media: UKMTN04Tablet,
+                                        mediaWp: UKMTN04TabletWp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
-                                        alt: "UK Motorway Traffic News voice search traffic events",
-                                        media: UKMTN07Tablet
+                                        alt: "UK Motorway Traffic News traffic audio playback of traffic events",
+                                        media: UKMTN05Tablet,
+                                        mediaWp: UKMTN05TabletWp,
+                                        originalMediaType: "image/png"
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News search traffic event map view",
+                                        media: UKMTN06Tablet,
+                                        mediaWp: UKMTN06TabletWp,
+                                        originalMediaType: "image/png"
+                                    },
+                                    {
+                                        mediaType: mediaType.IMAGE,
+                                        alt: "UK Motorway Traffic News traffic event map clusters",
+                                        media: UKMTN07Tablet,
+                                        mediaWp: UKMTN07TabletWp,
+                                        originalMediaType: "image/png"
                                     }
                                 ],
                                 cardContent: {
@@ -273,7 +384,8 @@ class Portfolio extends Component {
                                     mediaType: mediaType.IMAGE,
                                     alt: "Momo Academy of Drama",
                                     media: MomoAcademyOfDrama,
-                                    title: "Momo Academy of Drama"
+                                    mediaWp: MomoAcademyOfDramaWp,
+                                    originalMediaType: "image/jpeg"
                                 },
                                 cardContent: {
                                     title: "Momo Academy of Drama",
@@ -343,7 +455,9 @@ class Portfolio extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.IMAGE,
                                     alt: "Stogursey Vintage",
-                                    media: StogurseyVintage
+                                    media: StogurseyVintage,
+                                    mediaWp: StogurseyVintageWp,
+                                    originalMediaType: "image/jpeg"
                                 },
                                 cardContent: {
                                     title: "Stogursey Vintage",
@@ -408,77 +522,107 @@ class Portfolio extends Component {
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street",
-                                        media: OOTHS01
+                                        media: OOTHS01,
+                                        mediaWp: OOTHS01Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street Android app upcoming events",
-                                        media: OOTHS02
+                                        media: OOTHS02,
+                                        mediaWp: OOTHS02Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street Android app event details",
-                                        media: OOTHS03
+                                        media: OOTHS03,
+                                        mediaWp: OOTHS03Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street Android app event location",
-                                        media: OOTHS04
+                                        media: OOTHS04,
+                                        mediaWp: OOTHS04Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street Android app event retailer offers",
-                                        media: OOTHS05
+                                        media: OOTHS05,
+                                        mediaWp: OOTHS05Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street Android app event treasure hunt",
-                                        media: OOTHS06
+                                        media: OOTHS06,
+                                        mediaWp: OOTHS06Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street Android app menu",
-                                        media: OOTHS07
+                                        media: OOTHS07,
+                                        mediaWp: OOTHS07Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street Android app feedback",
-                                        media: OOTHS08
+                                        media: OOTHS08,
+                                        mediaWp: OOTHS08Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street website backend login",
-                                        media: OOTHS09
+                                        media: OOTHS09,
+                                        mediaWp: OOTHS09Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street website backend dashboard",
-                                        media: OOTHS10
+                                        media: OOTHS10,
+                                        mediaWp: OOTHS10Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street website backend add event booking",
-                                        media: OOTHS11
+                                        media: OOTHS11,
+                                        mediaWp: OOTHS11Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street website backend add event booking with date",
-                                        media: OOTHS12
+                                        media: OOTHS12,
+                                        mediaWp: OOTHS12Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street website backend add event booking with Google location search",
-                                        media: OOTHS13
+                                        media: OOTHS13,
+                                        mediaWp: OOTHS13Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street website backend dashboard menu",
-                                        media: OOTHS14
+                                        media: OOTHS14,
+                                        mediaWp: OOTHS14Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Only on the High Street website backend event offers",
-                                        media: OOTHS15
+                                        media: OOTHS15,
+                                        mediaWp: OOTHS15Wp,
+                                        originalMediaType: "image/jpeg"
                                     }
                                 ],
                                 cardContent: {
@@ -572,107 +716,149 @@ class Portfolio extends Component {
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes",
-                                        media: SammyHayes01
+                                        media: SammyHayes01,
+                                        mediaWp: SammyHayes01Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes about section",
                                         media: SammyHayes02,
+                                        mediaWp: SammyHayes02Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes contact section",
-                                        media: SammyHayes03
+                                        media: SammyHayes03,
+                                        mediaWp: SammyHayes03Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes booking requests section",
-                                        media: SammyHayes04
+                                        media: SammyHayes04,
+                                        mediaWp: SammyHayes04Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes follow and footer section",
-                                        media: SammyHayes05
+                                        media: SammyHayes05,
+                                        mediaWp: SammyHayes05Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website menu",
-                                        media: SammyHayes06
+                                        media: SammyHayes06,
+                                        mediaWp: SammyHayes06Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website frequently asked questions",
-                                        media: SammyHayes07
+                                        media: SammyHayes07,
+                                        mediaWp: SammyHayes07Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes newsletter sign-up page (external)",
-                                        media: SammyHayes08
+                                        media: SammyHayes08,
+                                        mediaWp: SammyHayes08Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website share option",
-                                        media: SammyHayes09
+                                        media: SammyHayes09,
+                                        mediaWp: SammyHayes09Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend login",
-                                        media: SammyHayes10
+                                        media: SammyHayes10,
+                                        mediaWp: SammyHayes10Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend login verification",
-                                        media: SammyHayes11
+                                        media: SammyHayes11,
+                                        mediaWp: SammyHayes11Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend dashboard",
-                                        media: SammyHayes12
+                                        media: SammyHayes12,
+                                        mediaWp: SammyHayes12Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend add event booking",
-                                        media: SammyHayes13
+                                        media: SammyHayes13,
+                                        mediaWp: SammyHayes13Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend add event booking with date",
-                                        media: SammyHayes14
+                                        media: SammyHayes14,
+                                        mediaWp: SammyHayes14Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend add event booking with Google location search",
-                                        media: SammyHayes15
+                                        media: SammyHayes15,
+                                        mediaWp: SammyHayes15Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend new event booking added to Google Calendar (external)",
-                                        media: SammyHayes16
+                                        media: SammyHayes16,
+                                        mediaWp: SammyHayes16Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend new event booking added to dashboard",
-                                        media: SammyHayes17
+                                        media: SammyHayes17,
+                                        mediaWp: SammyHayes17Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend additional new event booking added to dashboard",
-                                        media: SammyHayes18
+                                        media: SammyHayes18,
+                                        mediaWp: SammyHayes18Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend existing event booking confirm deletion",
-                                        media: SammyHayes19
+                                        media: SammyHayes19,
+                                        mediaWp: SammyHayes19Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes website backend dashboard menu",
-                                        media: SammyHayes20
+                                        media: SammyHayes20,
+                                        mediaWp: SammyHayes20Wp,
+                                        originalMediaType: "image/jpeg"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "Sammy Hayes booking calendar downloaded (external)",
-                                        media: SammyHayes21
+                                        media: SammyHayes21,
+                                        mediaWp: SammyHayes21Wp,
+                                        originalMediaType: "image/jpeg"
                                     }
                                 ],
                                 cardContent: {
@@ -743,7 +929,9 @@ class Portfolio extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.IMAGE,
                                     alt: "Space Explorer",
-                                    media: SpaceExplorer
+                                    media: SpaceExplorer,
+                                    mediaWp: SpaceExplorerWp,
+                                    originalMediaType: "image/jpeg"
                                 },
                                 cardContent: {
                                     title: "Space Explorer",
@@ -807,57 +995,79 @@ class Portfolio extends Component {
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound home screen",
-                                        media: SpellBound01
+                                        media: SpellBound01,
+                                        mediaWp: SpellBound01Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound select difficulty level",
-                                        media: SpellBound02
+                                        media: SpellBound02,
+                                        mediaWp: SpellBound02Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound chosen difficulty level message",
-                                        media: SpellBound03
+                                        media: SpellBound03,
+                                        mediaWp: SpellBound03Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound sound effects off",
-                                        media: SpellBound04
+                                        media: SpellBound04,
+                                        mediaWp: SpellBound04Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound play game instruction message",
-                                        media: SpellBound05
+                                        media: SpellBound05,
+                                        mediaWp: SpellBound05Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound no text entered message",
-                                        media: SpellBound06
+                                        media: SpellBound06,
+                                        mediaWp: SpellBound06Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound remaining attempts message",
-                                        media: SpellBound07
+                                        media: SpellBound07,
+                                        mediaWp: SpellBound07Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound time expired message",
-                                        media: SpellBound08
+                                        media: SpellBound08,
+                                        mediaWp: SpellBound08Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound media volume off message",
-                                        media: SpellBound09
+                                        media: SpellBound09,
+                                        mediaWp: SpellBound09Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound correct answer message",
-                                        media: SpellBound10
+                                        media: SpellBound10,
+                                        mediaWp: SpellBound10Wp,
+                                        originalMediaType: "image/png"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
                                         alt: "SpellBound game completed screen",
-                                        media: SpellBound11
+                                        media: SpellBound11,
+                                        mediaWp: SpellBound11Wp,
+                                        originalMediaType: "image/png"
                                     }
                                 ],
                                 cardContent: {
@@ -932,7 +1142,7 @@ class Portfolio extends Component {
                             }
                         ]
                     }
-                },
+                }
             ]
         };
         this.portfolioRef = React.createRef();

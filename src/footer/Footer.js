@@ -39,8 +39,18 @@ const styles = () => ({
 });
 
 class Footer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "Richard Ansell",
+            tagline: "Tech enthusiast",
+            reactTagline: "Lovingly created with React"
+        };
+    }
+
     render() {
         const {classes} = this.props;
+        const {name, tagline, reactTagline} = this.state;
         return (
             <div>
                 <Grid alignItems="center" className={classes.footerBackground} container>
@@ -48,12 +58,12 @@ class Footer extends Component {
                         <Grid container direction="column">
                             <Grid item xs={12}>
                                 <Typography className={classes.websiteLogo} variant="h5">
-                                    RICHARD ANSELL
+                                    {name.toUpperCase()}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography className={classes.textColor} variant="overline">
-                                    Tech enthusiast
+                                    {tagline}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -62,7 +72,7 @@ class Footer extends Component {
                                           width={96}/>
                                 </RotateDiv>
                                 <Typography className={classes.reactDevelopmentTagline} variant="h6">
-                                    Lovingly created with React
+                                    {reactTagline}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>

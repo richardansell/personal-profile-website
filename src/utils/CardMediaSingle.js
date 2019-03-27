@@ -21,6 +21,7 @@ import {isWidthUp} from "@material-ui/core/withWidth";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import ProfilePicture from "../utils/media/profile-picture.jpg";
+import ProfilePictureWp from "./media/profile-picture.webp";
 import {Icon} from "@iconify/react";
 
 const styles = () => ({
@@ -40,10 +41,21 @@ const styles = () => ({
     },
     cardMedia: {
         cursor: "pointer",
-        height: 250,
-        maxHeight: 250
+        height: "auto",
+        margin: "0 auto",
+        maxHeight: "100%",
+        maxWidth: "100%",
+        width: "auto"
+    },
+    cardMediaVideo: {
+        height: 200
+    },
+    cardMediaSection: {
+        height: 200,
+        maxHeight: 200
     },
     cardSmDown: {
+        maxWidth: 400,
         width: "auto"
     },
     cardSmUp: {
@@ -152,7 +164,8 @@ class CardMediaSingle extends Component {
                         <CardHeader
                             avatar={
                                 <Avatar aria-label={name}>
-                                    <Avatar alt={name} src={ProfilePicture}/>
+                                    <Avatar alt={name} src={ProfilePicture}
+                                            srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}/>
                                 </Avatar>
                             }
                             title={media.cardTitle}
@@ -165,45 +178,58 @@ class CardMediaSingle extends Component {
                         />
                     }
 
-                    {isCycleOnlyMedia ?
-                        item.cardMedia[activeStep].mediaType === mediaType.VIDEO ?
-                            <CardMedia
-                                alt={item.cardMedia[activeStep].alt}
-                                className={classes.cardMedia}
-                                component="iframe"
-                                image={item.cardMedia[activeStep].media}
-                            />
+                    <div className={classes.cardMediaSection}>
+                        {isCycleOnlyMedia ?
+                            item.cardMedia[activeStep].mediaType === mediaType.VIDEO ?
+                                <CardMedia
+                                    alt={item.cardMedia[activeStep].alt}
+                                    className={classes.cardMediaVideo}
+                                    component="iframe"
+                                    image={item.cardMedia[activeStep].media}
+                                />
+                                :
+                                <picture>
+                                    <source type="image/webp" srcSet={item.cardMedia[activeStep].mediaWp}/>
+                                    <source type={item.cardMedia[activeStep].originalMediaType}
+                                            srcSet={item.cardMedia[activeStep].media}/>
+                                    <CardMedia
+                                        alt={item.cardMedia[activeStep].alt}
+                                        className={classes.cardMedia}
+                                        component="img"
+                                        image={item.cardMedia[activeStep].media}
+                                        onClick={() => this.setState({
+                                            dialogImage: item.cardMedia[activeStep].media,
+                                            dialogImageAlt: item.cardMedia[activeStep].alt,
+                                            showSelectedImageDialog: true
+                                        })}
+                                    />
+                                </picture>
                             :
-                            <CardMedia
-                                alt={item.cardMedia[activeStep].alt}
-                                className={classes.cardMedia}
-                                image={item.cardMedia[activeStep].media}
-                                onClick={() => this.setState({
-                                    dialogImage: item.cardMedia[activeStep].media,
-                                    dialogImageAlt: item.cardMedia[activeStep].alt,
-                                    showSelectedImageDialog: true
-                                })}
-                            />
-                        :
-                        item.cardMedia.mediaType === mediaType.VIDEO ?
-                            <CardMedia
-                                alt={item.cardMedia.alt}
-                                className={classes.cardMedia}
-                                component="iframe"
-                                image={item.cardMedia.media}
-                            />
-                            :
-                            <CardMedia
-                                alt={item.cardMedia.alt}
-                                className={classes.cardMedia}
-                                image={item.cardMedia.media}
-                                onClick={() => this.setState({
-                                    dialogImage: item.cardMedia.media,
-                                    dialogImageAlt: item.cardMedia.alt,
-                                    showSelectedImageDialog: true
-                                })}
-                            />
-                    }
+                            item.cardMedia.mediaType === mediaType.VIDEO ?
+                                <CardMedia
+                                    alt={item.cardMedia.alt}
+                                    className={classes.cardMediaVideo}
+                                    component="iframe"
+                                    image={item.cardMedia.media}
+                                />
+                                :
+                                <picture>
+                                    <source type="image/webp" srcSet={item.cardMedia.mediaWp}/>
+                                    <source type={item.cardMedia.originalMediaType} srcSet={item.cardMedia.media}/>
+                                    <CardMedia
+                                        alt={item.cardMedia.alt}
+                                        className={classes.cardMedia}
+                                        component="img"
+                                        image={item.cardMedia.media}
+                                        onClick={() => this.setState({
+                                            dialogImage: item.cardMedia.media,
+                                            dialogImageAlt: item.cardMedia.alt,
+                                            showSelectedImageDialog: true
+                                        })}
+                                    />
+                                </picture>
+                        }
+                    </div>
 
                     {isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
 

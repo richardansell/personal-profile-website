@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {updateAbout} from "../redux/actions";
 import ProfilePicture from "../utils/media/profile-picture.jpg";
+import ProfilePictureWp from "../utils/media/profile-picture.webp";
 
 const styles = theme => ({
     border: {
@@ -78,7 +79,7 @@ const tooltipCustomTheme = createMuiTheme({
     },
     typography: {
         "fontFamily": "\"Montserrat\", sans-serif",
-        useNextVariants: true,
+        useNextVariants: true
     }
 });
 
@@ -156,6 +157,7 @@ class About extends Component {
 
     render() {
         const {classes} = this.props;
+        const {name, githubUrl, linkedInUrl, stackOverflowUrl, title, introduction, location, toolTipSelected, toolTipCopyEmailSuccess, toolTipCopyEmailInitial, email} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         const avatarStyle = {
             height: widthSmDown ? 100 : 200,
@@ -168,22 +170,23 @@ class About extends Component {
                         <Grid item md={5}>
                             <Grid alignItems="center" container direction="column">
                                 <Grid item xs={12}>
-                                    <Avatar alt={this.state.name} src={ProfilePicture} style={avatarStyle}/>
+                                    <Avatar alt={name} srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}
+                                            style={avatarStyle}/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Tooltip title="Github">
                                         <FontAwesomeIcon className={classes.githubIconHover} icon={GithubIcon}
-                                                         onClick={() => this.openLink(this.state.githubUrl)} size="2x"/>
+                                                         onClick={() => this.openLink(githubUrl)} size="2x"/>
                                     </Tooltip>
                                     <Tooltip title="LinkedIn">
                                         <FontAwesomeIcon className={classes.linkedInIconHover} icon={LinkedInIcon}
-                                                         onClick={() => this.openLink(this.state.linkedInUrl)}
+                                                         onClick={() => this.openLink(linkedInUrl)}
                                                          size="2x"/>
                                     </Tooltip>
                                     <Tooltip title="Stack Overflow">
                                         <FontAwesomeIcon className={classes.stackOverflowIconHover}
                                                          icon={StackOverflowIcon}
-                                                         onClick={() => this.openLink(this.state.stackOverflowUrl)}
+                                                         onClick={() => this.openLink(stackOverflowUrl)}
                                                          size="2x"/>
                                     </Tooltip>
                                 </Grid>
@@ -193,19 +196,19 @@ class About extends Component {
                             <Grid alignItems={widthSmDown ? "center" : "flex-start"} container spacing={24}>
                                 <Grid item style={{textAlign: widthSmDown ? "center" : "left"}} xs={12}>
                                     <Typography color="secondary" variant={widthSmDown ? "h5" : "h4"}>
-                                        {this.state.name}
+                                        {name}
                                     </Typography>
                                 </Grid>
                                 <Grid item style={{textAlign: widthSmDown ? "center" : "left"}} xs={12}>
                                     <Typography color="textSecondary" variant={widthSmDown ? "subtitle1" : "h6"}>
-                                        {this.state.title.toUpperCase()}
+                                        {title.toUpperCase()}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Grid alignItems={widthSmDown ? "center" : "flex-start"} container>
                                         <Grid item xs={12}>
                                             <Typography color="secondary" variant="body1">
-                                                {this.state.introduction}
+                                                {introduction}
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -233,9 +236,9 @@ class About extends Component {
                                             <Tooltip title="Open in Google Maps">
                                                 <Typography className={classes.locationHover} color="textSecondary"
                                                             gutterBottom
-                                                            onClick={() => this.openLink("https://maps.google.com/?q=term" + this.state.location)}
+                                                            onClick={() => this.openLink("https://maps.google.com/?q=term" + location)}
                                                             variant="body1">
-                                                    {this.state.location}
+                                                    {location}
                                                 </Typography>
                                             </Tooltip>
                                         </Grid>
@@ -248,11 +251,11 @@ class About extends Component {
                                         <Grid item sm={9} xs={12}>
                                             <MuiThemeProvider theme={tooltipCustomTheme}>
                                                 <Tooltip
-                                                    title={this.state.toolTipSelected ? this.state.toolTipCopyEmailSuccess : this.state.toolTipCopyEmailInitial}>
+                                                    title={toolTipSelected ? toolTipCopyEmailSuccess : toolTipCopyEmailInitial}>
                                                     <Typography className={classes.emailHover} color="textSecondary"
                                                                 onClick={this.copyEmail}
                                                                 variant="body1">
-                                                        {this.state.email}
+                                                        {email}
                                                     </Typography>
                                                 </Tooltip>
                                             </MuiThemeProvider>
