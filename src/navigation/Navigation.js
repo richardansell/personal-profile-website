@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppBar, Button, Hidden, Tab, Tabs, Toolbar, Typography, withStyles, withWidth} from "@material-ui/core";
+import {AppBar, Button, Hidden, Slide, Tab, Tabs, Toolbar, Typography, withStyles, withWidth} from "@material-ui/core";
 import CodeIcon from "@material-ui/icons/Code";
 import {connect} from "react-redux";
 import {updateAppBar} from "../redux/actions";
@@ -47,10 +47,17 @@ class Navigation extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            showNavigation: false
+        };
         this.appBarRef = React.createRef();
+        this.slideInTimer = null;
     }
 
     componentDidMount() {
+        this.slideInTimer = setTimeout(() => {
+            this.setState({showNavigation: true})
+        }, 1500);
         this.setComponentMeasurements();
         window.addEventListener('resize', this.setComponentMeasurements);
     }
@@ -60,6 +67,7 @@ class Navigation extends Component {
     }
 
     componentWillUnmount() {
+        clearTimeout(this.slideInTimer);
         window.removeEventListener('resize', this.setComponentMeasurements);
     }
 
@@ -112,36 +120,39 @@ class Navigation extends Component {
 
     render() {
         const {classes, navigation} = this.props;
+        const {showNavigation} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
-            <div className={classes.root} ref={this.appBarRef}>
-                <AppBar color="inherit" position="static">
-                    <Toolbar>
-                        <CodeIcon className={classes.codeIcon} color="secondary"/>
-                        <Typography className={classes.appBarName} color="secondary"
-                                    variant={widthSmDown ? "body1" : "h6"}>
-                            Richard
-                        </Typography>
-                        <Hidden lgUp>
-                            <Button color="secondary" onClick={this.scrollToContactForm}
-                                    size={widthSmDown ? "small" : "medium"}>
-                                Contact
-                            </Button>
-                        </Hidden>
-                        <Hidden mdDown>
-                            <Tabs indicatorColor="secondary" onChange={this.handleTabChange}
-                                  color="secondary" value={navigation.tabIndex}>
-                                <Tab label="About" style={tabStyle}/>
-                                <Tab label="Skills" style={tabStyle}/>
-                                <Tab label="Portfolio" style={tabStyle}/>
-                                <Tab label="Education" style={tabStyle}/>
-                                <Tab label="Experience" style={tabStyle}/>
-                                <Tab label="Contact" style={tabStyle}/>
-                            </Tabs>
-                        </Hidden>
-                    </Toolbar>
-                </AppBar>
-            </div>
+            <Slide direction="down" in={showNavigation} timeout={{enter: 1000}}>
+                <div className={classes.root} ref={this.appBarRef}>
+                    <AppBar color="inherit" position="static">
+                        <Toolbar>
+                            <CodeIcon className={classes.codeIcon} color="secondary"/>
+                            <Typography className={classes.appBarName} color="secondary"
+                                        variant={widthSmDown ? "body1" : "h6"}>
+                                Richard
+                            </Typography>
+                            <Hidden lgUp>
+                                <Button color="secondary" onClick={this.scrollToContactForm}
+                                        size={widthSmDown ? "small" : "medium"}>
+                                    Contact
+                                </Button>
+                            </Hidden>
+                            <Hidden mdDown>
+                                <Tabs indicatorColor="secondary" onChange={this.handleTabChange}
+                                      color="secondary" value={navigation.tabIndex}>
+                                    <Tab label="About" style={tabStyle}/>
+                                    <Tab label="Skills" style={tabStyle}/>
+                                    <Tab label="Portfolio" style={tabStyle}/>
+                                    <Tab label="Education" style={tabStyle}/>
+                                    <Tab label="Experience" style={tabStyle}/>
+                                    <Tab label="Contact" style={tabStyle}/>
+                                </Tabs>
+                            </Hidden>
+                        </Toolbar>
+                    </AppBar>
+                </div>
+            </Slide>
         )
     }
 

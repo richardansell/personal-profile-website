@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {withStyles} from "@material-ui/core";
+import {Fade, withStyles} from "@material-ui/core";
 import BgVideoOne from "./media/background-video-one.mp4";
 import BgVideoTwo from "./media/background-video-two.mp4";
 import BgVideoThree from "./media/background-video-three.mp4";
@@ -58,13 +58,17 @@ class BackgroundVideo extends Component {
         return (
             <div>
                 {!chromeDataSavingEnabled ?
-                    <div className={classes.backgroundContainer}>
-                        <video autoPlay={true} className={classes.backgroundVideo} controls={false} loop={true}
-                               muted={true}>
-                            <source src={bgVideos[videoPosition]} type="video/mp4"/>
-                        </video>
-                    </div> : <div className={classes.backgroundImageFallback}
-                                  style={{background: "url(" + fallbackBgImage + ") center"}}/>}
+                    <Fade in={true} timeout={{enter: 5000}}>
+                        <div className={classes.backgroundContainer}>
+                            <video autoPlay={true} className={classes.backgroundVideo} controls={false} loop={true}
+                                   muted={true}>
+                                <source src={bgVideos[videoPosition]} type="video/mp4"/>
+                            </video>
+                        </div>
+                    </Fade> : <Fade in={true} timeout={{enter: 5000}}>
+                        <div className={classes.backgroundImageFallback}
+                             style={{background: "url(" + fallbackBgImage + ") center"}}/>
+                    </Fade>}
             </div>
         )
     }

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Grid, Hidden, Paper, Toolbar, Tooltip, Typography, withStyles, withWidth} from "@material-ui/core";
+import {Fade, Grid, Hidden, Paper, Slide, Toolbar, Tooltip, Typography, withStyles, withWidth} from "@material-ui/core";
 import {updateComponentDistancesToTop, updateEducation} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import UoBLogo from "./media/uob-logo-slate-grey.png";
@@ -93,34 +93,38 @@ class Education extends Component {
             <div className={classes.border} ref={this.educationRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={12} xs={12}>
-                        <Typography color="secondary" gutterBottom
-                                    variant={widthSmDown ? "h5" : "h4"}>
-                            Education
-                        </Typography>
-                        <Paper className={classes.paper} square={true}>
-                            <Hidden mdUp>
-                                <Grid container justify="flex-end">
-                                    <Grid item>
-                                        {this.universityOfBathLogo(classes.universityOfBathLogo)}
+                        <Fade in={true} timeout={{enter: 3000}}>
+                            <Typography color="secondary" gutterBottom
+                                        variant={widthSmDown ? "h5" : "h4"}>
+                                Education
+                            </Typography>
+                        </Fade>
+                        <Slide direction="right" in={true} timeout={{enter: 3000}}>
+                            <Paper className={classes.paper} square={true}>
+                                <Hidden mdUp>
+                                    <Grid container justify="flex-end">
+                                        <Grid item>
+                                            {this.universityOfBathLogo(classes.universityOfBathLogo)}
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </Hidden>
-                            <Toolbar disableGutters={true}>
-                                <Typography className={classes.universityTitle} color="secondary"
-                                            variant={widthSmDown ? "h6" : "h5"}>
-                                    {instituteName}
-                                </Typography>
-                                <Hidden smDown>
-                                    {this.universityOfBathLogo(classes.universityOfBathLogo)}
                                 </Hidden>
-                            </Toolbar>
-                            <Typography color="textSecondary" variant={widthSmDown ? "subtitle1" : "h6"}>
-                                {courseDetails}
-                            </Typography>
-                            <Typography className={classes.courseContentText} color="secondary" variant="body1">
-                                {courseContent}
-                            </Typography>
-                        </Paper>
+                                <Toolbar disableGutters={true}>
+                                    <Typography className={classes.universityTitle} color="secondary"
+                                                variant={widthSmDown ? "h6" : "h5"}>
+                                        {instituteName}
+                                    </Typography>
+                                    <Hidden smDown>
+                                        {this.universityOfBathLogo(classes.universityOfBathLogo)}
+                                    </Hidden>
+                                </Toolbar>
+                                <Typography color="textSecondary" variant={widthSmDown ? "subtitle1" : "h6"}>
+                                    {courseDetails}
+                                </Typography>
+                                <Typography className={classes.courseContentText} color="secondary" variant="body1">
+                                    {courseContent}
+                                </Typography>
+                            </Paper>
+                        </Slide>
                     </Grid>
                 </Grid>
             </div>
