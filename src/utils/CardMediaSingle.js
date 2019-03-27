@@ -11,6 +11,7 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    Grow,
     MobileStepper,
     Tooltip,
     Typography,
@@ -159,115 +160,117 @@ class CardMediaSingle extends Component {
                     </DialogActions>
                 </Dialog>
 
-                <Card className={widthSmUp ? classes.cardSmUp : classes.cardSmDown} elevation={6} square={square}>
-                    {widthSmUp ?
-                        <CardHeader
-                            avatar={
-                                <Avatar aria-label={name}>
-                                    <Avatar alt={name} src={ProfilePicture}
-                                            srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}/>
-                                </Avatar>
-                            }
-                            title={media.cardTitle}
-                            titleTypographyProps={{color: "secondary", variant: "h6"}}
-                        />
-                        :
-                        <CardHeader
-                            title={media.cardTitle}
-                            titleTypographyProps={{color: "secondary", variant: "h6"}}
-                        />
-                    }
+                <Grow in={true} timeout={{enter: 3000}}>
+                    <Card className={widthSmUp ? classes.cardSmUp : classes.cardSmDown} elevation={6} square={square}>
+                        {widthSmUp ?
+                            <CardHeader
+                                avatar={
+                                    <Avatar aria-label={name}>
+                                        <Avatar alt={name} src={ProfilePicture}
+                                                srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}/>
+                                    </Avatar>
+                                }
+                                title={media.cardTitle}
+                                titleTypographyProps={{color: "secondary", variant: "h6"}}
+                            />
+                            :
+                            <CardHeader
+                                title={media.cardTitle}
+                                titleTypographyProps={{color: "secondary", variant: "h6"}}
+                            />
+                        }
 
-                    <div className={classes.cardMediaSection}>
-                        {isCycleOnlyMedia ?
-                            item.cardMedia[activeStep].mediaType === mediaType.VIDEO ?
-                                <CardMedia
-                                    alt={item.cardMedia[activeStep].alt}
-                                    className={classes.cardMediaVideo}
-                                    component="iframe"
-                                    image={item.cardMedia[activeStep].media}
-                                />
-                                :
-                                <picture>
-                                    <source type="image/webp" srcSet={item.cardMedia[activeStep].mediaWp}/>
-                                    <source type={item.cardMedia[activeStep].originalMediaType}
-                                            srcSet={item.cardMedia[activeStep].media}/>
+                        <div className={classes.cardMediaSection}>
+                            {isCycleOnlyMedia ?
+                                item.cardMedia[activeStep].mediaType === mediaType.VIDEO ?
                                     <CardMedia
                                         alt={item.cardMedia[activeStep].alt}
-                                        className={classes.cardMedia}
-                                        component="img"
+                                        className={classes.cardMediaVideo}
+                                        component="iframe"
                                         image={item.cardMedia[activeStep].media}
-                                        onClick={() => this.setState({
-                                            dialogImage: item.cardMedia[activeStep].media,
-                                            dialogImageAlt: item.cardMedia[activeStep].alt,
-                                            showSelectedImageDialog: true
-                                        })}
                                     />
-                                </picture>
-                            :
-                            item.cardMedia.mediaType === mediaType.VIDEO ?
-                                <CardMedia
-                                    alt={item.cardMedia.alt}
-                                    className={classes.cardMediaVideo}
-                                    component="iframe"
-                                    image={item.cardMedia.media}
-                                />
+                                    :
+                                    <picture>
+                                        <source type="image/webp" srcSet={item.cardMedia[activeStep].mediaWp}/>
+                                        <source type={item.cardMedia[activeStep].originalMediaType}
+                                                srcSet={item.cardMedia[activeStep].media}/>
+                                        <CardMedia
+                                            alt={item.cardMedia[activeStep].alt}
+                                            className={classes.cardMedia}
+                                            component="img"
+                                            image={item.cardMedia[activeStep].media}
+                                            onClick={() => this.setState({
+                                                dialogImage: item.cardMedia[activeStep].media,
+                                                dialogImageAlt: item.cardMedia[activeStep].alt,
+                                                showSelectedImageDialog: true
+                                            })}
+                                        />
+                                    </picture>
                                 :
-                                <picture>
-                                    <source type="image/webp" srcSet={item.cardMedia.mediaWp}/>
-                                    <source type={item.cardMedia.originalMediaType} srcSet={item.cardMedia.media}/>
+                                item.cardMedia.mediaType === mediaType.VIDEO ?
                                     <CardMedia
                                         alt={item.cardMedia.alt}
-                                        className={classes.cardMedia}
-                                        component="img"
+                                        className={classes.cardMediaVideo}
+                                        component="iframe"
                                         image={item.cardMedia.media}
-                                        onClick={() => this.setState({
-                                            dialogImage: item.cardMedia.media,
-                                            dialogImageAlt: item.cardMedia.alt,
-                                            showSelectedImageDialog: true
-                                        })}
                                     />
-                                </picture>
-                        }
-                    </div>
+                                    :
+                                    <picture>
+                                        <source type="image/webp" srcSet={item.cardMedia.mediaWp}/>
+                                        <source type={item.cardMedia.originalMediaType} srcSet={item.cardMedia.media}/>
+                                        <CardMedia
+                                            alt={item.cardMedia.alt}
+                                            className={classes.cardMedia}
+                                            component="img"
+                                            image={item.cardMedia.media}
+                                            onClick={() => this.setState({
+                                                dialogImage: item.cardMedia.media,
+                                                dialogImageAlt: item.cardMedia.alt,
+                                                showSelectedImageDialog: true
+                                            })}
+                                        />
+                                    </picture>
+                            }
+                        </div>
 
-                    {isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
+                        {isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
 
-                    <CardContent>
-                        <Typography color="secondary" component="h2" gutterBottom variant="h5">
-                            {item.cardContent.title}
-                        </Typography>
-                        <Typography className={classes.cardContentDescription} component="p">
-                            {item.cardContent.description}
-                        </Typography>
-                        {item.cardAction.iconButtonsAvailable &&
-                        <div className={classes.iconContainer}>
-                            {item.cardAction.iconButtons.map(iconButton => {
-                                return (
-                                    <Tooltip key={iconButton.key} title={iconButton.label}>
-                                        <Avatar className={classes.avatarBackground}
-                                                onClick={() => this.openLink(iconButton.link)}>
-                                            {iconButton.isCustomIcon ?
-                                                iconButton.icon :
-                                                <Icon color={iconButton.color} icon={iconButton.icon}/>
-                                            }
-                                        </Avatar>
-                                    </Tooltip>
-                                );
-                            })}
-                        </div>}
-                    </CardContent>
-                    <CardActions>
-                        {item.cardAction.link !== null &&
-                        <Button color="secondary"
-                                onClick={() => this.openLink(item.cardAction.link)}
-                                size="small">
-                            {item.cardAction.linkButtonText}
-                        </Button>}
-                    </CardActions>
+                        <CardContent>
+                            <Typography color="secondary" component="h2" gutterBottom variant="h5">
+                                {item.cardContent.title}
+                            </Typography>
+                            <Typography className={classes.cardContentDescription} component="p">
+                                {item.cardContent.description}
+                            </Typography>
+                            {item.cardAction.iconButtonsAvailable &&
+                            <div className={classes.iconContainer}>
+                                {item.cardAction.iconButtons.map(iconButton => {
+                                    return (
+                                        <Tooltip key={iconButton.key} title={iconButton.label}>
+                                            <Avatar className={classes.avatarBackground}
+                                                    onClick={() => this.openLink(iconButton.link)}>
+                                                {iconButton.isCustomIcon ?
+                                                    iconButton.icon :
+                                                    <Icon color={iconButton.color} icon={iconButton.icon}/>
+                                                }
+                                            </Avatar>
+                                        </Tooltip>
+                                    );
+                                })}
+                            </div>}
+                        </CardContent>
+                        <CardActions>
+                            {item.cardAction.link !== null &&
+                            <Button color="secondary"
+                                    onClick={() => this.openLink(item.cardAction.link)}
+                                    size="small">
+                                {item.cardAction.linkButtonText}
+                            </Button>}
+                        </CardActions>
 
-                    {!isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
-                </Card>
+                        {!isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
+                    </Card>
+                </Grow>
             </div>
         )
     }

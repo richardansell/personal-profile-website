@@ -3,7 +3,9 @@ import {connect} from "react-redux";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import {
     colors,
+    Fade,
     Grid,
+    Slide,
     Step,
     StepContent,
     StepLabel,
@@ -503,70 +505,74 @@ class Experience extends Component {
             <div className={classes.border} ref={this.experienceRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={12} xs={12}>
-                        <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
-                            Experience
-                        </Typography>
-                        <Stepper elevation={2} orientation="vertical" square={true}>
-                            {positions.map(position => {
-                                return (
-                                    <Step active key={position.key}>
-                                        <StepLabel icon={
-                                            <Tooltip
-                                                disableFocusListener={position.link === null}
-                                                disableHoverListener={position.link === null}
-                                                disableTouchListener={position.link === null}
-                                                title={"Visit " + position.company + " website"}>
-                                                {position.logoDetails.isIcon ?
-                                                    <Icon color={position.logoDetails.iconColor}
-                                                          height={position.logoDetails.height} icon={position.logo}
-                                                          width={position.logoDetails.width}/>
-                                                    :
-                                                    <img alt={position.company}
-                                                         className={classes.companyLogo}
-                                                         height={position.logoDetails.height}
-                                                         onClick={() => window.open(position.link, "", "", false)}
-                                                         src={position.logo}
-                                                         width={position.logoDetails.width}/>
-                                                }
-                                            </Tooltip>
-                                        }/>
-                                        <StepContent>
-                                            <Toolbar disableGutters={true} variant="dense">
+                        <Fade in={true} timeout={{enter: 3000}}>
+                            <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
+                                Experience
+                            </Typography>
+                        </Fade>
+                        <Slide direction="left" in={true} timeout={{enter: 3000}}>
+                            <Stepper elevation={2} orientation="vertical" square={true}>
+                                {positions.map(position => {
+                                    return (
+                                        <Step active key={position.key}>
+                                            <StepLabel icon={
+                                                <Tooltip
+                                                    disableFocusListener={position.link === null}
+                                                    disableHoverListener={position.link === null}
+                                                    disableTouchListener={position.link === null}
+                                                    title={"Visit " + position.company + " website"}>
+                                                    {position.logoDetails.isIcon ?
+                                                        <Icon color={position.logoDetails.iconColor}
+                                                              height={position.logoDetails.height} icon={position.logo}
+                                                              width={position.logoDetails.width}/>
+                                                        :
+                                                        <img alt={position.company}
+                                                             className={classes.companyLogo}
+                                                             height={position.logoDetails.height}
+                                                             onClick={() => window.open(position.link, "", "", false)}
+                                                             src={position.logo}
+                                                             width={position.logoDetails.width}/>
+                                                    }
+                                                </Tooltip>
+                                            }/>
+                                            <StepContent>
+                                                <Toolbar disableGutters={true} variant="dense">
 
-                                                <Typography className={classes.companyTitle} color="secondary"
-                                                            variant={widthSmDown ? "h6" : "h5"}>
-                                                    {position.company}
-                                                </Typography>
+                                                    <Typography className={classes.companyTitle} color="secondary"
+                                                                variant={widthSmDown ? "h6" : "h5"}>
+                                                        {position.company}
+                                                    </Typography>
+                                                    <Typography color="textSecondary"
+                                                                variant={widthSmDown ? "h6" : "h5"}>
+                                                        {position.dates}
+                                                    </Typography>
+                                                </Toolbar>
                                                 <Typography color="textSecondary"
-                                                            variant={widthSmDown ? "h6" : "h5"}>
-                                                    {position.dates}
+                                                            variant={widthSmDown ? "subtitle1" : "h6"}>
+                                                    {position.role}
                                                 </Typography>
-                                            </Toolbar>
-                                            <Typography color="textSecondary"
-                                                        variant={widthSmDown ? "subtitle1" : "h6"}>
-                                                {position.role}
-                                            </Typography>
-                                            <Typography
-                                                className={position.mediaAvailable ? classes.descriptionBottomMargin : null}
-                                                color="secondary" gutterBottom variant="body1">
-                                                {position.description}
-                                            </Typography>
-                                            {position.mediaAvailable &&
-                                            <Grid alignContent="center" container direction="column" spacing={24}>
-                                                <Grid item xs>
-                                                    <CardMediaSingle
-                                                        cycleOnlyMediaPosition={position.media.cycleOnlyMedia ? position.media.items[0].key : null}
-                                                        media={position.media}
-                                                        isCycleOnlyMedia={position.media.cycleOnlyMedia}
-                                                        square={false}
-                                                        setComponentMeasurements={this.setComponentMeasurements}/>
-                                                </Grid>
-                                            </Grid>}
-                                        </StepContent>
-                                    </Step>
-                                )
-                            })}
-                        </Stepper>
+                                                <Typography
+                                                    className={position.mediaAvailable ? classes.descriptionBottomMargin : null}
+                                                    color="secondary" gutterBottom variant="body1">
+                                                    {position.description}
+                                                </Typography>
+                                                {position.mediaAvailable &&
+                                                <Grid alignContent="center" container direction="column" spacing={24}>
+                                                    <Grid item xs>
+                                                        <CardMediaSingle
+                                                            cycleOnlyMediaPosition={position.media.cycleOnlyMedia ? position.media.items[0].key : null}
+                                                            media={position.media}
+                                                            isCycleOnlyMedia={position.media.cycleOnlyMedia}
+                                                            square={false}
+                                                            setComponentMeasurements={this.setComponentMeasurements}/>
+                                                    </Grid>
+                                                </Grid>}
+                                            </StepContent>
+                                        </Step>
+                                    )
+                                })}
+                            </Stepper>
+                        </Slide>
                     </Grid>
                 </Grid>
             </div>

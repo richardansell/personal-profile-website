@@ -3,12 +3,14 @@ import {connect} from "react-redux";
 import {
     Avatar,
     Chip,
+    Fade,
     Grid,
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
     Paper,
+    Slide,
     Tooltip,
     Typography,
     withStyles,
@@ -266,88 +268,96 @@ class Skills extends Component {
             <div className={classes.border} ref={this.skillsRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={6} xs={12}>
-                        <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
-                            Technical Skills
-                        </Typography>
-                        <Paper className={classes.paper} square={true}>
-                            <Typography className={classes.technicalSkillSubtitle} color="secondary" gutterBottom
-                                        variant="overline">
-                                Programming Languages
+                        <Fade in={true} timeout={{enter: 3000}}>
+                            <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
+                                Technical Skills
                             </Typography>
-                            <div className={classes.chipContainer}>
-                                {this.state.programmingSkills.map(chip => {
-                                    return (
-                                        <Tooltip key={chip.key} title="Learn more">
-                                            <Chip
-                                                avatar={
-                                                    <Avatar className={classes.avatarBackground}>
-                                                        {chip.isCustomIcon ? chip.icon :
-                                                            <Icon color={chip.color} icon={chip.icon}/>}
-                                                    </Avatar>
-                                                }
-                                                className={classes.chip}
-                                                clickable
-                                                color="default"
-                                                label={chip.label}
-                                                onClick={() => this.openLink(chip.link)}
-                                                variant="outlined"
-                                            />
-                                        </Tooltip>
-                                    );
-                                })}
-                            </div>
-                            <Typography className={classes.technicalSkillSubtitle} color="secondary" gutterBottom
-                                        variant="overline">
-                                Software Applications
-                            </Typography>
-                            <div className={classes.chipContainer}>
-                                {this.state.softwareSkills.map(chip => {
-                                    return (
-                                        <Tooltip key={chip.key} title="Learn more">
-                                            <Chip
-                                                avatar={
-                                                    <Avatar className={classes.avatarBackground}>
-                                                        {chip.isCustomIcon ? chip.icon :
-                                                            <Icon color={chip.color} icon={chip.icon}/>}
-                                                    </Avatar>
-                                                }
-                                                className={classes.chip}
-                                                clickable
-                                                color="default"
-                                                label={chip.label}
-                                                onClick={() => this.openLink(chip.link)}
-                                                variant="outlined"
-                                            />
-                                        </Tooltip>
-                                    );
-                                })}
-                            </div>
-                        </Paper>
+                        </Fade>
+                        <Slide direction="right" in={true} timeout={{enter: 3000}}>
+                            <Paper className={classes.paper} square={true}>
+                                <Typography className={classes.technicalSkillSubtitle} color="secondary" gutterBottom
+                                            variant="overline">
+                                    Programming Languages
+                                </Typography>
+                                <div className={classes.chipContainer}>
+                                    {this.state.programmingSkills.map(chip => {
+                                        return (
+                                            <Tooltip key={chip.key} title="Learn more">
+                                                <Chip
+                                                    avatar={
+                                                        <Avatar className={classes.avatarBackground}>
+                                                            {chip.isCustomIcon ? chip.icon :
+                                                                <Icon color={chip.color} icon={chip.icon}/>}
+                                                        </Avatar>
+                                                    }
+                                                    className={classes.chip}
+                                                    clickable
+                                                    color="default"
+                                                    label={chip.label}
+                                                    onClick={() => this.openLink(chip.link)}
+                                                    variant="outlined"
+                                                />
+                                            </Tooltip>
+                                        );
+                                    })}
+                                </div>
+                                <Typography className={classes.technicalSkillSubtitle} color="secondary" gutterBottom
+                                            variant="overline">
+                                    Software Applications
+                                </Typography>
+                                <div className={classes.chipContainer}>
+                                    {this.state.softwareSkills.map(chip => {
+                                        return (
+                                            <Tooltip key={chip.key} title="Learn more">
+                                                <Chip
+                                                    avatar={
+                                                        <Avatar className={classes.avatarBackground}>
+                                                            {chip.isCustomIcon ? chip.icon :
+                                                                <Icon color={chip.color} icon={chip.icon}/>}
+                                                        </Avatar>
+                                                    }
+                                                    className={classes.chip}
+                                                    clickable
+                                                    color="default"
+                                                    label={chip.label}
+                                                    onClick={() => this.openLink(chip.link)}
+                                                    variant="outlined"
+                                                />
+                                            </Tooltip>
+                                        );
+                                    })}
+                                </div>
+                            </Paper>
+                        </Slide>
                     </Grid>
                     <Grid item md={6} xs={12}>
-                        <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
-                            Personal Skills
-                        </Typography>
-                        <Paper className={classes.paper} square={true}>
-                            <List dense={true}>
-                                {this.state.personalSkills.map(skill => {
-                                    return (
-                                        <ListItem key={skill.key}>
-                                            <ListItemIcon>
-                                                <Icon height="24px" icon={skill.icon} width="24px"/>
-                                            </ListItemIcon>
-                                            <ListItemText
-                                                primary={
-                                                    <Typography color="secondary" variant="body1">
-                                                        {skill.label}
-                                                    </Typography>
-                                                }
-                                            />
-                                        </ListItem>
-                                    )
-                                })}
-                            </List>
-                        </Paper>
+                        <Fade in={true} timeout={{enter: 3000}}>
+                            <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
+                                Personal Skills
+                            </Typography>
+                        </Fade>
+                        <Slide direction="left" in={true} timeout={{enter: 3000}}>
+                            <Paper className={classes.paper} square={true}>
+                                <List dense={true}>
+                                    {this.state.personalSkills.map(skill => {
+                                        return (
+                                            <ListItem key={skill.key}>
+                                                <ListItemIcon>
+                                                    <Icon height="24px" icon={skill.icon} width="24px"/>
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary={
+                                                        <Typography color="secondary" variant="body1">
+                                                            {skill.label}
+                                                        </Typography>
+                                                    }
+                                                />
+                                            </ListItem>
+                                        )
+                                    })}
+                                </List>
+                            </Paper>
+                        </Slide>
                     </Grid>
                 </Grid>
             </div>

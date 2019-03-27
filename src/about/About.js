@@ -8,6 +8,7 @@ import {
     Grid,
     MuiThemeProvider,
     Paper,
+    Slide,
     Tooltip,
     Typography,
     withStyles,
@@ -164,109 +165,111 @@ class About extends Component {
             width: widthSmDown ? 100 : 200
         };
         return (
-            <div className={classes.border} ref={this.aboutRef}>
-                <Paper className={classes.paper} square={true}>
-                    <Grid alignItems="center" container justify="center" spacing={24}>
-                        <Grid item md={5}>
-                            <Grid alignItems="center" container direction="column">
-                                <Grid item xs={12}>
-                                    <Avatar alt={name} srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}
-                                            style={avatarStyle}/>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Tooltip title="Github">
-                                        <FontAwesomeIcon className={classes.githubIconHover} icon={GithubIcon}
-                                                         onClick={() => this.openLink(githubUrl)} size="2x"/>
-                                    </Tooltip>
-                                    <Tooltip title="LinkedIn">
-                                        <FontAwesomeIcon className={classes.linkedInIconHover} icon={LinkedInIcon}
-                                                         onClick={() => this.openLink(linkedInUrl)}
-                                                         size="2x"/>
-                                    </Tooltip>
-                                    <Tooltip title="Stack Overflow">
-                                        <FontAwesomeIcon className={classes.stackOverflowIconHover}
-                                                         icon={StackOverflowIcon}
-                                                         onClick={() => this.openLink(stackOverflowUrl)}
-                                                         size="2x"/>
-                                    </Tooltip>
+            <Slide direction="down" in={true} timeout={{enter: 1500}}>
+                <div className={classes.border} ref={this.aboutRef}>
+                    <Paper className={classes.paper} square={true}>
+                        <Grid alignItems="center" container justify="center" spacing={24}>
+                            <Grid item md={5}>
+                                <Grid alignItems="center" container direction="column">
+                                    <Grid item xs={12}>
+                                        <Avatar alt={name} srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}
+                                                style={avatarStyle}/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Tooltip title="Github">
+                                            <FontAwesomeIcon className={classes.githubIconHover} icon={GithubIcon}
+                                                             onClick={() => this.openLink(githubUrl)} size="2x"/>
+                                        </Tooltip>
+                                        <Tooltip title="LinkedIn">
+                                            <FontAwesomeIcon className={classes.linkedInIconHover} icon={LinkedInIcon}
+                                                             onClick={() => this.openLink(linkedInUrl)}
+                                                             size="2x"/>
+                                        </Tooltip>
+                                        <Tooltip title="Stack Overflow">
+                                            <FontAwesomeIcon className={classes.stackOverflowIconHover}
+                                                             icon={StackOverflowIcon}
+                                                             onClick={() => this.openLink(stackOverflowUrl)}
+                                                             size="2x"/>
+                                        </Tooltip>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                        <Grid item md={7}>
-                            <Grid alignItems={widthSmDown ? "center" : "flex-start"} container spacing={24}>
-                                <Grid item style={{textAlign: widthSmDown ? "center" : "left"}} xs={12}>
-                                    <Typography color="secondary" variant={widthSmDown ? "h5" : "h4"}>
-                                        {name}
-                                    </Typography>
-                                </Grid>
-                                <Grid item style={{textAlign: widthSmDown ? "center" : "left"}} xs={12}>
-                                    <Typography color="textSecondary" variant={widthSmDown ? "subtitle1" : "h6"}>
-                                        {title.toUpperCase()}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Grid alignItems={widthSmDown ? "center" : "flex-start"} container>
-                                        <Grid item xs={12}>
-                                            <Typography color="secondary" variant="body1">
-                                                {introduction}
-                                            </Typography>
-                                        </Grid>
+                            <Grid item md={7}>
+                                <Grid alignItems={widthSmDown ? "center" : "flex-start"} container spacing={24}>
+                                    <Grid item style={{textAlign: widthSmDown ? "center" : "left"}} xs={12}>
+                                        <Typography color="secondary" variant={widthSmDown ? "h5" : "h4"}>
+                                            {name}
+                                        </Typography>
                                     </Grid>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Grid container justify={widthSmDown ? "center" : "flex-start"} spacing={16}>
-                                        <Grid item>
-                                            <Button color="secondary" onClick={this.scrollToContactForm}
-                                                    size={widthSmDown ? "medium" : "large"}
-                                                    variant="contained">
-                                                Contact
-                                            </Button>
-                                        </Grid>
+                                    <Grid item style={{textAlign: widthSmDown ? "center" : "left"}} xs={12}>
+                                        <Typography color="textSecondary" variant={widthSmDown ? "subtitle1" : "h6"}>
+                                            {title.toUpperCase()}
+                                        </Typography>
                                     </Grid>
-                                </Grid>
-                                <Grid item style={{paddingTop: widthSmDown ? 30 : 50}} xs={12}>
-                                    <Grid alignItems={widthSmDown ? "center" : "flex-start"} container>
-                                        <Grid item sm={3} xs={12}>
-                                            <Typography color="secondary" style={{fontWeight: "bold"}}
-                                                        variant="body1">
-                                                Location
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item sm={9} xs={12}>
-                                            <Tooltip title="Open in Google Maps">
-                                                <Typography className={classes.locationHover} color="textSecondary"
-                                                            gutterBottom
-                                                            onClick={() => this.openLink("https://maps.google.com/?q=term" + location)}
-                                                            variant="body1">
-                                                    {location}
+                                    <Grid item xs={12}>
+                                        <Grid alignItems={widthSmDown ? "center" : "flex-start"} container>
+                                            <Grid item xs={12}>
+                                                <Typography color="secondary" variant="body1">
+                                                    {introduction}
                                                 </Typography>
-                                            </Tooltip>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item sm={3} xs={12}>
-                                            <Typography color="secondary" style={{fontWeight: "bold"}}
-                                                        variant="body1">
-                                                Email
-                                            </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Grid container justify={widthSmDown ? "center" : "flex-start"} spacing={16}>
+                                            <Grid item>
+                                                <Button color="secondary" onClick={this.scrollToContactForm}
+                                                        size={widthSmDown ? "medium" : "large"}
+                                                        variant="contained">
+                                                    Contact
+                                                </Button>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item sm={9} xs={12}>
-                                            <MuiThemeProvider theme={tooltipCustomTheme}>
-                                                <Tooltip
-                                                    title={toolTipSelected ? toolTipCopyEmailSuccess : toolTipCopyEmailInitial}>
-                                                    <Typography className={classes.emailHover} color="textSecondary"
-                                                                onClick={this.copyEmail}
+                                    </Grid>
+                                    <Grid item style={{paddingTop: widthSmDown ? 30 : 50}} xs={12}>
+                                        <Grid alignItems={widthSmDown ? "center" : "flex-start"} container>
+                                            <Grid item sm={3} xs={12}>
+                                                <Typography color="secondary" style={{fontWeight: "bold"}}
+                                                            variant="body1">
+                                                    Location
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item sm={9} xs={12}>
+                                                <Tooltip title="Open in Google Maps">
+                                                    <Typography className={classes.locationHover} color="textSecondary"
+                                                                gutterBottom
+                                                                onClick={() => this.openLink("https://maps.google.com/?q=term" + location)}
                                                                 variant="body1">
-                                                        {email}
+                                                        {location}
                                                     </Typography>
                                                 </Tooltip>
-                                            </MuiThemeProvider>
+                                            </Grid>
+                                            <Grid item sm={3} xs={12}>
+                                                <Typography color="secondary" style={{fontWeight: "bold"}}
+                                                            variant="body1">
+                                                    Email
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item sm={9} xs={12}>
+                                                <MuiThemeProvider theme={tooltipCustomTheme}>
+                                                    <Tooltip
+                                                        title={toolTipSelected ? toolTipCopyEmailSuccess : toolTipCopyEmailInitial}>
+                                                        <Typography className={classes.emailHover} color="textSecondary"
+                                                                    onClick={this.copyEmail}
+                                                                    variant="body1">
+                                                            {email}
+                                                        </Typography>
+                                                    </Tooltip>
+                                                </MuiThemeProvider>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-                </Paper>
-            </div>
+                    </Paper>
+                </div>
+            </Slide>
         )
     }
 }

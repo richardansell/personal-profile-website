@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Grid, GridList, GridListTile, Typography, withStyles, withWidth} from "@material-ui/core";
+import {Fade, Grid, GridList, GridListTile, Typography, withStyles, withWidth} from "@material-ui/core";
 import {updateComponentDistancesToTop, updatePortfolio} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
@@ -1176,9 +1176,11 @@ class Portfolio extends Component {
             <div className={classes.border} ref={this.portfolioRef}>
                 <Grid alignItems="flex-start" container justify="center">
                     <Grid item md={12} xs={12}>
-                        <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
-                            Portfolio
-                        </Typography>
+                        <Fade in={true} timeout={{enter: 3000}}>
+                            <Typography color="secondary" gutterBottom variant={widthSmDown ? "h5" : "h4"}>
+                                Portfolio
+                            </Typography>
+                        </Fade>
                     </Grid>
                     <Grid alignItems="flex-start" container>
                         <Grid item xs>
