@@ -11,7 +11,7 @@ const styles = () => ({
     backToTopButtonReveal: {
         bottom: "12px",
         position: "fixed",
-        right: "12px",
+        right: "15px",
         zIndex: "99"
     }
 });
