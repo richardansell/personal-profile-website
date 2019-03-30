@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import firebase from "firebase/app";
+import "firebase/storage";
 import {
     Avatar,
     Button,
@@ -7,11 +9,13 @@ import {
     CardContent,
     CardHeader,
     CardMedia,
+    colors,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
     Grow,
+    LinearProgress,
     MobileStepper,
     Tooltip,
     Typography,
@@ -21,9 +25,11 @@ import {
 import {isWidthUp} from "@material-ui/core/withWidth";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import BackgroundPlaceholder from "./media/background-placeholder.png";
 import ProfilePicture from "../utils/media/profile-picture.jpg";
 import ProfilePictureWp from "./media/profile-picture.webp";
 import {Icon} from "@iconify/react";
+import FileSaver from "file-saver";
 
 const styles = () => ({
     avatarBackground: {
@@ -48,7 +54,7 @@ const styles = () => ({
         maxWidth: "100%",
         width: "auto"
     },
-    cardMediaVideo: {
+    cardMediaVideoIframe: {
         height: 200
     },
     cardMediaSection: {
@@ -67,6 +73,11 @@ const styles = () => ({
     dialogAction: {
         margin: 15
     },
+    downloadError: {
+        color: colors.red[500],
+        marginBottom: 15,
+        marginLeft: 15
+    },
     iconContainer: {
         display: "flex",
         justifyContent: "start",
@@ -83,26 +94,48 @@ class CardMediaSingle extends Component {
         super(props);
         this.state = {
             activeStep: 0,
-            dialogImage: null,
-            dialogImageAlt: null,
+            dialogMedia: null,
+            downloadError: false,
+            downloadErrorText: "An error was encountered while downloading, please try again later",
+            downloadRequested: false,
+            downloadRequestVariant: "determinate",
+            downloadRequestPercentage: 0,
             name: "Richard Ansell",
-            showSelectedImageDialog: false
+            showSelectedImageDialog: false,
+            videosReady: false
         };
+        this.downloadErrorTimer = null;
+        this.downloadRequest = null;
     }
 
     componentDidMount() {
+        window.addEventListener("load", this.setIframeSrc);
         this.props.setComponentMeasurements();
     }
+
+    componentWillUnmount() {
+        clearTimeout(this.downloadErrorTimer);
+        window.removeEventListener("load", this.setIframeSrc);
+    }
+
+    setIframeSrc = () => {
+        let vidDefer = document.getElementsByTagName("iframe");
+        for (let i = 0; i < vidDefer.length; i++) {
+            if (vidDefer[i].getAttribute("datasrc")) {
+                vidDefer[i].setAttribute("src", vidDefer[i].getAttribute("datasrc"));
+            }
+        }
+    };
 
     handleNext = mediaLength => this.setState(prevState => ({activeStep: prevState.activeStep !== mediaLength - 1 ? prevState.activeStep + 1 : 0}));
 
     handleBack = mediaLength => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? mediaLength - 1 : prevState.activeStep - 1}));
 
-    handleImageDialogClose = () => this.setState({showSelectedImageDialog: false});
+    handleImageDialogClose = () => this.setState({dialogMedia: null, showSelectedImageDialog: false});
 
     openLink = url => window.open(url, "", "", false);
 
-    setMobileStepper = (activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp) => {
+    setMobileStepper = (activeStep, media, isCycleOnlyMedia, item, theme, widthLgUp) => {
         if (isCycleOnlyMedia) {
             if (item.cardMedia.length < 2) return null;
         } else {
@@ -118,57 +151,112 @@ class CardMediaSingle extends Component {
                         size="small">
                         {theme.direction === 'rtl' ? <KeyboardArrowRight/> :
                             <KeyboardArrowLeft/>}
-                        {widthSmUp ? "Back" : null}
+                        {widthLgUp ? "Back" : null}
                     </Button>
                 }
                 nextButton={
                     <Button
                         onClick={() => this.handleNext(isCycleOnlyMedia ? item.cardMedia.length : media.items.length)}
                         size="small">
-                        {widthSmUp ? "Next" : null}
+                        {widthLgUp ? "Next" : null}
                         {theme.direction === 'rtl' ? <KeyboardArrowLeft/> :
                             <KeyboardArrowRight/>}
                     </Button>
                 }
                 position="static"
                 steps={isCycleOnlyMedia ? item.cardMedia.length : media.items.length}
-                variant={widthSmUp && variant ? "dots" : "progress"}/>
+                variant={widthLgUp && variant ? "dots" : "progress"}/>
         )
     };
 
+    downloadApk = fileName => {
+        this.setState({downloadRequested: true}, () => {
+            firebase.storage().ref().child(fileName).getDownloadURL().then(url => {
+                this.downloadRequest = new XMLHttpRequest();
+                this.downloadRequest.addEventListener("load", () => this.downloadCompleted(this.downloadRequest, fileName));
+                this.downloadRequest.addEventListener("progress", this.updateDownloadProgress);
+                this.downloadRequest.addEventListener("error", this.downloadError);
+                this.downloadRequest.addEventListener("abort", this.downloadAborted);
+                this.downloadRequest.responseType = "blob";
+                this.downloadRequest.open("GET", url);
+                this.downloadRequest.send();
+            }).catch(this.downloadError);
+        });
+    };
+
+    updateDownloadProgress = downloadRequest => {
+        if (downloadRequest.lengthComputable) {
+            this.setState({downloadRequestPercentage: downloadRequest.loaded / downloadRequest.total * 100});
+        } else {
+            this.setState({downloadRequestVariant: "indeterminate"});
+        }
+    };
+
+    downloadError = () => this.setState({
+        downloadError: true,
+        downloadRequested: false,
+        downloadRequestVariant: "determinate",
+        downloadRequestPercentage: 0
+    }, () => {
+        this.downloadErrorTimer = setTimeout(() => {
+            this.setState({downloadError: false}, () => this.downloadRequest = null);
+        }, 3000);
+    });
+
+    downloadAborted = () => this.setState({
+        downloadRequested: false,
+        downloadRequestVariant: "determinate",
+        downloadRequestPercentage: 0
+    }, () => this.downloadRequest = null);
+
+    downloadCompleted = (download, fileName) => this.setState({
+        downloadRequested: false,
+        downloadRequestVariant: "determinate",
+        downloadRequestPercentage: 0
+    }, () => {
+        FileSaver(download.response, fileName, {autoBOM: true});
+        this.downloadRequest = null
+    });
+
     render() {
         const widthSmUp = isWidthUp("sm", this.props.width);
+        const widthLgUp = isWidthUp("lg", this.props.width);
         const {classes, cycleOnlyMediaPosition, media, isCycleOnlyMedia, square, theme} = this.props;
-        const {activeStep, dialogImage, dialogImageAlt, name, showSelectedImageDialog} = this.state;
+        const {activeStep, dialogMedia, downloadError, downloadErrorText, downloadRequested, downloadRequestPercentage, downloadRequestVariant, name, showSelectedImageDialog} = this.state;
         const item = isCycleOnlyMedia ? media.items[cycleOnlyMediaPosition] : media.items[activeStep];
         return (
             <div>
-                <Dialog
+                {dialogMedia !== null && <Dialog
                     aria-labelledby="image-dialog-title" maxWidth="md"
                     onBackdropClick={this.handleImageDialogClose}
                     open={showSelectedImageDialog} transitionDuration={{enter: 0, exit: 500}}>
                     <DialogTitle id="image-dialog-title">
-                        {dialogImageAlt}
+                        {dialogMedia.alt}
                     </DialogTitle>
                     <DialogContent>
-                        <img alt={dialogImageAlt} height="auto" src={dialogImage} width="100%"/>
+                        <picture>
+                            <source type="image/webp" srcSet={dialogMedia.mediaWp}/>
+                            <source type={dialogMedia.originalMediaType} srcSet={dialogMedia.media}/>
+                            <img alt={dialogMedia.alt} height="auto" src={dialogMedia.media} width="100%"/>
+                        </picture>
                     </DialogContent>
                     <DialogActions className={classes.dialogAction}>
                         <Button color="secondary" onClick={this.handleImageDialogClose}>
                             Close
                         </Button>
                     </DialogActions>
-                </Dialog>
+                </Dialog>}
 
                 <Grow in={true} timeout={{enter: 3000}}>
                     <Card className={widthSmUp ? classes.cardSmUp : classes.cardSmDown} elevation={6} square={square}>
                         {widthSmUp ?
                             <CardHeader
                                 avatar={
-                                    <Avatar aria-label={name}>
-                                        <Avatar alt={name} src={ProfilePicture}
-                                                srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}/>
-                                    </Avatar>
+                                    <picture>
+                                        <source type="image/webp" srcSet={ProfilePictureWp}/>
+                                        <source type="image/jpg" srcSet={ProfilePicture}/>
+                                        <Avatar alt={name} src={ProfilePicture}/>
+                                    </picture>
                                 }
                                 title={media.cardTitle}
                                 titleTypographyProps={{color: "secondary", variant: "h6"}}
@@ -183,12 +271,10 @@ class CardMediaSingle extends Component {
                         <div className={classes.cardMediaSection}>
                             {isCycleOnlyMedia ?
                                 item.cardMedia[activeStep].mediaType === mediaType.VIDEO ?
-                                    <CardMedia
-                                        alt={item.cardMedia[activeStep].alt}
-                                        className={classes.cardMediaVideo}
-                                        component="iframe"
-                                        image={item.cardMedia[activeStep].media}
-                                    />
+                                    <CardMedia alt={item.cardMedia[activeStep].alt}
+                                               className={classes.cardMediaVideoIframe} component="iframe"
+                                               datasrc={`${item.cardMedia[activeStep].media}?rel=0`}
+                                               image={BackgroundPlaceholder} src=""/>
                                     :
                                     <picture>
                                         <source type="image/webp" srcSet={item.cardMedia[activeStep].mediaWp}/>
@@ -200,20 +286,16 @@ class CardMediaSingle extends Component {
                                             component="img"
                                             image={item.cardMedia[activeStep].media}
                                             onClick={() => this.setState({
-                                                dialogImage: item.cardMedia[activeStep].media,
-                                                dialogImageAlt: item.cardMedia[activeStep].alt,
+                                                dialogMedia: item.cardMedia[activeStep],
                                                 showSelectedImageDialog: true
                                             })}
                                         />
                                     </picture>
                                 :
                                 item.cardMedia.mediaType === mediaType.VIDEO ?
-                                    <CardMedia
-                                        alt={item.cardMedia.alt}
-                                        className={classes.cardMediaVideo}
-                                        component="iframe"
-                                        image={item.cardMedia.media}
-                                    />
+                                    <CardMedia alt={item.cardMedia.alt} className={classes.cardMediaVideoIframe}
+                                               component="iframe" datasrc={`${item.cardMedia.media}?rel=0`}
+                                               image={BackgroundPlaceholder} src=""/>
                                     :
                                     <picture>
                                         <source type="image/webp" srcSet={item.cardMedia.mediaWp}/>
@@ -224,8 +306,7 @@ class CardMediaSingle extends Component {
                                             component="img"
                                             image={item.cardMedia.media}
                                             onClick={() => this.setState({
-                                                dialogImage: item.cardMedia.media,
-                                                dialogImageAlt: item.cardMedia.alt,
+                                                dialogMedia: item.cardMedia,
                                                 showSelectedImageDialog: true
                                             })}
                                         />
@@ -233,7 +314,7 @@ class CardMediaSingle extends Component {
                             }
                         </div>
 
-                        {isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
+                        {isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthLgUp)}
 
                         <CardContent>
                             <Typography color="secondary" component="h2" gutterBottom variant="h5">
@@ -259,16 +340,25 @@ class CardMediaSingle extends Component {
                                 })}
                             </div>}
                         </CardContent>
+
                         <CardActions>
                             {item.cardAction.link !== null &&
                             <Button color="secondary"
-                                    onClick={() => this.openLink(item.cardAction.link)}
+                                    onClick={() => item.cardAction.isDownloadLink ? !downloadRequested ? this.downloadApk(item.cardAction.link) : this.downloadRequest.abort() : this.openLink(item.cardAction.link)}
                                     size="small">
-                                {item.cardAction.linkButtonText}
+                                {!downloadRequested ? item.cardAction.linkButtonText : "Cancel download"}
                             </Button>}
                         </CardActions>
 
-                        {!isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthSmUp)}
+                        {downloadError &&
+                        <Typography className={classes.downloadError} variant="caption">
+                            {downloadErrorText}
+                        </Typography>}
+
+                        {downloadRequested && <LinearProgress color="secondary" value={downloadRequestPercentage}
+                                                              variant={downloadRequestVariant}/>}
+
+                        {!isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthLgUp)}
                     </Card>
                 </Grow>
             </div>
