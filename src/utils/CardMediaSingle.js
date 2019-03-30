@@ -171,9 +171,9 @@ class CardMediaSingle extends Component {
 
     downloadApk = cardActionContent => {
         this.setState({downloadRequested: true}, () => {
-            firebase.storage().ref().child("ggugiu.png").getDownloadURL().then(url => {
+            firebase.storage().ref().child(cardActionContent.link).getDownloadURL().then(url => {
                 this.downloadRequest = new XMLHttpRequest();
-                this.downloadRequest.addEventListener("load", () => this.downloadCompleted(this.downloadRequest, cardActionContent.link));
+                this.downloadRequest.addEventListener("load", () => this.downloadCompleted(this.downloadRequest));
                 this.downloadRequest.addEventListener("progress", this.updateDownloadProgress);
                 this.downloadRequest.addEventListener("error", this.downloadError);
                 this.downloadRequest.addEventListener("abort", this.downloadAborted);
@@ -181,13 +181,12 @@ class CardMediaSingle extends Component {
                 this.downloadRequest.open("GET", url);
                 this.downloadRequest.send();
             }).catch(error => {
-                    if (error.code === "storage/quota-exceeded") {
-                        window.open(cardActionContent.backupDownloadLink, "", "", false);
-                    } else {
-                        this.downloadError();
-                    }
+                if (error.code === "storage/quota-exceeded") {
+                    window.open(cardActionContent.backupDownloadLink, "", "", false);
+                } else {
+                    this.downloadError();
                 }
-            );
+            });
         });
     };
 
