@@ -169,18 +169,25 @@ class CardMediaSingle extends Component {
         )
     };
 
-    downloadApk = fileName => {
+    downloadApk = cardActionContent => {
         this.setState({downloadRequested: true}, () => {
-            firebase.storage().ref().child(fileName).getDownloadURL().then(url => {
+            firebase.storage().ref().child("ggugiu.png").getDownloadURL().then(url => {
                 this.downloadRequest = new XMLHttpRequest();
-                this.downloadRequest.addEventListener("load", () => this.downloadCompleted(this.downloadRequest, fileName));
+                this.downloadRequest.addEventListener("load", () => this.downloadCompleted(this.downloadRequest, cardActionContent.link));
                 this.downloadRequest.addEventListener("progress", this.updateDownloadProgress);
                 this.downloadRequest.addEventListener("error", this.downloadError);
                 this.downloadRequest.addEventListener("abort", this.downloadAborted);
                 this.downloadRequest.responseType = "blob";
                 this.downloadRequest.open("GET", url);
                 this.downloadRequest.send();
-            }).catch(this.downloadError);
+            }).catch(error => {
+                    if (error.code === "storage/quota-exceeded") {
+                        window.open(cardActionContent.backupDownloadLink, "", "", false);
+                    } else {
+                        this.downloadError();
+                    }
+                }
+            );
         });
     };
 
@@ -344,7 +351,7 @@ class CardMediaSingle extends Component {
                         <CardActions>
                             {item.cardAction.link !== null &&
                             <Button color="secondary"
-                                    onClick={() => item.cardAction.isDownloadLink ? !downloadRequested ? this.downloadApk(item.cardAction.link) : this.downloadRequest.abort() : this.openLink(item.cardAction.link)}
+                                    onClick={() => item.cardAction.isDownloadLink ? !downloadRequested ? this.downloadApk(item.cardAction) : this.downloadRequest.abort() : this.openLink(item.cardAction.link)}
                                     size="small">
                                 {!downloadRequested ? item.cardAction.linkButtonText : "Cancel download"}
                             </Button>}
