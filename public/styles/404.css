@@ -1,0 +1,120 @@
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+#notfound {
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
+}
+
+video {
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+#notfound .notfound {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.notfound {
+    max-width: 710px;
+    width: 100%;
+    padding-left: 190px;
+    line-height: 1.4;
+}
+
+.notfound .notfound-404 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 150px;
+    height: 150px;
+}
+
+.notfound .notfound-404 h1 {
+    color: #607d8b;
+    font-size: 150px;
+    letter-spacing: 16px;
+    margin: 0;
+    font-weight: 900;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.notfound h2 {
+    color: #292929;
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-top: 0;
+}
+
+.notfound p {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.notfound a {
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: #fff;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 40px;
+    color: #292929;
+    font-weight: 700;
+    -webkit-box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.3);
+    -webkit-transition: 0.5s all;
+    transition: 0.5s all;
+}
+
+.notfound a:hover {
+    color: #fff;
+    background-color: #607d8b;
+}
+
+@media only screen and (max-width: 480px) {
+    .notfound {
+        text-align: center;
+    }
+
+    .notfound .notfound-404 {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .notfound {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
