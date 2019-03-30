@@ -158,7 +158,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/AYwpzcl_B-A"
+                                    media: "https://www.youtube.com/embed/AYwpzcl_B-A",
+                                    youtubeVideoId: "AYwpzcl_B-A"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -174,7 +175,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/W_C4fOG3ijI"
+                                    media: "https://www.youtube.com/embed/W_C4fOG3ijI",
+                                    youtubeVideoId: "W_C4fOG3ijI"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -190,7 +192,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/cjokUDILrnM"
+                                    media: "https://www.youtube.com/embed/cjokUDILrnM",
+                                    youtubeVideoId: "cjokUDILrnM"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -206,7 +209,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/jwnzzDPEcts"
+                                    media: "https://www.youtube.com/embed/jwnzzDPEcts",
+                                    youtubeVideoId: "jwnzzDPEcts"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -222,7 +226,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/j0-vodPFDK4"
+                                    media: "https://www.youtube.com/embed/j0-vodPFDK4",
+                                    youtubeVideoId: "j0-vodPFDK4"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -238,7 +243,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/AOd4VgTgWnY"
+                                    media: "https://www.youtube.com/embed/AOd4VgTgWnY",
+                                    youtubeVideoId: "AOd4VgTgWnY"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -254,7 +260,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/p3iKKSvD28k"
+                                    media: "https://www.youtube.com/embed/p3iKKSvD28k",
+                                    youtubeVideoId: "p3iKKSvD28k"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -345,7 +352,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/G4GZKIOFxyY"
+                                    media: "https://www.youtube.com/embed/G4GZKIOFxyY",
+                                    youtubeVideoId: "G4GZKIOFxyY"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -361,7 +369,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/RlMQRSj4kdU"
+                                    media: "https://www.youtube.com/embed/RlMQRSj4kdU",
+                                    youtubeVideoId: "RlMQRSj4kdU"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -377,7 +386,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/nJFoMTWTunc"
+                                    media: "https://www.youtube.com/embed/nJFoMTWTunc",
+                                    youtubeVideoId: "nJFoMTWTunc"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -393,7 +403,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/6ExalnrEkVs"
+                                    media: "https://www.youtube.com/embed/6ExalnrEkVs",
+                                    youtubeVideoId: "6ExalnrEkVs"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",
@@ -409,7 +420,8 @@ class Experience extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "QVC Live Guest Appearance",
-                                    media: "https://www.youtube.com/embed/B6u6rYx_ON4"
+                                    media: "https://www.youtube.com/embed/B6u6rYx_ON4",
+                                    youtubeVideoId: "B6u6rYx_ON4"
                                 },
                                 cardContent: {
                                     title: "QVC Live Guest Appearance",

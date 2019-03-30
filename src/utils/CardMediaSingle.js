@@ -101,24 +101,23 @@ class CardMediaSingle extends Component {
             downloadRequestVariant: "determinate",
             downloadRequestPercentage: 0,
             name: "Richard Ansell",
-            showSelectedImageDialog: false,
-            videosReady: false
+            showSelectedImageDialog: false
         };
         this.downloadErrorTimer = null;
         this.downloadRequest = null;
     }
 
     componentDidMount() {
-        window.addEventListener("load", this.setIframeSrc);
+        window.addEventListener("load", this.setIframeSrcs);
         this.props.setComponentMeasurements();
     }
 
     componentWillUnmount() {
         clearTimeout(this.downloadErrorTimer);
-        window.removeEventListener("load", this.setIframeSrc);
+        window.removeEventListener("load", this.setIframeSrcs);
     }
 
-    setIframeSrc = () => {
+    setIframeSrcs = () => {
         let vidDefer = document.getElementsByTagName("iframe");
         for (let i = 0; i < vidDefer.length; i++) {
             if (vidDefer[i].getAttribute("datasrc")) {
@@ -127,9 +126,16 @@ class CardMediaSingle extends Component {
         }
     };
 
-    handleNext = mediaLength => this.setState(prevState => ({activeStep: prevState.activeStep !== mediaLength - 1 ? prevState.activeStep + 1 : 0}));
+    setSingleIframeSrc = mediaItem => {
+        if (mediaItem.mediaType === mediaType.VIDEO) {
+            let iframe = document.getElementById(mediaItem.youtubeVideoId);
+            if (iframe.getAttribute("datasrc")) iframe.setAttribute("src", iframe.getAttribute("datasrc"));
+        }
+    };
 
-    handleBack = mediaLength => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? mediaLength - 1 : prevState.activeStep - 1}));
+    handleNext = media => this.setState(prevState => ({activeStep: prevState.activeStep !== media.length - 1 ? prevState.activeStep + 1 : 0}), () => this.setSingleIframeSrc(media[this.state.activeStep]));
+
+    handleBack = media => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? media.length - 1 : prevState.activeStep - 1}), () => this.setSingleIframeSrc(media[this.state.activeStep]));
 
     handleImageDialogClose = () => this.setState({dialogMedia: null, showSelectedImageDialog: false});
 
@@ -147,19 +153,19 @@ class CardMediaSingle extends Component {
                 activeStep={activeStep}
                 backButton={
                     <Button
-                        onClick={() => this.handleBack(isCycleOnlyMedia ? item.cardMedia.length : media.items.length)}
+                        onClick={() => this.handleBack(isCycleOnlyMedia ? item.cardMedia : media.items)}
                         size="small">
-                        {theme.direction === 'rtl' ? <KeyboardArrowRight/> :
+                        {theme.direction === "rtl" ? <KeyboardArrowRight/> :
                             <KeyboardArrowLeft/>}
                         {widthLgUp ? "Back" : null}
                     </Button>
                 }
                 nextButton={
                     <Button
-                        onClick={() => this.handleNext(isCycleOnlyMedia ? item.cardMedia.length : media.items.length)}
+                        onClick={() => this.handleNext(isCycleOnlyMedia ? item.cardMedia : media.items)}
                         size="small">
                         {widthLgUp ? "Next" : null}
-                        {theme.direction === 'rtl' ? <KeyboardArrowLeft/> :
+                        {theme.direction === "rtl" ? <KeyboardArrowLeft/> :
                             <KeyboardArrowRight/>}
                     </Button>
                 }
@@ -280,6 +286,7 @@ class CardMediaSingle extends Component {
                                     <CardMedia alt={item.cardMedia[activeStep].alt}
                                                className={classes.cardMediaVideoIframe} component="iframe"
                                                datasrc={`${item.cardMedia[activeStep].media}?rel=0`}
+                                               id={item.cardMedia[activeStep].youtubeVideoId}
                                                image={BackgroundPlaceholder} src=""/>
                                     :
                                     <picture>
@@ -301,6 +308,7 @@ class CardMediaSingle extends Component {
                                 item.cardMedia.mediaType === mediaType.VIDEO ?
                                     <CardMedia alt={item.cardMedia.alt} className={classes.cardMediaVideoIframe}
                                                component="iframe" datasrc={`${item.cardMedia.media}?rel=0`}
+                                               id={item.cardMedia.youtubeVideoId}
                                                image={BackgroundPlaceholder} src=""/>
                                     :
                                     <picture>
