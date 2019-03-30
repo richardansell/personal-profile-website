@@ -173,7 +173,7 @@ class CardMediaSingle extends Component {
         this.setState({downloadRequested: true}, () => {
             firebase.storage().ref().child(cardActionContent.link).getDownloadURL().then(url => {
                 this.downloadRequest = new XMLHttpRequest();
-                this.downloadRequest.addEventListener("load", () => this.downloadCompleted(this.downloadRequest));
+                this.downloadRequest.addEventListener("load", () => this.downloadCompleted(this.downloadRequest, cardActionContent.link));
                 this.downloadRequest.addEventListener("progress", this.updateDownloadProgress);
                 this.downloadRequest.addEventListener("error", this.downloadError);
                 this.downloadRequest.addEventListener("abort", this.downloadAborted);
