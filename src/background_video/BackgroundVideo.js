@@ -1,13 +1,8 @@
 import React, {Component} from "react";
+import firebase from "firebase/app";
+import "firebase/storage";
 import {connect} from "react-redux";
 import {Fade, withStyles} from "@material-ui/core";
-import BgVideoOne from "./media/background-video-one.mp4";
-import BgVideoTwo from "./media/background-video-two.mp4";
-import BgVideoThree from "./media/background-video-three.mp4";
-import BgVideoFour from "./media/background-video-four.mp4";
-import BgVideoFive from "./media/background-video-five.mp4";
-import BgVideoSix from "./media/background-video-six.mp4";
-import BgVideoSeven from "./media/background-video-seven.mp4";
 import BgImageFallback from "./media/background-image-fallback.jpg";
 import BgImageFallbackWp from "./media/background-image-fallback.webp";
 
@@ -47,22 +42,38 @@ const mapStateToProps = state => {
     return {webpsupport: state.webpsupport};
 };
 
-const bgVideos = [BgVideoOne, BgVideoTwo, BgVideoThree, BgVideoFour, BgVideoFive, BgVideoSix, BgVideoSeven];
+const backgroundVideos = ["background-video-one.mp4", "background-video-two.mp4", "background-video-three.mp4",
+    "background-video-four.mp4", "background-video-five.mp4", "background-video-six.mp4", "background-video-seven.mp4"];
 
 class BackgroundVideo extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            videoDownloadError: null,
+            videoReady: false,
+            videoUrl: null
+        };
+        this.downloadVideo(backgroundVideos[new Date().getDay()])
+    }
+
+    downloadVideo = fileName => firebase.storage().ref().child(fileName).getDownloadURL()
+        .then(backgroundVideoUrl => this.setState({videoReady: true, videoUrl: backgroundVideoUrl}))
+        .catch(() => this.setState({videoDownloadError: true}));
+
     render() {
+        const {videoDownloadError, videoReady, videoUrl} = this.state;
         const {classes, webpsupport} = this.props;
         const chromeDataSavingEnabled = ("connection" in navigator) ? !!(navigator.connection.saveData) : false;
-        const fallbackBgImage = !chromeDataSavingEnabled ? webpsupport.lossless ? BgImageFallbackWp : BgImageFallback : null;
-        const videoPosition = new Date().getDay();
+        const fallbackBgImage = chromeDataSavingEnabled || videoDownloadError ? webpsupport.lossless ? BgImageFallbackWp : BgImageFallback : null;
         return (
             <div>
-                {!chromeDataSavingEnabled ?
-                    <Fade in={true} timeout={{enter: 5000}}>
+                {!chromeDataSavingEnabled && !videoDownloadError ?
+                    videoReady && <Fade in={true} timeout={{enter: 5000}}>
                         <div className={classes.backgroundContainer}>
                             <video autoPlay={true} className={classes.backgroundVideo} controls={false} loop={true}
                                    muted={true}>
-                                <source src={bgVideos[videoPosition]} type="video/mp4"/>
+                                <source src={videoUrl} type="video/mp4"/>
                             </video>
                         </div>
                     </Fade> : <Fade in={true} timeout={{enter: 5000}}>
