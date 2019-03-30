@@ -5,7 +5,7 @@ import {updateComponentDistancesToTop, updatePortfolio} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
 
-import UKMTNPromotionalPoster from "./media/traffic_news/uk_motorway_traffic_news_promotional_poster.png";
+import UKMTNPromotionalPoster from "./media/traffic_news/uk-motorway-traffic-news-promotional-poster.png";
 import UKMTN01Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-01-events-phone.png";
 import UKMTN02Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-02-near-me-phone.png";
 import UKMTN03Phone from "./media/traffic_news/phone/uk-motorway-traffic-news-03-search-phone.png";
@@ -82,7 +82,7 @@ import SpellBound09 from "./media/spellbound/spellbound-09-media-volume-off-mess
 import SpellBound10 from "./media/spellbound/spellbound-10-correct-answer-message.png";
 import SpellBound11 from "./media/spellbound/spellbound-11-game-completed.png";
 
-import UKMTNPromotionalPosterWp from "./media/traffic_news/uk_motorway_traffic_news_promotional_poster.webp";
+import UKMTNPromotionalPosterWp from "./media/traffic_news/uk-motorway-traffic-news-promotional-poster.webp";
 import UKMTN01PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-01-events-phone.webp";
 import UKMTN02PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-02-near-me-phone.webp";
 import UKMTN03PhoneWp from "./media/traffic_news/phone/uk-motorway-traffic-news-03-search-phone.webp";
@@ -160,9 +160,6 @@ import SpellBound08Wp from "./media/spellbound/spellbound-08-time-expired-messag
 import SpellBound09Wp from "./media/spellbound/spellbound-09-media-volume-off-message.webp";
 import SpellBound10Wp from "./media/spellbound/spellbound-10-correct-answer-message.webp";
 import SpellBound11Wp from "./media/spellbound/spellbound-11-game-completed.webp";
-
-import SpellBoundAPK from "./media/spellbound/spellbound.apk";
-import Area51APK from "./media/area-51.apk";
 
 import JavaIcon from '@iconify/react/logos/java';
 import XmlIcon from '@iconify/react/mdi/file-xml';
@@ -340,6 +337,7 @@ class Portfolio extends Component {
                                     description: "A range of Android applications developed from the ground-up providing traffic news to users across the UK, including the above example as one of the most popular apps created to date."
                                 },
                                 cardAction: {
+                                    isDownloadLink: false,
                                     link: "https://play.google.com/store/apps/dev?id=5284578463219197910",
                                     linkButtonText: "Visit Android Apps",
                                     iconButtonsAvailable: true,
@@ -392,6 +390,7 @@ class Portfolio extends Component {
                                     description: "Momo Academy of Drama offers drama lessons for all ages and abilities after school in Staffordshire and surrounding areas.\n\nMomo Academy of Drama is run by Mrs Carol Molin and Mrs Nicola Morris, two fully qualified Drama teachers who are dedicated to providing the best possible Drama classes in the area. Branches of the Academy are currently in Burntwood (Nicola Morris) and Brewood (Carol Molin). Both teachers have a wealth of experience and knowledge of Drama teaching."
                                 },
                                 cardAction: {
+                                    isDownloadLink: false,
                                     link: "https://momoacademy.co.uk/",
                                     linkButtonText: "Visit Website",
                                     iconButtonsAvailable: true,
@@ -464,6 +463,7 @@ class Portfolio extends Component {
                                     description: "Stogursey Vintage sell a wide range of vintage items including furniture, ceramics, glass, textiles, lighting and specialist products upcycled from vintage items.\n\nProducts range from Antiques to Retro as well as repurposed items of all descriptions."
                                 },
                                 cardAction: {
+                                    isDownloadLink: false,
                                     link: "https://stogurseyvintage.co.uk/",
                                     linkButtonText: "Visit Website",
                                     iconButtonsAvailable: true,
@@ -630,6 +630,7 @@ class Portfolio extends Component {
                                     description: "To address the widening gap between the high street and online shopping, style consultants, Laraine Robathan-Field and Hannah Jean Lewis, have founded Only On The High Street. They use their experience and backgrounds to offer a range of interactive events to provide you with a platform that connects your customers and builds your brand experience.\n\nNote: A final year university project having created the Android application and website backend only."
                                 },
                                 cardAction: {
+                                    isDownloadLink: false,
                                     link: "https://play.google.com/store/apps/details?id=com.onlyonthehighstreet.ooths&hl=en_GB",
                                     linkButtonText: "Visit Google Play Store",
                                     iconButtonsAvailable: true,
@@ -866,6 +867,7 @@ class Portfolio extends Component {
                                     description: "With over a decade of experience performing live across the UK, Sammy Hayes is talented and versatile singer available to book for your event or musical related project.\n\nNote: A second year university project having created both the website frontend and backend."
                                 },
                                 cardAction: {
+                                    isDownloadLink: false,
                                     link: "https://sammyhayes.co.uk/",
                                     linkButtonText: "Visit Website",
                                     iconButtonsAvailable: true,
@@ -938,6 +940,7 @@ class Portfolio extends Component {
                                     description: "A second year university project (Multimedia) prototype website application created for a fictional client for teaching students between the ages of 11 to 18 years on the subject of space.\n\nThe website application contains several screens each containing an interactive quiz and a game to test students’ knowledge."
                                 },
                                 cardAction: {
+                                    isDownloadLink: false,
                                     link: "https://spaceexplorer.firebaseapp.com/",
                                     linkButtonText: "Visit Website",
                                     iconButtonsAvailable: true,
@@ -1075,7 +1078,8 @@ class Portfolio extends Component {
                                     description: "A final year university project (Creative Computing) Android application created to test the spelling abilities of a wide range of users through a simple and intuitive interface, allowing a user to enter the spelling of a variety of words using their mobile device.\n\nFor each spoken word, the user is required to spell the word in English in a text input field within a specified period of time (20 seconds) before moving onto the next question.\n\nThe user will later be presented with a final score page following the completion of the quiz."
                                 },
                                 cardAction: {
-                                    link: SpellBoundAPK,
+                                    isDownloadLink: true,
+                                    link: "spellbound.apk",
                                     linkButtonText: "Download Android App",
                                     iconButtonsAvailable: true,
                                     iconButtons: [
@@ -1125,7 +1129,8 @@ class Portfolio extends Component {
                                     description: "A second year university project (Games Programming) mobile game (Android) built using Unreal Engine.\n\nStoryline: The game centres around a fictional alien character called ‘Flimbo’, who has crash landed in the notorious military compound called ‘Area 51’. The United States Air Force are hunting down the character and have dropped a number of bombs in the level, whereby the objective is to simply get Flimbo to safety by reaching another alien spacecraft that has landed to pick him up, all in less than sixty seconds!\n\nThe bombs will cause damage to the player on contact, which will result in the player’s health being effected and will also slow the character down. Furthermore, the character will be destroyed if they should come into contact with too many bombs or if the timer reaches the zero, whereby this will result in the game terminating. Finally, the level will be completed if the player reaches the friendly spacecraft."
                                 },
                                 cardAction: {
-                                    link: Area51APK,
+                                    isDownloadLink: true,
+                                    link: "area-51.apk",
                                     linkButtonText: "Download Android App",
                                     iconButtonsAvailable: true,
                                     iconButtons: [
@@ -1146,19 +1151,28 @@ class Portfolio extends Component {
             ]
         };
         this.portfolioRef = React.createRef();
+        this.resizeEventTimer = null;
     }
 
     componentDidMount() {
         this.setComponentMeasurements();
-        window.addEventListener('resize', this.setComponentMeasurements);
+        window.addEventListener("resize", this.resizeEvent);
     }
+
+    resizeEvent = () => {
+        clearTimeout(this.resizeEventTimer);
+        this.resizeEventTimer = setTimeout(() => {
+            this.setComponentMeasurements();
+        }, 250);
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.portfolioComponent.height !== this.portfolioRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.setComponentMeasurements);
+        clearTimeout(this.resizeEventTimer);
+        window.removeEventListener("resize", this.resizeEvent);
     }
 
     setComponentMeasurements = () => {
@@ -1185,7 +1199,7 @@ class Portfolio extends Component {
                     <Grid alignItems="flex-start" container>
                         <Grid item xs>
                             <GridList cellHeight="auto" className={classes.gridList}
-                                      cols={portfolio.length === 1 ? 1 : widthXsDown ? 1.25 : widthSmDown ? 1.5 : 2.5}
+                                      cols={portfolio.length === 1 ? 1 : widthXsDown ? 1.2 : widthSmDown ? 1.5 : 2.5}
                                       spacing={0}>
                                 {portfolio.map(item => (
                                     <GridListTile cols={1} key={item.key}

@@ -474,21 +474,28 @@ class Experience extends Component {
             ]
         };
         this.experienceRef = React.createRef();
+        this.resizeEventTimer = null;
     }
 
     componentDidMount() {
         this.setComponentMeasurements();
-        window.addEventListener('resize', this.setComponentMeasurements);
+        window.addEventListener("resize", this.resizeEvent);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.experienceComponent.height !== this.experienceRef.current.scrollHeight) {
+    resizeEvent = () => {
+        clearTimeout(this.resizeEventTimer);
+        this.resizeEventTimer = setTimeout(() => {
             this.setComponentMeasurements();
-        }
+        }, 250);
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.experienceComponent.height !== this.experienceRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.setComponentMeasurements);
+        clearTimeout(this.resizeEventTimer);
+        window.removeEventListener("resize", this.resizeEvent);
     }
 
     setComponentMeasurements = () => {
@@ -557,7 +564,8 @@ class Experience extends Component {
                                                     {position.description}
                                                 </Typography>
                                                 {position.mediaAvailable &&
-                                                <Grid alignContent="center" container direction="column" spacing={24}>
+                                                <Grid alignContent="center" alignItems="center" container
+                                                      direction="column" spacing={24}>
                                                     <Grid item xs>
                                                         <CardMediaSingle
                                                             cycleOnlyMediaPosition={position.media.cycleOnlyMedia ? position.media.items[0].key : null}

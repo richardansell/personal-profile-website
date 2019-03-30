@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import {connect} from "react-redux";
 import {
     updateComponentDistancesToTop,
@@ -11,7 +13,7 @@ import {
     updateWebPsupportLossless,
     updateWebPsupportLossy
 } from "./redux/actions";
-import {colors, createMuiTheme, Grid, MuiThemeProvider, withStyles} from "@material-ui/core";
+import {colors, createMuiTheme, Grid, MuiThemeProvider, withStyles, withWidth} from "@material-ui/core";
 import BackgroundVideo from "./background_video/BackgroundVideo";
 import Navigation, {tabs} from "./navigation/Navigation";
 import BackToTopButton from "./back_to_top_button/BackToTopButton";
@@ -22,6 +24,9 @@ import Education from "./education/Education";
 import Experience from "./experience/Experience";
 import Contact from "./contact/Contact";
 import Footer from "./footer/Footer";
+import {isWidthDown} from "@material-ui/core/withWidth";
+
+require("dotenv").config();
 
 const theme = createMuiTheme({
     palette: {
@@ -79,6 +84,18 @@ const mapDispatchToProps = dispatch => {
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        firebase.initializeApp({
+            apiKey: process.env.REACT_APP_FIREBASE_KEY,
+            authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+            databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
+            projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+            storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+            messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
+        });
+    }
+
     componentDidMount() {
         this.checkWebPSupport();
         window.addEventListener("scroll", this.handleScroll);
@@ -97,14 +114,8 @@ class App extends Component {
 
     checkWebPSupport = () => {
         const testImages = [
-            {
-                format: "lossy",
-                data: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"
-            },
-            {
-                format: "lossless",
-                data: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=="
-            }
+            {format: "lossy", data: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"},
+            {format: "lossless", data: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=="}
         ];
         testImages.forEach(testImage => {
             const image = new Image();
@@ -166,6 +177,7 @@ class App extends Component {
     };
 
     handleScroll = () => {
+        if (isWidthDown("md", this.props.width)) return;
         const {appBarComponent, aboutComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
         const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
         const scrollPoint = document.scrollingElement.scrollTop || document.documentElement.scrollTop;
@@ -235,4 +247,4 @@ class App extends Component {
 
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withWidth()(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App)));

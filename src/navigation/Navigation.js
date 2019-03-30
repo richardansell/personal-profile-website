@@ -52,6 +52,7 @@ class Navigation extends Component {
         };
         this.appBarRef = React.createRef();
         this.slideInTimer = null;
+        this.resizeEventTimer = null;
     }
 
     componentDidMount() {
@@ -59,8 +60,15 @@ class Navigation extends Component {
             this.setState({showNavigation: true})
         }, 1500);
         this.setComponentMeasurements();
-        window.addEventListener('resize', this.setComponentMeasurements);
+        window.addEventListener("resize", this.resizeEvent);
     }
+
+    resizeEvent = () => {
+        clearTimeout(this.resizeEventTimer);
+        this.resizeEventTimer = setTimeout(() => {
+            this.setComponentMeasurements();
+        }, 250);
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.navigation.appBarComponent.height !== this.appBarRef.current.scrollHeight) this.setComponentMeasurements();
@@ -68,7 +76,8 @@ class Navigation extends Component {
 
     componentWillUnmount() {
         clearTimeout(this.slideInTimer);
-        window.removeEventListener('resize', this.setComponentMeasurements);
+        clearTimeout(this.resizeEventTimer);
+        window.removeEventListener("resize", this.resizeEvent);
     }
 
     setComponentMeasurements = () => {
