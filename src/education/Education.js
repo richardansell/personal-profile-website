@@ -51,19 +51,28 @@ class Education extends Component {
             courseContent: "Key modules included: Creative Computing, Multi-Tasking Systems, Advanced Web-Based Technologies, Mobile Technologies, Computer Hardware, Cyber Security and Ethics, Systems Analysis, Networking, Programming and Database Development.\n\nDevelopment work included the creation of a website for the Local Safeguarding Children’s Board for Bath & North-East Somerset Council, a professional services website and a website and Android mobile application for a client specialising in promoting shopping events across the UK."
         };
         this.educationRef = React.createRef();
+        this.resizeEventTimer = null;
     }
 
     componentDidMount() {
         this.setComponentMeasurements();
-        window.addEventListener('resize', this.setComponentMeasurements);
+        window.addEventListener("resize", this.resizeEvent);
     }
+
+    resizeEvent = () => {
+        clearTimeout(this.resizeEventTimer);
+        this.resizeEventTimer = setTimeout(() => {
+            this.setComponentMeasurements();
+        }, 250);
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.educationComponent.height !== this.educationRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.setComponentMeasurements);
+        clearTimeout(this.resizeEventTimer);
+        window.removeEventListener("resize", this.resizeEvent);
     }
 
     setComponentMeasurements = () => {

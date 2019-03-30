@@ -88,19 +88,28 @@ class Contact extends Component {
             snackbarOpen: false
         };
         this.contactRef = React.createRef();
+        this.resizeEventTimer = null;
     }
 
     componentDidMount() {
         this.setComponentMeasurements();
-        window.addEventListener("resize", this.setComponentMeasurements);
+        window.addEventListener("resize", this.resizeEvent);
     }
+
+    resizeEvent = () => {
+        clearTimeout(this.resizeEventTimer);
+        this.resizeEventTimer = setTimeout(() => {
+            this.setComponentMeasurements();
+        }, 250);
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.contactComponent.height !== this.contactRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.setComponentMeasurements);
+        clearTimeout(this.resizeEventTimer);
+        window.removeEventListener("resize", this.resizeEvent);
     }
 
     setComponentMeasurements = () => {
