@@ -56,8 +56,7 @@ const styles = () => ({
         left: 0,
         margin: "0 auto",
         position: "absolute",
-        right: 0,
-        top: "200px"
+        right: 0
     },
     section: {
         paddingBottom: "24px"
@@ -135,7 +134,8 @@ class App extends Component {
     setSectionComponentDistancesToTop = () => {
         const {appBarComponent, aboutComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
         const componentSections = [skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent];
-        let distanceToTop = 200 + aboutComponent.height - appBarComponent.height;
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
+        let distanceToTop = contentStartPoint + aboutComponent.height - appBarComponent.height;
         let margin = 24;
         componentSections.forEach(component => {
             if (component === skillsComponent) {
@@ -181,7 +181,8 @@ class App extends Component {
         const {appBarComponent, aboutComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
         const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
         const scrollPoint = document.scrollingElement.scrollTop || document.documentElement.scrollTop;
-        const initialDistance = 200 + aboutComponent.height - appBarComponent.height;
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
+        const initialDistance = contentStartPoint + aboutComponent.height - appBarComponent.height;
         if (scrollPoint <= initialDistance) {
             if (this.props.navigation.tabIndex === ABOUT) return;
             this.props.updateTabIndex(ABOUT);
@@ -205,6 +206,7 @@ class App extends Component {
 
     render() {
         const {classes} = this.props;
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
         return (
             <div>
                 <MuiThemeProvider theme={theme}>
@@ -216,7 +218,7 @@ class App extends Component {
                             </Grid>
                         </Grid>
                     </div>
-                    <div className={classes.content}>
+                    <div className={classes.content} style={{top: contentStartPoint}}>
                         <Grid container justify="center">
                             <Grid className={classes.section} item lg={8} xs={9}>
                                 <About/>
