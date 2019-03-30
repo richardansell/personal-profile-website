@@ -111,12 +111,20 @@ class About extends Component {
         };
         this.aboutRef = React.createRef();
         this.toolTipCopyEmailTimer = null;
+        this.resizeEventTimer = null;
     }
 
     componentDidMount() {
         this.setComponentMeasurements();
-        window.addEventListener('resize', this.setComponentMeasurements);
+        window.addEventListener("resize", this.resizeEvent);
     }
+
+    resizeEvent = () => {
+        clearTimeout(this.resizeEventTimer);
+        this.resizeEventTimer = setTimeout(() => {
+            this.setComponentMeasurements();
+        }, 250);
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.navigation.aboutComponent.height !== this.aboutRef.current.scrollHeight) this.setComponentMeasurements();
@@ -124,7 +132,8 @@ class About extends Component {
 
     componentWillUnmount() {
         clearTimeout(this.toolTipCopyEmailTimer);
-        window.removeEventListener('resize', this.setComponentMeasurements);
+        clearTimeout(this.resizeEventTimer);
+        window.removeEventListener("resize", this.resizeEvent);
     }
 
     setComponentMeasurements = () => {
@@ -172,8 +181,11 @@ class About extends Component {
                             <Grid item md={5}>
                                 <Grid alignItems="center" container direction="column">
                                     <Grid item xs={12}>
-                                        <Avatar alt={name} srcSet={`${ProfilePictureWp}, ${ProfilePicture}`}
-                                                style={avatarStyle}/>
+                                        <picture>
+                                            <source type="image/webp" srcSet={ProfilePictureWp}/>
+                                            <source type="image/jpg" srcSet={ProfilePicture}/>
+                                            <Avatar alt={name} src={ProfilePicture} style={avatarStyle}/>
+                                        </picture>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Tooltip title="Github">
@@ -238,7 +250,7 @@ class About extends Component {
                                                 <Tooltip title="Open in Google Maps">
                                                     <Typography className={classes.locationHover} color="textSecondary"
                                                                 gutterBottom
-                                                                onClick={() => this.openLink("https://maps.google.com/?q=term" + location)}
+                                                                onClick={() => this.openLink("https://maps.google.com/?q=" + location)}
                                                                 variant="body1">
                                                         {location}
                                                     </Typography>
