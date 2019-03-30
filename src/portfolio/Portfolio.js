@@ -161,6 +161,9 @@ import SpellBound09Wp from "./media/spellbound/spellbound-09-media-volume-off-me
 import SpellBound10Wp from "./media/spellbound/spellbound-10-correct-answer-message.webp";
 import SpellBound11Wp from "./media/spellbound/spellbound-11-game-completed.webp";
 
+import SpellBoundApk from "./media/spellbound/spellbound.apk";
+import Area51Apk from "./media/area-51.apk";
+
 import JavaIcon from '@iconify/react/logos/java';
 import XmlIcon from '@iconify/react/mdi/file-xml';
 import JavaScriptIcon from '@iconify/react/logos/javascript';
@@ -1080,6 +1083,7 @@ class Portfolio extends Component {
                                 cardAction: {
                                     isDownloadLink: true,
                                     link: "spellbound.apk",
+                                    backupDownloadLink: SpellBoundApk,
                                     linkButtonText: "Download Android App",
                                     iconButtonsAvailable: true,
                                     iconButtons: [
@@ -1131,6 +1135,7 @@ class Portfolio extends Component {
                                 cardAction: {
                                     isDownloadLink: true,
                                     link: "area-51.apk",
+                                    backupDownloadLink: Area51Apk,
                                     linkButtonText: "Download Android App",
                                     iconButtonsAvailable: true,
                                     iconButtons: [
