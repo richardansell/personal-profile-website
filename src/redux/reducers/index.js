@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux'
-import webpsupport from "./webpsupport";
+import actionMessage from "./action-message";
 import navigation from "./navigation";
+import touchScreen from "./touch-screen";
+import webpSupport from "./webp-support";
 
-export default combineReducers({webpsupport, navigation})
+export default combineReducers({actionMessage, navigation, touchScreen, webpSupport});
