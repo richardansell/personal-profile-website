@@ -198,7 +198,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
-        updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions)),
+        updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions))
     }
 };
 

@@ -16,7 +16,7 @@ import {
     withStyles,
     withWidth
 } from "@material-ui/core";
-import {updateComponentDistancesToTop, updateExperience} from "../redux/actions";
+import {setActionMessage, updateComponentDistancesToTop, updateExperience} from "../redux/actions";
 import CodeIcon from '@iconify/react/fe/code';
 import MubalooLogo from "./media/mubaloo-logo.svg";
 import BathCollegeLogo from "./media/bath-college-logo.svg";
@@ -29,6 +29,7 @@ import IdeaOfTheYear2006AwardTwoWp from "./media/idea-of-the-year-2006-award-two
 import IdeaOfTheQuarter2008AwardWp from "./media/idea-of-the-quarter-2008-award.webp";
 import {Icon} from "@iconify/react";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
+import {actionMessageType} from "../utils/ActionMessage";
 
 const styles = () => ({
     border: {
@@ -58,13 +59,14 @@ const styles = () => ({
 });
 
 const mapStateToProps = state => {
-    return {experienceComponent: state.navigation.experienceComponent};
+    return {experienceComponent: state.navigation.experienceComponent, touchScreen: state.touchScreen.isTouchScreen};
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
         updateExperience: dimensions => dispatch(updateExperience(dimensions)),
+        setActionMessage: actionMessageContent => dispatch(setActionMessage(actionMessageContent))
     }
 };
 
@@ -76,7 +78,7 @@ class Experience extends Component {
             positions: [
                 {
                     key: 0,
-                    company: "Freelance Work",
+                    company: "Freelance",
                     logo: CodeIcon,
                     logoDetails: {
                         height: 48,
@@ -122,7 +124,7 @@ class Experience extends Component {
                 },
                 {
                     key: 3,
-                    company: "Vax Limited",
+                    company: "Vax",
                     logo: VaxLogo,
                     logoDetails: {
                         height: 48,
@@ -137,7 +139,7 @@ class Experience extends Component {
                 },
                 {
                     key: 4,
-                    company: "Vax Limited",
+                    company: "Vax",
                     logo: VaxLogo,
                     logoDetails: {
                         height: 48,
@@ -277,7 +279,7 @@ class Experience extends Component {
                 },
                 {
                     key: 5,
-                    company: "Vax Limited",
+                    company: "Vax",
                     logo: VaxLogo,
                     logoDetails: {
                         height: 48,
@@ -292,7 +294,7 @@ class Experience extends Component {
                 },
                 {
                     key: 6,
-                    company: "Vax Limited",
+                    company: "Vax",
                     logo: VaxLogo,
                     logoDetails: {
                         height: 48,
@@ -331,7 +333,7 @@ class Experience extends Component {
                 },
                 {
                     key: 7,
-                    company: "Vax Limited",
+                    company: "Vax",
                     logo: VaxLogo,
                     logoDetails: {
                         height: 48,
@@ -437,7 +439,7 @@ class Experience extends Component {
                 },
                 {
                     key: 8,
-                    company: "Vax Limited",
+                    company: "Vax",
                     logo: VaxLogo,
                     logoDetails: {
                         height: 48,
@@ -516,9 +518,23 @@ class Experience extends Component {
         this.props.updateComponentDistancesToTop(true);
     };
 
+    handleLinkClick = (isTouchScreen, actionMessageType, link, message) => {
+        if (!isTouchScreen) {
+            window.open(link, "", "", false);
+        } else {
+            this.props.setActionMessage({
+                actionMessageType: actionMessageType,
+                link: link,
+                message: message,
+                open: true
+            });
+        }
+    };
+
     render() {
-        const {classes} = this.props;
+        const {classes, touchScreen} = this.props;
         const {positions} = this.state;
+        const {VISIT} = actionMessageType;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
             <div className={classes.border} ref={this.experienceRef}>
@@ -536,10 +552,10 @@ class Experience extends Component {
                                         <Step active key={position.key}>
                                             <StepLabel icon={
                                                 <Tooltip
-                                                    disableFocusListener={position.link === null}
-                                                    disableHoverListener={position.link === null}
-                                                    disableTouchListener={position.link === null}
-                                                    title={"Visit " + position.company + " website"}>
+                                                    disableFocusListener={position.link === null || touchScreen}
+                                                    disableHoverListener={position.link === null || touchScreen}
+                                                    disableTouchListener={position.link === null || touchScreen}
+                                                    title={`Visit ${position.company} website`}>
                                                     {position.logoDetails.isIcon ?
                                                         <Icon color={position.logoDetails.iconColor}
                                                               height={position.logoDetails.height} icon={position.logo}
@@ -548,7 +564,7 @@ class Experience extends Component {
                                                         <img alt={position.company}
                                                              className={classes.companyLogo}
                                                              height={position.logoDetails.height}
-                                                             onClick={() => window.open(position.link, "", "", false)}
+                                                             onClick={() => this.handleLinkClick(touchScreen, VISIT, position.link, `Visit ${position.company} website`)}
                                                              src={position.logo}
                                                              width={position.logoDetails.width}/>
                                                     }

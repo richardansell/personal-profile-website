@@ -21,9 +21,10 @@ import {
     faLinkedinIn as LinkedInIcon,
     faStackOverflow as StackOverflowIcon
 } from "@fortawesome/free-brands-svg-icons";
-import {updateAbout} from "../redux/actions";
+import {setActionMessage, updateAbout} from "../redux/actions";
 import ProfilePicture from "../utils/media/profile-picture.jpg";
 import ProfilePictureWp from "../utils/media/profile-picture.webp";
+import {actionMessageType} from "../utils/ActionMessage";
 
 const styles = theme => ({
     border: {
@@ -85,11 +86,14 @@ const tooltipCustomTheme = createMuiTheme({
 });
 
 const mapStateToProps = state => {
-    return {navigation: state.navigation};
+    return {navigation: state.navigation, touchScreen: state.touchScreen.isTouchScreen};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {updateAbout: dimensions => dispatch(updateAbout(dimensions))}
+    return {
+        updateAbout: dimensions => dispatch(updateAbout(dimensions)),
+        setActionMessage: actionMessageContent => dispatch(setActionMessage(actionMessageContent))
+    }
 };
 
 class About extends Component {
@@ -102,7 +106,7 @@ class About extends Component {
             githubUrl: "https://github.com/richardansell",
             linkedInUrl: "https://www.linkedin.com/in/ransell/",
             stackOverflowUrl: "https://stackoverflow.com/users/5955426/richard-ansell",
-            introduction: "Hi, I'm Richard! I'm an Android and front-end web developer with a passion for all things tech. Check out my portfolio and other info I've shared about me. Please feel free to reach out by filling out my short contact form below.",
+            introduction: "Hi, I'm Richard! I'm an Android and front-end web developer with a passion for all things tech. Check out my portfolio and other info I've shared about myself. Please also feel free to reach out by filling out my short contact form below.",
             location: "Wolverhampton, United Kingdom",
             email: "richard.ansell@bath.edu",
             toolTipSelected: false,
@@ -150,23 +154,44 @@ class About extends Component {
         });
     };
 
-    openLink = url => window.open(url, "", "", false);
+    handleEmailCopy = (isTouchScreen, actionMessageType, event, message) => {
+        if (!isTouchScreen) {
+            this.setState({toolTipSelected: true});
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.innerText = event.nativeEvent.target.innerText;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            tempTextArea.remove();
+            this.toolTipCopyEmailTimer = setTimeout(() => {
+                this.setState({toolTipSelected: false})
+            }, 1000);
+        } else {
+            this.props.setActionMessage({
+                actionMessageType: actionMessageType,
+                copyText: event.nativeEvent.target.innerText,
+                message: message,
+                open: true
+            });
+        }
+    };
 
-    copyEmail = event => {
-        this.setState({toolTipSelected: true});
-        const tempTextArea = document.createElement("textarea");
-        tempTextArea.innerText = event.nativeEvent.target.innerText;
-        document.body.appendChild(tempTextArea);
-        tempTextArea.select();
-        document.execCommand("copy");
-        tempTextArea.remove();
-        this.toolTipCopyEmailTimer = setTimeout(() => {
-            this.setState({toolTipSelected: false})
-        }, 1000);
+    handleLinkClick = (isTouchScreen, actionMessageType, link, message) => {
+        if (!isTouchScreen) {
+            window.open(link, "", "", false);
+        } else {
+            this.props.setActionMessage({
+                actionMessageType: actionMessageType,
+                link: link,
+                message: message,
+                open: true
+            });
+        }
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, touchScreen} = this.props;
+        const {VISIT, COPY} = actionMessageType;
         const {name, githubUrl, linkedInUrl, stackOverflowUrl, title, introduction, location, toolTipSelected, toolTipCopyEmailSuccess, toolTipCopyEmailInitial, email} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         const avatarStyle = {
@@ -188,19 +213,29 @@ class About extends Component {
                                         </picture>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Tooltip title="Github">
-                                            <FontAwesomeIcon className={classes.githubIconHover} icon={GithubIcon}
-                                                             onClick={() => this.openLink(githubUrl)} size="2x"/>
-                                        </Tooltip>
-                                        <Tooltip title="LinkedIn">
-                                            <FontAwesomeIcon className={classes.linkedInIconHover} icon={LinkedInIcon}
-                                                             onClick={() => this.openLink(linkedInUrl)}
+
+
+                                        <Tooltip disableHoverListener={touchScreen} disableFocusListener={touchScreen}
+                                                 disableTouchListener={touchScreen} title="Github">
+                                            <FontAwesomeIcon className={classes.githubIconHover}
+                                                             icon={GithubIcon}
+                                                             onClick={() => this.handleLinkClick(touchScreen, VISIT, githubUrl, "Github profile")}
                                                              size="2x"/>
                                         </Tooltip>
-                                        <Tooltip title="Stack Overflow">
+
+                                        <Tooltip disableHoverListener={touchScreen} disableFocusListener={touchScreen}
+                                                 disableTouchListener={touchScreen} title="LinkedIn">
+                                            <FontAwesomeIcon className={classes.linkedInIconHover}
+                                                             icon={LinkedInIcon}
+                                                             onClick={() => this.handleLinkClick(touchScreen, VISIT, linkedInUrl, "LinkedIn profile")}
+                                                             size="2x"/>
+                                        </Tooltip>
+
+                                        <Tooltip disableHoverListener={touchScreen} disableFocusListener={touchScreen}
+                                                 disableTouchListener={touchScreen} title="Stack Overflow">
                                             <FontAwesomeIcon className={classes.stackOverflowIconHover}
                                                              icon={StackOverflowIcon}
-                                                             onClick={() => this.openLink(stackOverflowUrl)}
+                                                             onClick={() => this.handleLinkClick(touchScreen, VISIT, stackOverflowUrl, "Stack Overflow profile")}
                                                              size="2x"/>
                                         </Tooltip>
                                     </Grid>
@@ -247,10 +282,12 @@ class About extends Component {
                                                 </Typography>
                                             </Grid>
                                             <Grid item sm={9} xs={12}>
-                                                <Tooltip title="Open in Google Maps">
+                                                <Tooltip disableHoverListener={touchScreen}
+                                                         disableFocusListener={touchScreen}
+                                                         disableTouchListener={touchScreen} title="Open in Google Maps">
                                                     <Typography className={classes.locationHover} color="textSecondary"
                                                                 gutterBottom
-                                                                onClick={() => this.openLink("https://maps.google.com/?q=" + location)}
+                                                                onClick={() => this.handleLinkClick(touchScreen, VISIT, "https://maps.google.com/?q=" + location, "Open in Google Maps?")}
                                                                 variant="body1">
                                                         {location}
                                                     </Typography>
@@ -264,10 +301,12 @@ class About extends Component {
                                             </Grid>
                                             <Grid item sm={9} xs={12}>
                                                 <MuiThemeProvider theme={tooltipCustomTheme}>
-                                                    <Tooltip
-                                                        title={toolTipSelected ? toolTipCopyEmailSuccess : toolTipCopyEmailInitial}>
+                                                    <Tooltip disableHoverListener={touchScreen}
+                                                             disableFocusListener={touchScreen}
+                                                             disableTouchListener={touchScreen}
+                                                             title={toolTipSelected ? toolTipCopyEmailSuccess : toolTipCopyEmailInitial}>
                                                         <Typography className={classes.emailHover} color="textSecondary"
-                                                                    onClick={this.copyEmail}
+                                                                    onClick={event => this.handleEmailCopy(touchScreen, COPY, event, "Copy email address?")}
                                                                     variant="body1">
                                                             {email}
                                                         </Typography>

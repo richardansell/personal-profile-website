@@ -16,7 +16,7 @@ import {
     withStyles,
     withWidth
 } from "@material-ui/core";
-import {updateComponentDistancesToTop, updateSkills} from "../redux/actions";
+import {setActionMessage, updateComponentDistancesToTop, updateSkills} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import {ProjectIcon} from "./media/ProjectIcon";
 import {VisioIcon} from "./media/VisioIcon";
@@ -49,6 +49,7 @@ import HandshakeIcon from '@iconify/react/vaadin/handshake';
 import TeamIcon from '@iconify/react/ant-design/team-outline';
 import PriorityIcon from '@iconify/react/ic/priority-high';
 import PresentingIcon from '@iconify/react/mdi/presentation-play';
+import {actionMessageType} from "../utils/ActionMessage";
 
 const styles = theme => ({
     avatarBackground: {
@@ -85,13 +86,14 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    return {skillsComponent: state.navigation.skillsComponent};
+    return {skillsComponent: state.navigation.skillsComponent, touchScreen: state.touchScreen.isTouchScreen};
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
-        updateSkills: dimensions => dispatch(updateSkills(dimensions))
+        updateSkills: dimensions => dispatch(updateSkills(dimensions)),
+        setActionMessage: actionMessageContent => dispatch(setActionMessage(actionMessageContent))
     }
 };
 
@@ -268,10 +270,22 @@ class Skills extends Component {
         this.props.updateComponentDistancesToTop(true);
     };
 
-    openLink = url => window.open(url, "", "", false);
+    handleLinkClick = (isTouchScreen, actionMessageType, link, message) => {
+        if (!isTouchScreen) {
+            window.open(link, "", "", false);
+        } else {
+            this.props.setActionMessage({
+                actionMessageType: actionMessageType,
+                link: link,
+                message: message,
+                open: true
+            });
+        }
+    };
 
     render() {
-        const {classes} = this.props;
+        const {classes, touchScreen} = this.props;
+        const {VISIT} = actionMessageType;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
             <div className={classes.border} ref={this.skillsRef}>
@@ -291,7 +305,10 @@ class Skills extends Component {
                                 <div className={classes.chipContainer}>
                                     {this.state.programmingSkills.map(chip => {
                                         return (
-                                            <Tooltip key={chip.key} title="Learn more">
+                                            <Tooltip disableHoverListener={touchScreen}
+                                                     disableFocusListener={touchScreen}
+                                                     disableTouchListener={touchScreen} key={chip.key}
+                                                     title="Learn more">
                                                 <Chip
                                                     avatar={
                                                         <Avatar className={classes.avatarBackground}>
@@ -303,7 +320,7 @@ class Skills extends Component {
                                                     clickable
                                                     color="default"
                                                     label={chip.label}
-                                                    onClick={() => this.openLink(chip.link)}
+                                                    onClick={() => this.handleLinkClick(touchScreen, VISIT, chip.link, `Learn more of ${chip.label}`)}
                                                     variant="outlined"
                                                 />
                                             </Tooltip>
@@ -317,7 +334,10 @@ class Skills extends Component {
                                 <div className={classes.chipContainer}>
                                     {this.state.softwareSkills.map(chip => {
                                         return (
-                                            <Tooltip key={chip.key} title="Learn more">
+                                            <Tooltip disableHoverListener={touchScreen}
+                                                     disableFocusListener={touchScreen}
+                                                     disableTouchListener={touchScreen} key={chip.key}
+                                                     title="Learn more">
                                                 <Chip
                                                     avatar={
                                                         <Avatar className={classes.avatarBackground}>
@@ -329,7 +349,7 @@ class Skills extends Component {
                                                     clickable
                                                     color="default"
                                                     label={chip.label}
-                                                    onClick={() => this.openLink(chip.link)}
+                                                    onClick={() => this.handleLinkClick(touchScreen, VISIT, chip.link, `Learn more of ${chip.label}`)}
                                                     variant="outlined"
                                                 />
                                             </Tooltip>

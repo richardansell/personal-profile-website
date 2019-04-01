@@ -30,6 +30,9 @@ import ProfilePicture from "../utils/media/profile-picture.jpg";
 import ProfilePictureWp from "./media/profile-picture.webp";
 import {Icon} from "@iconify/react";
 import FileSaver from "file-saver";
+import {connect} from "react-redux";
+import {setActionMessage} from "../redux/actions";
+import {actionMessageType} from "./ActionMessage";
 
 const styles = () => ({
     avatarBackground: {
@@ -50,7 +53,7 @@ const styles = () => ({
         cursor: "pointer",
         height: "auto",
         margin: "0 auto",
-        maxHeight: "100%",
+        maxHeight: 200,
         maxWidth: "100%",
         width: "auto"
     },
@@ -58,7 +61,7 @@ const styles = () => ({
         height: 200
     },
     cardMediaSection: {
-        height: 200,
+        height: "auto",
         maxHeight: 200
     },
     cardSmDown: {
@@ -73,6 +76,9 @@ const styles = () => ({
     dialogAction: {
         margin: 15
     },
+    dotActive: {
+        backgroundColor: colors.blueGrey[900]
+    },
     downloadError: {
         color: colors.red[500],
         marginBottom: 15,
@@ -85,6 +91,16 @@ const styles = () => ({
         paddingTop: 20
     }
 });
+
+const mapStateToProps = state => {
+    return {touchScreen: state.touchScreen.isTouchScreen};
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setActionMessage: actionMessageContent => dispatch(setActionMessage(actionMessageContent))
+    }
+};
 
 export const mediaType = {IMAGE: 0, VIDEO: 1};
 
@@ -126,22 +142,37 @@ class CardMediaSingle extends Component {
         }
     };
 
-    setSingleIframeSrc = mediaItem => {
-        if (mediaItem.mediaType === mediaType.VIDEO) {
-            let iframe = document.getElementById(mediaItem.youtubeVideoId);
+    setSingleIframeSrc = (mediaItem, isCycleOnlyMedia) => {
+        if (isCycleOnlyMedia ? mediaItem.mediaType === mediaType.VIDEO : mediaItem.cardMedia.mediaType === mediaType.VIDEO) {
+            let iframe = document.getElementById(isCycleOnlyMedia ? mediaItem.youtubeVideoId : mediaItem.cardMedia.youtubeVideoId);
             if (iframe.getAttribute("datasrc")) iframe.setAttribute("src", iframe.getAttribute("datasrc"));
         }
     };
 
-    handleNext = media => this.setState(prevState => ({activeStep: prevState.activeStep !== media.length - 1 ? prevState.activeStep + 1 : 0}), () => this.setSingleIframeSrc(media[this.state.activeStep]));
+    handleNext = (media, isCycleOnlyMedia) => this.setState(prevState => ({activeStep: prevState.activeStep !== media.length - 1 ? prevState.activeStep + 1 : 0}), () => {
+        this.setSingleIframeSrc(media[this.state.activeStep], isCycleOnlyMedia)
+    });
 
-    handleBack = media => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? media.length - 1 : prevState.activeStep - 1}), () => this.setSingleIframeSrc(media[this.state.activeStep]));
+    handleBack = (media, isCycleOnlyMedia) => this.setState(prevState => ({activeStep: prevState.activeStep === 0 ? media.length - 1 : prevState.activeStep - 1}), () => {
+        this.setSingleIframeSrc(media[this.state.activeStep], isCycleOnlyMedia)
+    });
 
     handleImageDialogClose = () => this.setState({dialogMedia: null, showSelectedImageDialog: false});
 
-    openLink = url => window.open(url, "", "", false);
+    handleLinkClick = (isTouchScreen, actionMessageType, link, message) => {
+        if (!isTouchScreen) {
+            window.open(link, "", "", false);
+        } else {
+            this.props.setActionMessage({
+                actionMessageType: actionMessageType,
+                link: link,
+                message: message,
+                open: true
+            });
+        }
+    };
 
-    setMobileStepper = (activeStep, media, isCycleOnlyMedia, item, theme, widthLgUp) => {
+    setMobileStepper = (activeStep, classes, media, isCycleOnlyMedia, item, theme, widthLgUp) => {
         if (isCycleOnlyMedia) {
             if (item.cardMedia.length < 2) return null;
         } else {
@@ -153,16 +184,18 @@ class CardMediaSingle extends Component {
                 activeStep={activeStep}
                 backButton={
                     <Button
-                        onClick={() => this.handleBack(isCycleOnlyMedia ? item.cardMedia : media.items)}
+                        onClick={() => isCycleOnlyMedia ? this.handleBack(item.cardMedia, isCycleOnlyMedia) : this.handleBack(media.items, isCycleOnlyMedia)}
                         size="small">
                         {theme.direction === "rtl" ? <KeyboardArrowRight/> :
                             <KeyboardArrowLeft/>}
                         {widthLgUp ? "Back" : null}
                     </Button>
                 }
+                classes={{"dotActive": classes.dotActive}}
+                LinearProgressProps={{color: "secondary"}}
                 nextButton={
                     <Button
-                        onClick={() => this.handleNext(isCycleOnlyMedia ? item.cardMedia : media.items)}
+                        onClick={() => isCycleOnlyMedia ? this.handleNext(item.cardMedia, isCycleOnlyMedia) : this.handleNext(media.items, isCycleOnlyMedia)}
                         size="small">
                         {widthLgUp ? "Next" : null}
                         {theme.direction === "rtl" ? <KeyboardArrowLeft/> :
@@ -171,7 +204,8 @@ class CardMediaSingle extends Component {
                 }
                 position="static"
                 steps={isCycleOnlyMedia ? item.cardMedia.length : media.items.length}
-                variant={widthLgUp && variant ? "dots" : "progress"}/>
+                variant={widthLgUp && variant ? "dots" : "progress"}
+            />
         )
     };
 
@@ -231,9 +265,10 @@ class CardMediaSingle extends Component {
     });
 
     render() {
+        const {LEARN_MORE} = actionMessageType;
         const widthSmUp = isWidthUp("sm", this.props.width);
         const widthLgUp = isWidthUp("lg", this.props.width);
-        const {classes, cycleOnlyMediaPosition, media, isCycleOnlyMedia, square, theme} = this.props;
+        const {classes, cycleOnlyMediaPosition, media, isCycleOnlyMedia, square, theme, touchScreen} = this.props;
         const {activeStep, dialogMedia, downloadError, downloadErrorText, downloadRequested, downloadRequestPercentage, downloadRequestVariant, name, showSelectedImageDialog} = this.state;
         const item = isCycleOnlyMedia ? media.items[cycleOnlyMediaPosition] : media.items[activeStep];
         return (
@@ -313,7 +348,8 @@ class CardMediaSingle extends Component {
                                     :
                                     <picture>
                                         <source type="image/webp" srcSet={item.cardMedia.mediaWp}/>
-                                        <source type={item.cardMedia.originalMediaType} srcSet={item.cardMedia.media}/>
+                                        <source type={item.cardMedia.originalMediaType}
+                                                srcSet={item.cardMedia.media}/>
                                         <CardMedia
                                             alt={item.cardMedia.alt}
                                             className={classes.cardMedia}
@@ -328,7 +364,7 @@ class CardMediaSingle extends Component {
                             }
                         </div>
 
-                        {isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthLgUp)}
+                        {isCycleOnlyMedia && this.setMobileStepper(activeStep, classes, media, isCycleOnlyMedia, item, theme, widthLgUp)}
 
                         <CardContent>
                             <Typography color="secondary" component="h2" gutterBottom variant="h5">
@@ -341,9 +377,11 @@ class CardMediaSingle extends Component {
                             <div className={classes.iconContainer}>
                                 {item.cardAction.iconButtons.map(iconButton => {
                                     return (
-                                        <Tooltip key={iconButton.key} title={iconButton.label}>
+                                        <Tooltip disableHoverListener={touchScreen} disableFocusListener={touchScreen}
+                                                 disableTouchListener={touchScreen} key={iconButton.key}
+                                                 title={iconButton.label}>
                                             <Avatar className={classes.avatarBackground}
-                                                    onClick={() => this.openLink(iconButton.link)}>
+                                                    onClick={() => this.handleLinkClick(touchScreen, LEARN_MORE, iconButton.link, iconButton.label)}>
                                                 {iconButton.isCustomIcon ?
                                                     iconButton.icon :
                                                     <Icon color={iconButton.color} icon={iconButton.icon}/>
@@ -358,7 +396,7 @@ class CardMediaSingle extends Component {
                         <CardActions>
                             {item.cardAction.link !== null &&
                             <Button color="secondary"
-                                    onClick={() => item.cardAction.isDownloadLink ? !downloadRequested ? this.downloadApk(item.cardAction) : this.downloadRequest.abort() : this.openLink(item.cardAction.link)}
+                                    onClick={() => item.cardAction.isDownloadLink ? !downloadRequested ? this.downloadApk(item.cardAction) : this.downloadRequest.abort() : window.open(item.cardAction.link, "", "", false)}
                                     size="small">
                                 {!downloadRequested ? item.cardAction.linkButtonText : "Cancel download"}
                             </Button>}
@@ -372,7 +410,7 @@ class CardMediaSingle extends Component {
                         {downloadRequested && <LinearProgress color="secondary" value={downloadRequestPercentage}
                                                               variant={downloadRequestVariant}/>}
 
-                        {!isCycleOnlyMedia && this.setMobileStepper(activeStep, media, isCycleOnlyMedia, item, theme, widthLgUp)}
+                        {!isCycleOnlyMedia && this.setMobileStepper(activeStep, classes, media, isCycleOnlyMedia, item, theme, widthLgUp)}
                     </Card>
                 </Grow>
             </div>
@@ -381,4 +419,4 @@ class CardMediaSingle extends Component {
 
 }
 
-export default withWidth()(withStyles(styles, {withTheme: true})(CardMediaSingle));
+export default withWidth()(withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(CardMediaSingle)));
