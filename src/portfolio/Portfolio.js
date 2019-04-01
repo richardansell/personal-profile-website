@@ -198,7 +198,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
-        updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions)),
+        updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions))
     }
 };
 
@@ -220,7 +220,8 @@ class Portfolio extends Component {
                                     {
                                         mediaType: mediaType.VIDEO,
                                         alt: "UK Motorway Traffic News",
-                                        media: "https://www.youtube.com/embed/9UOjG-bqu-A"
+                                        media: "https://www.youtube.com/embed/9UOjG-bqu-A",
+                                        youtubeVideoId: "9UOjG-bqu-A"
                                     },
                                     {
                                         mediaType: mediaType.IMAGE,
@@ -1126,7 +1127,8 @@ class Portfolio extends Component {
                                 cardMedia: {
                                     mediaType: mediaType.VIDEO,
                                     alt: "Area 51",
-                                    media: "https://www.youtube.com/embed/f_vYqlDXKb0"
+                                    media: "https://www.youtube.com/embed/f_vYqlDXKb0",
+                                    youtubeVideoId: "f_vYqlDXKb0"
                                 },
                                 cardContent: {
                                     title: "Area 51",

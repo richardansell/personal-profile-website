@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Fab, Tooltip, withStyles, Zoom} from "@material-ui/core";
 import UpChevronIcon from "@material-ui/icons/ExpandLess";
+import {connect} from "react-redux";
 
 const styles = () => ({
     backToTopIconHover: {
@@ -15,6 +16,10 @@ const styles = () => ({
         zIndex: "99"
     }
 });
+
+const mapStateToProps = state => {
+    return {actionMessageIsOpen: state.actionMessage.actionMessageContent.open};
+};
 
 class BackToTopButton extends Component {
 
@@ -58,11 +63,12 @@ class BackToTopButton extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, actionMessageIsOpen} = this.props;
+        const {showBackToTopButton} = this.state;
         return (
             <div className={classes.backToTopButtonReveal}
-                 style={{display: this.state.showBackToTopButton ? "block" : "none"}}>
-                <Zoom in={this.state.showBackToTopButton}>
+                 style={{display: showBackToTopButton && !actionMessageIsOpen ? "block" : "none"}}>
+                <Zoom in={showBackToTopButton && !actionMessageIsOpen}>
                     <Tooltip aria-label="Back to top" title="Back to top">
                         <Fab aria-label="Back to top" className={classes.backToTopIconHover} color="primary"
                              onClick={this.backToTop} size="medium">
@@ -76,4 +82,4 @@ class BackToTopButton extends Component {
 
 }
 
-export default withStyles(styles)(BackToTopButton);
+export default withStyles(styles)(connect(mapStateToProps)(BackToTopButton));
