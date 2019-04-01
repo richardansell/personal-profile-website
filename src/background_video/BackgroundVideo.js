@@ -39,7 +39,7 @@ const styles = () => ({
 });
 
 const mapStateToProps = state => {
-    return {webpsupport: state.webpsupport};
+    return {webpSupport: state.webpSupport};
 };
 
 const backgroundVideos = ["background-video-one.mp4", "background-video-two.mp4", "background-video-three.mp4",
@@ -63,9 +63,9 @@ class BackgroundVideo extends Component {
 
     render() {
         const {videoDownloadError, videoReady, videoUrl} = this.state;
-        const {classes, webpsupport} = this.props;
+        const {classes, webpSupport} = this.props;
         const chromeDataSavingEnabled = ("connection" in navigator) ? !!(navigator.connection.saveData) : false;
-        const fallbackBgImage = chromeDataSavingEnabled || videoDownloadError ? webpsupport.lossless ? BgImageFallbackWp : BgImageFallback : null;
+        const fallbackBgImage = chromeDataSavingEnabled || videoDownloadError ? webpSupport.lossless ? BgImageFallbackWp : BgImageFallback : null;
         return (
             <div>
                 {!chromeDataSavingEnabled && !videoDownloadError ?

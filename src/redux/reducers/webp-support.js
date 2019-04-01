@@ -5,7 +5,7 @@ const webPstate = {
     lossless: false
 };
 
-function webpsupport(state = webPstate, action) {
+function webpSupport(state = webPstate, action) {
     switch (action.type) {
         case UPDATE_WEBP_SUPPORT_LOSSY:
             return Object.assign({}, state, {
@@ -20,4 +20,4 @@ function webpsupport(state = webPstate, action) {
     }
 }
 
-export default webpsupport;
+export default webpSupport;

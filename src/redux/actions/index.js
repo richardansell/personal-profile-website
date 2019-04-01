@@ -1,4 +1,6 @@
 import {
+    SET_ACTION_MESSAGE,
+    SET_TOUCH_SCREEN_STATUS,
     UPDATE_ABOUT,
     UPDATE_APP_BAR,
     UPDATE_COMPONENT_DISTANCES_TO_TOP,
@@ -54,4 +56,12 @@ export const updateExperience = payload => {
 
 export const updateContact = payload => {
     return {type: UPDATE_CONTACT, payload}
+};
+
+export const setActionMessage = payload => {
+    return {type: SET_ACTION_MESSAGE, payload}
+};
+
+export const setTouchScreenStatus = payload => {
+    return {type: SET_TOUCH_SCREEN_STATUS, payload}
 };

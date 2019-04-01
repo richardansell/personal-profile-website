@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import {connect} from "react-redux";
 import {
+    setTouchScreenStatus,
     updateComponentDistancesToTop,
     updateContact,
     updateEducation,
@@ -25,6 +26,8 @@ import Experience from "./experience/Experience";
 import Contact from "./contact/Contact";
 import Footer from "./footer/Footer";
 import {isWidthDown} from "@material-ui/core/withWidth";
+import ActionMessage from "./utils/ActionMessage";
+import isTouchDevice from "is-touch-device";
 
 require("dotenv").config();
 
@@ -64,7 +67,7 @@ const styles = () => ({
 });
 
 const mapStateToProps = state => {
-    return {navigation: state.navigation};
+    return {navigation: state.navigation, actionMessage: state.actionMessage.actionMessageContent};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -77,7 +80,8 @@ const mapDispatchToProps = dispatch => {
         updateExperience: dimensions => dispatch(updateExperience(dimensions)),
         updateContact: dimensions => dispatch(updateContact(dimensions)),
         updateWebPsupportLossy: supported => dispatch(updateWebPsupportLossy(supported)),
-        updateWebPsupportLossless: supported => dispatch(updateWebPsupportLossless(supported))
+        updateWebPsupportLossless: supported => dispatch(updateWebPsupportLossless(supported)),
+        setTouchScreenStatus: isTouchScreen => dispatch(setTouchScreenStatus(isTouchScreen))
     }
 };
 
@@ -93,6 +97,8 @@ class App extends Component {
             storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
             messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
         });
+        const touchScreen = isTouchDevice();
+        this.props.setTouchScreenStatus(touchScreen);
     }
 
     componentDidMount() {
@@ -206,6 +212,7 @@ class App extends Component {
 
     render() {
         const {classes} = this.props;
+        const {actionMessageType, copyText, link, message, open} = this.props.actionMessage;
         const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
         return (
             <div>
@@ -240,6 +247,8 @@ class App extends Component {
                             </Grid>
                         </Grid>
                         <Footer/>
+                        <ActionMessage actionMessageType={actionMessageType} copyText={copyText} link={link}
+                                       message={message} open={open}/>
                         <BackToTopButton/>
                     </div>
                 </MuiThemeProvider>
