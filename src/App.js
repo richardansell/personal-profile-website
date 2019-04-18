@@ -2,21 +2,33 @@ import React, {Component} from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import {connect} from "react-redux";
+import isTouchDevice from "is-touch-device";
 import {
+    setContactFormStatus,
     setTouchScreenStatus,
-    updateComponentDistancesToTop,
     updateContact,
     updateEducation,
     updateExperience,
     updatePortfolio,
     updateSkills,
-    updateTabIndex,
     updateWebPsupportLossless,
     updateWebPsupportLossy
 } from "./redux/actions";
-import {colors, createMuiTheme, Grid, MuiThemeProvider, withStyles, withWidth} from "@material-ui/core";
+import {
+    colors,
+    createMuiTheme,
+    Grid,
+    MuiThemeProvider,
+    Snackbar,
+    SnackbarContent,
+    Typography,
+    withStyles,
+    withWidth
+} from "@material-ui/core";
+import {isWidthDown} from "@material-ui/core/withWidth";
+import classNames from "classnames";
 import BackgroundVideo from "./background_video/BackgroundVideo";
-import Navigation, {tabs} from "./navigation/Navigation";
+import Navigation from "./navigation/Navigation";
 import BackToTopButton from "./back_to_top_button/BackToTopButton";
 import About from "./about/About";
 import Skills from "./skills/Skills";
@@ -25,13 +37,26 @@ import Education from "./education/Education";
 import Experience from "./experience/Experience";
 import Contact from "./contact/Contact";
 import Footer from "./footer/Footer";
-import {isWidthDown} from "@material-ui/core/withWidth";
 import ActionMessage from "./utils/ActionMessage";
-import isTouchDevice from "is-touch-device";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import ErrorIcon from "@material-ui/icons/Error";
+import SmoothScroll from "smoothscroll-polyfill";
 
 require("dotenv").config();
 
+const variantIcon = {success: CheckCircleIcon, error: ErrorIcon};
+
 const theme = createMuiTheme({
+    overrides: {
+        MuiSnackbarContent: {
+            root: {
+                "@media (min-width: 768px)": {
+                    flexGrow: 0,
+                    minWidth: 360
+                }
+            }
+        }
+    },
     palette: {
         primary: {
             main: colors.blueGrey[50]
@@ -46,7 +71,30 @@ const theme = createMuiTheme({
     }
 });
 
-const styles = () => ({
+const styles = theme => ({
+    content: {
+        left: 0,
+        margin: "0 auto",
+        position: "absolute",
+        right: 0
+    },
+    contactFormError: {
+        backgroundColor: theme.palette.error.dark
+    },
+    contactFormSuccess: {
+        backgroundColor: colors.green[600]
+    },
+    icon: {
+        fontSize: 20
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: theme.spacing.unit
+    },
+    message: {
+        display: "flex",
+        alignItems: "center"
+    },
     navigationBar: {
         left: 0,
         margin: "0 auto",
@@ -55,25 +103,21 @@ const styles = () => ({
         top: 0,
         zIndex: 99
     },
-    content: {
-        left: 0,
-        margin: "0 auto",
-        position: "absolute",
-        right: 0
-    },
     section: {
         paddingBottom: "24px"
     }
 });
 
 const mapStateToProps = state => {
-    return {navigation: state.navigation, actionMessage: state.actionMessage.actionMessageContent};
+    return {
+        navigation: state.navigation,
+        actionMessage: state.actionMessage.actionMessageContent,
+        contactFormStatus: state.contactFormStatus.contactFormStatusContent
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
-        updateTabIndex: tabIndex => dispatch(updateTabIndex(tabIndex)),
         updateSkills: dimensions => dispatch(updateSkills(dimensions)),
         updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions)),
         updateEducation: dimensions => dispatch(updateEducation(dimensions)),
@@ -81,7 +125,8 @@ const mapDispatchToProps = dispatch => {
         updateContact: dimensions => dispatch(updateContact(dimensions)),
         updateWebPsupportLossy: supported => dispatch(updateWebPsupportLossy(supported)),
         updateWebPsupportLossless: supported => dispatch(updateWebPsupportLossless(supported)),
-        setTouchScreenStatus: isTouchScreen => dispatch(setTouchScreenStatus(isTouchScreen))
+        setTouchScreenStatus: isTouchScreen => dispatch(setTouchScreenStatus(isTouchScreen)),
+        setContactFormStatus: status => dispatch(setContactFormStatus(status))
     }
 };
 
@@ -97,24 +142,13 @@ class App extends Component {
             storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
             messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
         });
+        SmoothScroll.polyfill();
         const touchScreen = isTouchDevice();
         this.props.setTouchScreenStatus(touchScreen);
     }
 
     componentDidMount() {
         this.checkWebPSupport();
-        window.addEventListener("scroll", this.handleScroll);
-        setTimeout(() => {
-            this.props.updateTabIndex(tabs.ABOUT);
-        }, 100);
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.navigation.componentDistancesToTop === true) this.setSectionComponentDistancesToTop();
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("scroll", this.handleScroll);
     }
 
     checkWebPSupport = () => {
@@ -137,81 +171,9 @@ class App extends Component {
         });
     };
 
-    setSectionComponentDistancesToTop = () => {
-        const {appBarComponent, aboutComponent, skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
-        const componentSections = [skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent];
-        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
-        let distanceToTop = contentStartPoint + aboutComponent.height - appBarComponent.height;
-        let margin = 24;
-        componentSections.forEach(component => {
-            if (component === skillsComponent) {
-                this.props.updateSkills({distanceToTop: distanceToTop + margin, height: component.height});
-                distanceToTop += component.height;
-            } else {
-                switch (component) {
-                    case portfolioComponent:
-                        this.props.updatePortfolio({
-                            distanceToTop: distanceToTop + margin,
-                            height: component.height
-                        });
-                        break;
-                    case educationComponent:
-                        this.props.updateEducation({
-                            distanceToTop: distanceToTop + margin,
-                            height: component.height
-                        });
-                        break;
-                    case experienceComponent:
-                        this.props.updateExperience({
-                            distanceToTop: distanceToTop + margin,
-                            height: component.height
-                        });
-                        break;
-                    case contactComponent:
-                        this.props.updateContact({
-                            distanceToTop: distanceToTop,
-                            height: component.height
-                        });
-                        break;
-                    default:
-                        break;
-                }
-                distanceToTop += component.height + margin;
-            }
-        });
-        this.props.updateComponentDistancesToTop({componentDistancesToTop: false});
-    };
-
-    handleScroll = () => {
-        if (isWidthDown("md", this.props.width)) return;
-        const {appBarComponent, aboutComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
-        const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
-        const scrollPoint = document.scrollingElement.scrollTop || document.documentElement.scrollTop;
-        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
-        const initialDistance = contentStartPoint + aboutComponent.height - appBarComponent.height;
-        if (scrollPoint <= initialDistance) {
-            if (this.props.navigation.tabIndex === ABOUT) return;
-            this.props.updateTabIndex(ABOUT);
-        } else if (scrollPoint > initialDistance && scrollPoint < portfolioComponent.distanceToTop) {
-            if (this.props.navigation.tabIndex === SKILLS) return;
-            this.props.updateTabIndex(SKILLS);
-        } else if (scrollPoint >= portfolioComponent.distanceToTop && scrollPoint < educationComponent.distanceToTop) {
-            if (this.props.navigation.tabIndex === PORTFOLIO) return;
-            this.props.updateTabIndex(PORTFOLIO);
-        } else if (scrollPoint >= educationComponent.distanceToTop && scrollPoint < experienceComponent.distanceToTop) {
-            if (this.props.navigation.tabIndex === EDUCATION) return;
-            this.props.updateTabIndex(EDUCATION);
-        } else if (scrollPoint >= experienceComponent.distanceToTop && scrollPoint < contactComponent.distanceToTop) {
-            if (this.props.navigation.tabIndex === EXPERIENCE) return;
-            this.props.updateTabIndex(EXPERIENCE);
-        } else if (scrollPoint >= contactComponent.distanceToTop) {
-            if (this.props.navigation.tabIndex === CONTACT) return;
-            this.props.updateTabIndex(CONTACT);
-        }
-    };
-
     render() {
-        const {classes} = this.props;
+        const {classes, contactFormStatus} = this.props;
+        const Icon = contactFormStatus.error ? variantIcon.error : variantIcon.success;
         const {actionMessageType, copyText, link, message, open} = this.props.actionMessage;
         const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
         return (
@@ -220,7 +182,7 @@ class App extends Component {
                     <BackgroundVideo/>
                     <div className={classes.navigationBar}>
                         <Grid container justify="center">
-                            <Grid item lg={8} xs={9}>
+                            <Grid item md={9} lg={8} sm={9} xs={12}>
                                 <Navigation/>
                             </Grid>
                         </Grid>
@@ -249,6 +211,35 @@ class App extends Component {
                         <Footer/>
                         <ActionMessage actionMessageType={actionMessageType} copyText={copyText} link={link}
                                        message={message} open={open}/>
+                        <Snackbar
+                            autoHideDuration={10000}
+                            ClickAwayListenerProps={{
+                                onClickAway: () => this.props.setContactFormStatus({error: false, open: false})
+                            }}
+                            ContentProps={{"aria-describedby": "contact-form-snackbar-message-id"}}
+                            onClose={() => this.props.setContactFormStatus({error: false, open: false})}
+                            open={contactFormStatus.open}>
+                            <SnackbarContent
+                                aria-describedby="contact-form-snackbar-message-id"
+                                action={
+                                    <Typography color="inherit" onClick={() => this.props.setContactFormStatus({
+                                        error: false, open: false
+                                    })} style={{cursor: "pointer"}} variant="overline">
+                                        Close
+                                    </Typography>
+                                }
+                                className={contactFormStatus.error ? classes.contactFormError : classes.contactFormSuccess}
+                                message={
+                                    <span id="contact-form-snackbar-message-id" className={classes.message}>
+                                        <Icon className={classNames(classes.icon, classes.iconVariant)}/>
+                                        <Typography color="inherit" variant="caption">
+                                            {contactFormStatus.error ? "Error sending your message, please try again" : "Message sent!"}
+                                        </Typography>
+                                    </span>
+                                }
+                                square={true}
+                            />
+                        </Snackbar>
                         <BackToTopButton/>
                     </div>
                 </MuiThemeProvider>

@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
-import {Fab, Tooltip, withStyles, Zoom} from "@material-ui/core";
-import UpChevronIcon from "@material-ui/icons/ExpandLess";
+import React, {Component} from "react";
 import {connect} from "react-redux";
+import {Fab, withStyles, Zoom} from "@material-ui/core";
+import UpChevronIcon from "@material-ui/icons/ExpandLess";
 
 const styles = () => ({
     backToTopIconHover: {
-        '&:hover': {
+        "&:hover": {
             color: "#fff"
         }
     },
-    backToTopButtonReveal: {
-        bottom: "12px",
+    backToTopButton: {
+        bottom: 12,
         position: "fixed",
         right: "15px",
         zIndex: "99"
@@ -18,19 +18,13 @@ const styles = () => ({
 });
 
 const mapStateToProps = state => {
-    return {actionMessageIsOpen: state.actionMessage.actionMessageContent.open};
+    return {
+        actionMessageIsOpen: state.actionMessage.actionMessageContent.open,
+        contactFormStatusIsOpen: state.contactFormStatus.contactFormStatusContent.open
+    };
 };
 
 class BackToTopButton extends Component {
-
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.scrollTimer);
-        window.removeEventListener('scroll', this.handleScroll);
-    }
 
     constructor(props) {
         super(props);
@@ -39,6 +33,15 @@ class BackToTopButton extends Component {
             showBackToTopButton: false
         };
         this.scrollTimer = null;
+    }
+
+    componentDidMount() {
+        window.addEventListener("scroll", this.handleScroll);
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.scrollTimer);
+        window.removeEventListener("scroll", this.handleScroll);
     }
 
     handleScroll = () => {
@@ -56,25 +59,20 @@ class BackToTopButton extends Component {
         this.setState({previousScrollPoint: scrollTop <= 0 ? 0 : scrollTop});
     };
 
-    backToTop = () => {
-        this.setState({showBackToTopButton: false}, () => {
-            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-        });
-    };
+    backToTop = () => window.scrollTo({top: 0, left: 0, behavior: "smooth"});
 
     render() {
-        const {classes, actionMessageIsOpen} = this.props;
+        const {classes, actionMessageIsOpen, contactFormStatusIsOpen} = this.props;
         const {showBackToTopButton} = this.state;
+        const isSnackbarFullWidth = window.innerWidth < 768;
         return (
-            <div className={classes.backToTopButtonReveal}
-                 style={{display: showBackToTopButton && !actionMessageIsOpen ? "block" : "none"}}>
-                <Zoom in={showBackToTopButton && !actionMessageIsOpen}>
-                    <Tooltip aria-label="Back to top" title="Back to top">
-                        <Fab aria-label="Back to top" className={classes.backToTopIconHover} color="primary"
-                             onClick={this.backToTop} size="medium">
-                            <UpChevronIcon/>
-                        </Fab>
-                    </Tooltip>
+            <div className={classes.backToTopButton}>
+                <Zoom
+                    in={isSnackbarFullWidth && showBackToTopButton && !contactFormStatusIsOpen && !actionMessageIsOpen ? true : !isSnackbarFullWidth && showBackToTopButton}>
+                    <Fab aria-label="Back to top" className={classes.backToTopIconHover} color="primary"
+                         onClick={this.backToTop} size="medium">
+                        <UpChevronIcon/>
+                    </Fab>
                 </Zoom>
             </div>
         )
