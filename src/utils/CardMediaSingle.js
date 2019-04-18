@@ -124,13 +124,14 @@ class CardMediaSingle extends Component {
     }
 
     componentDidMount() {
-        window.addEventListener("load", this.setIframeSrcs);
-        this.props.setComponentMeasurements();
+        window.addEventListener("load", () => {
+            this.props.setComponentMeasurements();
+            this.setIframeSrcs();
+        });
     }
 
     componentWillUnmount() {
         clearTimeout(this.downloadErrorTimer);
-        window.removeEventListener("load", this.setIframeSrcs);
     }
 
     setIframeSrcs = () => {
@@ -318,7 +319,7 @@ class CardMediaSingle extends Component {
                         <div className={classes.cardMediaSection}>
                             {isCycleOnlyMedia ?
                                 item.cardMedia[activeStep].mediaType === mediaType.VIDEO ?
-                                    <CardMedia alt={item.cardMedia[activeStep].alt}
+                                    <CardMedia alt={item.cardMedia[activeStep].alt} frameBorder={0}
                                                className={classes.cardMediaVideoIframe} component="iframe"
                                                datasrc={`${item.cardMedia[activeStep].media}?rel=0`}
                                                id={item.cardMedia[activeStep].youtubeVideoId}
@@ -343,7 +344,7 @@ class CardMediaSingle extends Component {
                                 item.cardMedia.mediaType === mediaType.VIDEO ?
                                     <CardMedia alt={item.cardMedia.alt} className={classes.cardMediaVideoIframe}
                                                component="iframe" datasrc={`${item.cardMedia.media}?rel=0`}
-                                               id={item.cardMedia.youtubeVideoId}
+                                               frameBorder={0} id={item.cardMedia.youtubeVideoId}
                                                image={BackgroundPlaceholder} src=""/>
                                     :
                                     <picture>
