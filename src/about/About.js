@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {connect} from "react-redux";
 import {
     Avatar,
@@ -27,11 +27,6 @@ import ProfilePictureWp from "../utils/media/profile-picture.webp";
 import {actionMessageType} from "../utils/ActionMessage";
 
 const styles = theme => ({
-    border: {
-        borderColor: "transparent",
-        borderStyle: "solid",
-        borderWidth: "1px"
-    },
     emailHover: {
         cursor: "pointer"
     },
@@ -119,7 +114,7 @@ class About extends Component {
     }
 
     componentDidMount() {
-        this.setComponentMeasurements();
+        window.addEventListener("load", this.setComponentMeasurements);
         window.addEventListener("resize", this.resizeEvent);
     }
 
@@ -141,16 +136,19 @@ class About extends Component {
     }
 
     setComponentMeasurements = () => {
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
+        const {appBarComponent} = this.props.navigation;
         const height = this.aboutRef.current.scrollHeight;
-        this.props.updateAbout({height});
+        const distanceToTop = this.aboutRef.current.offsetTop + (contentStartPoint - appBarComponent.height);
+        this.props.updateAbout({height: height, distanceToTop: distanceToTop});
     };
 
     scrollToContactForm = () => {
         const {contactComponent} = this.props.navigation;
         window.scrollTo({
-            top: contactComponent.distanceToTop,
+            top: contactComponent.distanceToTop - 12,
             left: 0,
-            behavior: 'smooth'
+            behavior: "smooth"
         });
     };
 
@@ -191,7 +189,7 @@ class About extends Component {
 
     render() {
         const {classes, touchScreen} = this.props;
-        const {VISIT, COPY} = actionMessageType;
+        const {COPY, VISIT, OK} = actionMessageType;
         const {name, githubUrl, linkedInUrl, stackOverflowUrl, title, introduction, location, toolTipSelected, toolTipCopyEmailSuccess, toolTipCopyEmailInitial, email} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         const avatarStyle = {
@@ -200,7 +198,7 @@ class About extends Component {
         };
         return (
             <Slide direction="down" in={true} timeout={{enter: 1500}}>
-                <div className={classes.border} ref={this.aboutRef}>
+                <div ref={this.aboutRef}>
                     <Paper className={classes.paper} square={true}>
                         <Grid alignItems="center" container justify="center" spacing={24}>
                             <Grid item md={5}>
@@ -213,8 +211,6 @@ class About extends Component {
                                         </picture>
                                     </Grid>
                                     <Grid item xs={12}>
-
-
                                         <Tooltip disableHoverListener={touchScreen} disableFocusListener={touchScreen}
                                                  disableTouchListener={touchScreen} title="Github">
                                             <FontAwesomeIcon className={classes.githubIconHover}
@@ -222,7 +218,6 @@ class About extends Component {
                                                              onClick={() => this.handleLinkClick(touchScreen, VISIT, githubUrl, "Github profile")}
                                                              size="2x"/>
                                         </Tooltip>
-
                                         <Tooltip disableHoverListener={touchScreen} disableFocusListener={touchScreen}
                                                  disableTouchListener={touchScreen} title="LinkedIn">
                                             <FontAwesomeIcon className={classes.linkedInIconHover}
@@ -230,7 +225,6 @@ class About extends Component {
                                                              onClick={() => this.handleLinkClick(touchScreen, VISIT, linkedInUrl, "LinkedIn profile")}
                                                              size="2x"/>
                                         </Tooltip>
-
                                         <Tooltip disableHoverListener={touchScreen} disableFocusListener={touchScreen}
                                                  disableTouchListener={touchScreen} title="Stack Overflow">
                                             <FontAwesomeIcon className={classes.stackOverflowIconHover}
@@ -268,7 +262,7 @@ class About extends Component {
                                                 <Button color="secondary" onClick={this.scrollToContactForm}
                                                         size={widthSmDown ? "medium" : "large"}
                                                         variant="contained">
-                                                    Contact
+                                                    Contact me
                                                 </Button>
                                             </Grid>
                                         </Grid>
@@ -287,7 +281,7 @@ class About extends Component {
                                                          disableTouchListener={touchScreen} title="Open in Google Maps">
                                                     <Typography className={classes.locationHover} color="textSecondary"
                                                                 gutterBottom
-                                                                onClick={() => this.handleLinkClick(touchScreen, VISIT, "https://maps.google.com/?q=" + location, "Open in Google Maps?")}
+                                                                onClick={() => this.handleLinkClick(touchScreen, OK, "https://maps.google.com/?q=" + location, "Open in Google Maps?")}
                                                                 variant="body1">
                                                         {location}
                                                     </Typography>

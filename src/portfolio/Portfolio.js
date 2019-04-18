@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Fade, Grid, GridList, GridListTile, Typography, withStyles, withWidth} from "@material-ui/core";
-import {updateComponentDistancesToTop, updatePortfolio} from "../redux/actions";
+import {updatePortfolio} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
 
@@ -164,27 +164,27 @@ import SpellBound11Wp from "./media/spellbound/spellbound-11-game-completed.webp
 import SpellBoundApk from "./media/spellbound/spellbound.apk";
 import Area51Apk from "./media/area-51.apk";
 
-import JavaIcon from '@iconify/react/logos/java';
-import XmlIcon from '@iconify/react/mdi/file-xml';
-import JavaScriptIcon from '@iconify/react/logos/javascript';
-import ReactIcon from '@iconify/react/logos/react';
-import AngularIcon from '@iconify/react/logos/angular-icon';
-import PhpIcon from '@iconify/react/logos/php';
-import HtmlIcon from '@iconify/react/logos/html-5';
-import CssIcon from '@iconify/react/logos/css-3';
-
 import AndroidStudioIcon from '@iconify/react/flat-color-icons/android-os';
-import IntelliJIdeaIcon from '@iconify/react/logos/intellij-idea';
+import AngularIcon from '@iconify/react/logos/angular-icon';
+import AngularMaterialIcon from '@iconify/react/simple-icons/angular';
+import BitbucketIcon from "@iconify/react/logos/bitbucket";
+import BootstrapIcon from "@iconify/react/logos/bootstrap";
+import CssIcon from '@iconify/react/logos/css-3';
+import FabricIcon from '@iconify/react/logos/fabric-io';
 import FirebaseIcon from '@iconify/react/logos/firebase';
-import WordPressIcon from '@iconify/react/dashicons/wordpress';
+import GitIcon from '@iconify/react/logos/git-icon';
+import HtmlIcon from '@iconify/react/logos/html-5';
+import IntelliJIdeaIcon from '@iconify/react/logos/intellij-idea';
+import JavaIcon from '@iconify/react/logos/java';
+import JavaScriptIcon from '@iconify/react/logos/javascript';
+import PhpIcon from '@iconify/react/logos/php';
+import ReactIcon from '@iconify/react/logos/react';
+import XmlIcon from '@iconify/react/mdi/file-xml';
 import UnrealEngineIcon from "@iconify/react/mdi/unreal";
+import WordPressIcon from '@iconify/react/dashicons/wordpress';
+import {ReactMaterialIcon} from "../skills/media/ReactMaterialIcon";
 
 const styles = () => ({
-    border: {
-        borderColor: "transparent",
-        borderStyle: "solid",
-        borderWidth: "1px"
-    },
     gridList: {
         flexWrap: "nowrap",
         transform: "translateZ(0)"
@@ -192,14 +192,11 @@ const styles = () => ({
 });
 
 const mapStateToProps = state => {
-    return {portfolioComponent: state.navigation.portfolioComponent};
+    return {navigation: state.navigation};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
-        updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions))
-    }
+    return {updatePortfolio: dimensions => dispatch(updatePortfolio(dimensions))}
 };
 
 class Portfolio extends Component {
@@ -343,31 +340,59 @@ class Portfolio extends Component {
                                 cardAction: {
                                     isDownloadLink: false,
                                     link: "https://play.google.com/store/apps/dev?id=5284578463219197910",
-                                    linkButtonText: "Visit Android Apps",
+                                    linkButtonText: "View Android Apps",
                                     iconButtonsAvailable: true,
                                     iconButtons: [
                                         {
                                             key: 0,
+                                            label: "Built using Android Studio",
+                                            icon: AndroidStudioIcon,
+                                            isCustomIcon: false,
+                                            link: "https://developer.android.com/studio"
+                                        },
+                                        {
+                                            key: 1,
+                                            label: 'Built using Bitbucket',
+                                            icon: BitbucketIcon,
+                                            isCustomIcon: false,
+                                            link: "https://bitbucket.org"
+                                        },
+                                        {
+                                            key: 2,
+                                            label: "Built using Fabric",
+                                            icon: FabricIcon,
+                                            isCustomIcon: false,
+                                            link: "https://get.fabric.io"
+                                        },
+                                        {
+                                            key: 3,
+                                            label: "Built using Firebase",
+                                            icon: FirebaseIcon,
+                                            isCustomIcon: false,
+                                            link: "https://firebase.google.com/"
+                                        },
+                                        {
+                                            key: 4,
+                                            label: "Built using Git",
+                                            icon: GitIcon,
+                                            isCustomIcon: false,
+                                            link: "https://git-scm.com/"
+                                        },
+                                        {
+                                            key: 5,
                                             label: "Built using Java",
                                             icon: JavaIcon,
                                             isCustomIcon: false,
                                             link: "https://www.java.com"
                                         },
                                         {
-                                            key: 1,
+                                            key: 6,
                                             label: "Built using XML",
                                             icon: XmlIcon,
                                             isCustomIcon: false,
                                             link: "https://www.w3.org/TR/REC-xml/",
                                             color: "#E07A2E"
                                         },
-                                        {
-                                            key: 2,
-                                            label: "Built using Android Studio",
-                                            icon: AndroidStudioIcon,
-                                            isCustomIcon: false,
-                                            link: "https://developer.android.com/studio"
-                                        }
                                     ]
                                 }
                             }
@@ -401,45 +426,66 @@ class Portfolio extends Component {
                                     iconButtons: [
                                         {
                                             key: 0,
-                                            label: "Built using JavaScript",
-                                            icon: JavaScriptIcon,
+                                            label: 'Built using Bitbucket',
+                                            icon: BitbucketIcon,
                                             isCustomIcon: false,
-                                            link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                                            link: "https://bitbucket.org"
                                         },
                                         {
                                             key: 1,
-                                            label: "Built using React",
-                                            icon: ReactIcon,
-                                            isCustomIcon: false,
-                                            link: "https://reactjs.org/"
-                                        },
-                                        {
-                                            key: 2,
-                                            label: "Built using HTML",
-                                            icon: HtmlIcon,
-                                            isCustomIcon: false,
-                                            link: "https://www.w3.org/html/"
-                                        },
-                                        {
-                                            key: 3,
                                             label: "Built using CSS",
                                             icon: CssIcon,
                                             isCustomIcon: false,
                                             link: "https://www.w3.org/TR/CSS/#css"
                                         },
                                         {
+                                            key: 2,
+                                            label: "Built using Firebase",
+                                            icon: FirebaseIcon,
+                                            isCustomIcon: false,
+                                            link: "https://firebase.google.com/"
+                                        },
+                                        {
+                                            key: 3,
+                                            label: "Built using Git",
+                                            icon: GitIcon,
+                                            isCustomIcon: false,
+                                            link: "https://git-scm.com/"
+                                        },
+                                        {
                                             key: 4,
+                                            label: "Built using HTML",
+                                            icon: HtmlIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.w3.org/html/"
+                                        },
+                                        {
+                                            key: 5,
                                             label: "Built using IntelliJ IDEA",
                                             icon: IntelliJIdeaIcon,
                                             isCustomIcon: false,
                                             link: "https://www.jetbrains.com/idea/"
                                         },
                                         {
-                                            key: 5,
-                                            label: "Built using Firebase",
-                                            icon: FirebaseIcon,
+                                            key: 6,
+                                            label: "Built using JavaScript",
+                                            icon: JavaScriptIcon,
                                             isCustomIcon: false,
-                                            link: "https://firebase.google.com/"
+                                            link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                                        },
+                                        {
+                                            key: 7,
+                                            label: "Built using React",
+                                            icon: ReactIcon,
+                                            isCustomIcon: false,
+                                            link: "https://reactjs.org/"
+                                        },
+                                        {
+                                            key: 8,
+                                            label: 'Built using React Material',
+                                            icon: <ReactMaterialIcon/>,
+                                            isCustomIcon: true,
+                                            link: "https://material-ui.com/"
                                         }
                                     ]
                                 }
@@ -474,18 +520,17 @@ class Portfolio extends Component {
                                     iconButtons: [
                                         {
                                             key: 0,
-                                            label: "Built using WordPress",
-                                            icon: WordPressIcon,
+                                            label: "Built using CSS",
+                                            icon: CssIcon,
                                             isCustomIcon: false,
-                                            color: "#2F73A5",
-                                            link: "https://en-gb.wordpress.org/"
+                                            link: "https://www.w3.org/TR/CSS/#css"
                                         },
                                         {
                                             key: 1,
-                                            label: "Built using PHP",
-                                            icon: PhpIcon,
+                                            label: "Built using HTML",
+                                            icon: HtmlIcon,
                                             isCustomIcon: false,
-                                            link: "http://php.net/"
+                                            link: "https://www.w3.org/html/"
                                         },
                                         {
                                             key: 2,
@@ -496,17 +541,18 @@ class Portfolio extends Component {
                                         },
                                         {
                                             key: 3,
-                                            label: "Built using HTML",
-                                            icon: HtmlIcon,
+                                            label: "Built using PHP",
+                                            icon: PhpIcon,
                                             isCustomIcon: false,
-                                            link: "https://www.w3.org/html/"
+                                            link: "http://php.net/"
                                         },
                                         {
                                             key: 4,
-                                            label: "Built using CSS",
-                                            icon: CssIcon,
+                                            label: "Built using WordPress",
+                                            icon: WordPressIcon,
                                             isCustomIcon: false,
-                                            link: "https://www.w3.org/TR/CSS/#css"
+                                            color: "#2F73A5",
+                                            link: "https://en-gb.wordpress.org/"
                                         }
                                     ]
                                 }
@@ -641,67 +687,75 @@ class Portfolio extends Component {
                                     iconButtons: [
                                         {
                                             key: 0,
-                                            label: "Built using Java",
-                                            icon: JavaIcon,
-                                            isCustomIcon: false,
-                                            link: "https://www.java.com"
-                                        },
-                                        {
-                                            key: 1,
-                                            label: "Built using XML",
-                                            icon: XmlIcon,
-                                            isCustomIcon: false,
-                                            link: "https://www.w3.org/TR/REC-xml/",
-                                            color: "#E07A2E"
-                                        },
-                                        {
-                                            key: 2,
-                                            label: "Built using AngularJS",
-                                            icon: AngularIcon,
-                                            isCustomIcon: false,
-                                            link: "https://angularjs.org/"
-                                        },
-                                        {
-                                            key: 3,
-                                            label: "Built using PHP",
-                                            icon: PhpIcon,
-                                            isCustomIcon: false,
-                                            link: "http://php.net/"
-                                        },
-                                        {
-                                            key: 4,
-                                            label: "Built using HTML",
-                                            icon: HtmlIcon,
-                                            isCustomIcon: false,
-                                            link: "https://www.w3.org/html/"
-                                        },
-                                        {
-                                            key: 5,
-                                            label: "Built using CSS",
-                                            icon: CssIcon,
-                                            isCustomIcon: false,
-                                            link: "https://www.w3.org/TR/CSS/#css"
-                                        },
-                                        {
-                                            key: 6,
                                             label: "Built using Android Studio",
                                             icon: AndroidStudioIcon,
                                             isCustomIcon: false,
                                             link: "https://developer.android.com/studio"
                                         },
                                         {
-                                            key: 7,
+                                            key: 1,
+                                            label: "Built using AngularJS",
+                                            icon: AngularIcon,
+                                            isCustomIcon: false,
+                                            link: "https://angularjs.org/"
+                                        },
+                                        {
+                                            key: 2,
+                                            label: 'Built using Angular Material',
+                                            icon: AngularMaterialIcon,
+                                            isCustomIcon: false,
+                                            link: "https://material.angular.io/",
+                                            color: "#3F51B5"
+                                        },
+                                        {
+                                            key: 3,
+                                            label: "Built using CSS",
+                                            icon: CssIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.w3.org/TR/CSS/#css"
+                                        },
+                                        {
+                                            key: 4,
+                                            label: "Built using Firebase",
+                                            icon: FirebaseIcon,
+                                            isCustomIcon: false,
+                                            link: "https://firebase.google.com/"
+                                        },
+                                        {
+                                            key: 5,
                                             label: "Built using IntelliJ IDEA",
                                             icon: IntelliJIdeaIcon,
                                             isCustomIcon: false,
                                             link: "https://www.jetbrains.com/idea/"
                                         },
                                         {
-                                            key: 8,
-                                            label: "Built using Firebase",
-                                            icon: FirebaseIcon,
+                                            key: 6,
+                                            label: "Built using HTML",
+                                            icon: HtmlIcon,
                                             isCustomIcon: false,
-                                            link: "https://firebase.google.com/"
+                                            link: "https://www.w3.org/html/"
+                                        },
+                                        {
+                                            key: 7,
+                                            label: "Built using Java",
+                                            icon: JavaIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.java.com"
+                                        },
+                                        {
+                                            key: 8,
+                                            label: "Built using PHP",
+                                            icon: PhpIcon,
+                                            isCustomIcon: false,
+                                            link: "http://php.net/"
+                                        },
+                                        {
+                                            key: 9,
+                                            label: "Built using XML",
+                                            icon: XmlIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.w3.org/TR/REC-xml/",
+                                            color: "#E07A2E"
                                         }
                                     ]
                                 }
@@ -885,38 +939,46 @@ class Portfolio extends Component {
                                         },
                                         {
                                             key: 1,
-                                            label: "Built using PHP",
-                                            icon: PhpIcon,
+                                            label: 'Built using Angular Material',
+                                            icon: AngularMaterialIcon,
                                             isCustomIcon: false,
-                                            link: "http://php.net/"
+                                            link: "https://material.angular.io/",
+                                            color: "#3F51B5"
                                         },
                                         {
                                             key: 2,
-                                            label: "Built using HTML",
-                                            icon: HtmlIcon,
-                                            isCustomIcon: false,
-                                            link: "https://www.w3.org/html/"
-                                        },
-                                        {
-                                            key: 3,
                                             label: "Built using CSS",
                                             icon: CssIcon,
                                             isCustomIcon: false,
                                             link: "https://www.w3.org/TR/CSS/#css"
                                         },
                                         {
+                                            key: 3,
+                                            label: "Built using Firebase",
+                                            icon: FirebaseIcon,
+                                            isCustomIcon: false,
+                                            link: "https://firebase.google.com/"
+                                        },
+                                        {
                                             key: 4,
+                                            label: "Built using HTML",
+                                            icon: HtmlIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.w3.org/html/"
+                                        },
+                                        {
+                                            key: 5,
                                             label: "Built using IntelliJ IDEA",
                                             icon: IntelliJIdeaIcon,
                                             isCustomIcon: false,
                                             link: "https://www.jetbrains.com/idea/"
                                         },
                                         {
-                                            key: 5,
-                                            label: "Built using Firebase",
-                                            icon: FirebaseIcon,
+                                            key: 6,
+                                            label: "Built using PHP",
+                                            icon: PhpIcon,
                                             isCustomIcon: false,
-                                            link: "https://firebase.google.com/"
+                                            link: "http://php.net/"
                                         }
                                     ]
                                 }
@@ -951,24 +1013,24 @@ class Portfolio extends Component {
                                     iconButtons: [
                                         {
                                             key: 0,
-                                            label: "Built using AngularJS",
-                                            icon: AngularIcon,
+                                            label: 'Built using Bootstrap',
+                                            icon: BootstrapIcon,
                                             isCustomIcon: false,
-                                            link: "https://angularjs.org/"
+                                            link: "https://getbootstrap.com/"
                                         },
                                         {
                                             key: 1,
-                                            label: "Built using HTML",
-                                            icon: HtmlIcon,
-                                            isCustomIcon: false,
-                                            link: "https://www.w3.org/html/"
-                                        },
-                                        {
-                                            key: 2,
                                             label: "Built using CSS",
                                             icon: CssIcon,
                                             isCustomIcon: false,
                                             link: "https://www.w3.org/TR/CSS/#css"
+                                        },
+                                        {
+                                            key: 2,
+                                            label: "Built using HTML",
+                                            icon: HtmlIcon,
+                                            isCustomIcon: false,
+                                            link: "https://www.w3.org/html/"
                                         },
                                         {
                                             key: 3,
@@ -1090,25 +1152,25 @@ class Portfolio extends Component {
                                     iconButtons: [
                                         {
                                             key: 0,
+                                            label: "Built using Android Studio",
+                                            icon: AndroidStudioIcon,
+                                            isCustomIcon: false,
+                                            link: "https://developer.android.com/studio"
+                                        },
+                                        {
+                                            key: 1,
                                             label: "Built using Java",
                                             icon: JavaIcon,
                                             isCustomIcon: false,
                                             link: "https://www.java.com"
                                         },
                                         {
-                                            key: 1,
+                                            key: 2,
                                             label: "Built using XML",
                                             icon: XmlIcon,
                                             isCustomIcon: false,
                                             link: "https://www.w3.org/TR/REC-xml/",
                                             color: "#E07A2E"
-                                        },
-                                        {
-                                            key: 2,
-                                            label: "Built using Android Studio",
-                                            icon: AndroidStudioIcon,
-                                            isCustomIcon: false,
-                                            link: "https://developer.android.com/studio"
                                         }
                                     ]
                                 }
@@ -1162,8 +1224,8 @@ class Portfolio extends Component {
     }
 
     componentDidMount() {
-        this.setComponentMeasurements();
         window.addEventListener("resize", this.resizeEvent);
+        window.addEventListener("load", this.setComponentMeasurements);
     }
 
     resizeEvent = () => {
@@ -1174,7 +1236,7 @@ class Portfolio extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.portfolioComponent.height !== this.portfolioRef.current.scrollHeight) this.setComponentMeasurements();
+        if (prevProps.navigation.portfolioComponent.height !== this.portfolioRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
@@ -1183,9 +1245,11 @@ class Portfolio extends Component {
     }
 
     setComponentMeasurements = () => {
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
+        const {appBarComponent} = this.props.navigation;
         const height = this.portfolioRef.current.scrollHeight;
-        this.props.updatePortfolio({height: height});
-        this.props.updateComponentDistancesToTop(true);
+        const distanceToTop = this.portfolioRef.current.offsetTop + (contentStartPoint - appBarComponent.height);
+        this.props.updatePortfolio({height: height, distanceToTop: distanceToTop});
     };
 
     render() {
@@ -1194,7 +1258,7 @@ class Portfolio extends Component {
         const widthSmDown = isWidthDown("sm", this.props.width);
         const widthXsDown = isWidthDown("xs", this.props.width);
         return (
-            <div className={classes.border} ref={this.portfolioRef}>
+            <div ref={this.portfolioRef}>
                 <Grid alignItems="flex-start" container justify="center">
                     <Grid item md={12} xs={12}>
                         <Fade in={true} timeout={{enter: 3000}}>

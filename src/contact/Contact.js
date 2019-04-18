@@ -16,12 +16,11 @@ import {
     Paper,
     Select,
     Slide,
-    Snackbar,
     Typography,
     withStyles,
     withWidth
 } from "@material-ui/core";
-import {updateComponentDistancesToTop, updateContact} from "../redux/actions";
+import {setContactFormStatus, updateContact} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import * as EmailValidator from "email-validator";
 import axios from "axios";
@@ -29,11 +28,6 @@ import axios from "axios";
 require("dotenv").config();
 
 const styles = theme => ({
-    border: {
-        borderColor: "transparent",
-        borderStyle: "solid",
-        borderWidth: "1px"
-    },
     contactDetails: {
         paddingTop: 30,
         textAlign: "center"
@@ -48,21 +42,17 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 4,
         paddingBottom: theme.spacing.unit * 4
-    },
-    snackbar: {
-        horizontal: "center",
-        vertical: "bottom"
     }
 });
 
 const mapStateToProps = state => {
-    return {contactComponent: state.navigation.contactComponent};
+    return {navigation: state.navigation};
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
-        updateContact: dimensions => dispatch(updateContact(dimensions))
+        updateContact: dimensions => dispatch(updateContact(dimensions)),
+        setContactFormStatus: status => dispatch(setContactFormStatus(status))
     }
 };
 
@@ -83,17 +73,15 @@ class Contact extends Component {
             messageHelperState: false,
             requestCV: false,
             gotcha: "",
-            formError: false,
             formProgress: false,
-            snackbarOpen: false
         };
         this.contactRef = React.createRef();
         this.resizeEventTimer = null;
     }
 
     componentDidMount() {
-        this.setComponentMeasurements();
         window.addEventListener("resize", this.resizeEvent);
+        window.addEventListener("load", this.setComponentMeasurements);
     }
 
     resizeEvent = () => {
@@ -104,7 +92,7 @@ class Contact extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.contactComponent.height !== this.contactRef.current.scrollHeight) this.setComponentMeasurements();
+        if (prevProps.navigation.contactComponent.height !== this.contactRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
@@ -113,14 +101,11 @@ class Contact extends Component {
     }
 
     setComponentMeasurements = () => {
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
+        const {appBarComponent} = this.props.navigation;
         const height = this.contactRef.current.scrollHeight;
-        this.props.updateContact({height: height});
-        this.props.updateComponentDistancesToTop(true);
-    };
-
-    handleClose = (event, reason) => {
-        if (reason === "clickaway") return;
-        this.setState({formError: false, snackbarOpen: false});
+        const distanceToTop = this.contactRef.current.offsetTop + (contentStartPoint - appBarComponent.height);
+        this.props.updateContact({height: height, distanceToTop: distanceToTop});
     };
 
     handleChange = (event, handleInputState) => {
@@ -173,22 +158,23 @@ class Contact extends Component {
                     {headers: {"Accept": "application/json"}}
                 ).then(() => {
                     this.setState({
-                        name: "",
-                        nameHelperError: "",
-                        nameHelperState: false,
-                        email: "",
-                        emailHelperError: "",
-                        emailHelperState: false,
-                        message: "",
-                        messageHelperError: "",
-                        messageHelperState: false,
-                        requestCV: false,
-                        gotcha: "",
-                        formError: false,
-                        formProgress: false,
-                        snackbarOpen: true
-                    })
-                }).catch(() => this.setState({formError: true, formProgress: false, snackbarOpen: true}));
+                            name: "",
+                            nameHelperError: "",
+                            nameHelperState: false,
+                            email: "",
+                            emailHelperError: "",
+                            emailHelperState: false,
+                            message: "",
+                            messageHelperError: "",
+                            messageHelperState: false,
+                            requestCV: false,
+                            gotcha: "",
+                            formProgress: false
+                        }, () => this.props.setContactFormStatus({error: false, open: true})
+                    )
+                }).catch(() => this.setState({
+                    formProgress: false
+                }, () => this.props.setContactFormStatus({error: true, open: true})));
             } else {
                 this
                     .setState({
@@ -203,21 +189,19 @@ class Contact extends Component {
                         messageHelperState: false,
                         requestCV: false,
                         gotcha: "",
-                        formError: false,
-                        formProgress: false,
-                        snackbarOpen: false
+                        formProgress: false
                     });
             }
         });
     };
 
     render() {
-        const {name, nameHelperError, nameHelperState, email, emailHelperError, emailHelperState, message, messageHelperError, messageHelperState, requestCV, gotcha, formError, formProgress, snackbarOpen} = this.state;
+        const {name, nameHelperError, nameHelperState, email, emailHelperError, emailHelperState, message, messageHelperError, messageHelperState, requestCV, gotcha, formProgress} = this.state;
         const isEmailValid = EmailValidator.validate(email);
         const {classes} = this.props;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
-            <div className={classes.border} ref={this.contactRef}>
+            <div ref={this.contactRef}>
 
                 <Dialog aria-labelledby="form-progress-dialog-title" fullWidth={true}
                         open={formProgress}>
@@ -301,12 +285,6 @@ class Contact extends Component {
                                             Send
                                         </Button>
                                     </Grid>
-
-                                    <Snackbar autoHideDuration={5000} className={classes.snackbar}
-                                              ContentProps={{"aria-describedby": "message-id"}}
-                                              message={<span id="message-id"
-                                                             style={{fontWeight: "bold"}}>{formError ? "Error sending your message, please try again later" : "Message sent!"}</span>}
-                                              onClose={this.handleClose} open={snackbarOpen}/>
                                 </Grid>
                             </Paper>
                         </Slide>
