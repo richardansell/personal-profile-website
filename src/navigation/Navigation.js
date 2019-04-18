@@ -1,9 +1,23 @@
-import React, {Component} from 'react';
-import {AppBar, Button, Hidden, Slide, Tab, Tabs, Toolbar, Typography, withStyles, withWidth} from "@material-ui/core";
-import CodeIcon from "@material-ui/icons/Code";
+import React, {Component} from "react";
 import {connect} from "react-redux";
+import {
+    AppBar,
+    Hidden,
+    Menu,
+    MenuItem,
+    Slide,
+    Tab,
+    Tabs,
+    Toolbar,
+    Typography,
+    withStyles,
+    withWidth
+} from "@material-ui/core";
+import CodeIcon from "@material-ui/icons/Code";
 import {updateAppBar} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
+import IconButton from "@material-ui/core/IconButton";
+import MoreIcon from "@material-ui/icons/MoreVert";
 
 const styles = theme => ({
     appBarName: {
@@ -17,10 +31,9 @@ const styles = theme => ({
         marginRight: 10
     },
     root: {
-        borderColor: "transparent",
-        borderStyle: "solid",
-        borderWidth: "1px",
-        paddingTop: theme.spacing.unit * 2
+        "@media (min-width: 600px)": {
+            paddingTop: theme.spacing.unit * 2
+        }
     }
 });
 
@@ -48,7 +61,9 @@ class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showNavigation: false
+            menuIndex: 0,
+            showNavigation: false,
+            showSmallScreenMenu: null
         };
         this.appBarRef = React.createRef();
         this.slideInTimer = null;
@@ -57,10 +72,11 @@ class Navigation extends Component {
 
     componentDidMount() {
         this.slideInTimer = setTimeout(() => {
-            this.setState({showNavigation: true})
-        }, 1500);
-        this.setComponentMeasurements();
+            this.setState({showNavigation: true});
+        }, 1250);
+        window.addEventListener("load", this.setComponentMeasurements);
         window.addEventListener("resize", this.resizeEvent);
+        window.addEventListener("scroll", this.setMenuItemIndex);
     }
 
     resizeEvent = () => {
@@ -78,58 +94,55 @@ class Navigation extends Component {
         clearTimeout(this.slideInTimer);
         clearTimeout(this.resizeEventTimer);
         window.removeEventListener("resize", this.resizeEvent);
+        window.removeEventListener("scroll", this.setMenuItemIndex);
     }
+
+    setMenuItemIndex = () => {
+        const {menuIndex} = this.state;
+        const {skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
+        const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
+        const scrollPoint = (document.scrollingElement.scrollTop || document.documentElement.scrollTop) + 12;
+        if (scrollPoint < skillsComponent.distanceToTop) {
+            if (menuIndex === ABOUT) return;
+            this.setState({menuIndex: ABOUT});
+        } else if (scrollPoint >= skillsComponent.distanceToTop && scrollPoint < portfolioComponent.distanceToTop) {
+            if (menuIndex === SKILLS) return;
+            this.setState({menuIndex: SKILLS});
+        } else if (scrollPoint >= portfolioComponent.distanceToTop && scrollPoint < educationComponent.distanceToTop) {
+            if (menuIndex === PORTFOLIO) return;
+            this.setState({menuIndex: PORTFOLIO});
+        } else if (scrollPoint >= educationComponent.distanceToTop && scrollPoint < experienceComponent.distanceToTop) {
+            if (menuIndex === EDUCATION) return;
+            this.setState({menuIndex: EDUCATION});
+        } else if (scrollPoint >= experienceComponent.distanceToTop && scrollPoint < contactComponent.distanceToTop) {
+            if (menuIndex === EXPERIENCE) return;
+            this.setState({menuIndex: EXPERIENCE});
+        } else if (scrollPoint >= contactComponent.distanceToTop) {
+            if (menuIndex === CONTACT) return;
+            this.setState({menuIndex: CONTACT});
+        }
+    };
 
     setComponentMeasurements = () => {
         const height = this.appBarRef.current.scrollHeight;
         this.props.updateAppBar({height: height});
     };
 
-    handleTabChange = (event, value) => {
-        const {skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = this.props.navigation;
-        const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
-        let scrollToPoint = 0;
-        switch (value) {
-            case ABOUT:
-                scrollToPoint = 0;
-                break;
-            case SKILLS:
-                scrollToPoint = skillsComponent.distanceToTop;
-                break;
-            case PORTFOLIO:
-                scrollToPoint = portfolioComponent.distanceToTop;
-                break;
-            case EDUCATION:
-                scrollToPoint = educationComponent.distanceToTop;
-                break;
-            case EXPERIENCE:
-                scrollToPoint = experienceComponent.distanceToTop;
-                break;
-            case CONTACT:
-                scrollToPoint = contactComponent.distanceToTop;
-                break;
-            default:
-                break;
-        }
-        window.scrollTo({
-            top: scrollToPoint,
+    scrollToTarget = target => {
+        this.setState({showSmallScreenMenu: null}, () => window.scrollTo({
+            top: target - 12,
             left: 0,
-            behavior: 'smooth'
-        });
+            behavior: "smooth"
+        }))
     };
 
-    scrollToContactForm = () => {
-        const {contactComponent} = this.props.navigation;
-        window.scrollTo({
-            top: contactComponent.distanceToTop,
-            left: 0,
-            behavior: 'smooth'
-        });
-    };
+    handleClose = () => this.setState({showSmallScreenMenu: null});
 
     render() {
+        const {ABOUT, SKILLS, PORTFOLIO, EDUCATION, EXPERIENCE, CONTACT} = tabs;
         const {classes, navigation} = this.props;
-        const {showNavigation} = this.state;
+        const {skillsComponent, portfolioComponent, educationComponent, experienceComponent, contactComponent} = navigation;
+        const {showNavigation, showSmallScreenMenu, menuIndex} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
             <Slide direction="down" in={showNavigation} timeout={{enter: 1000}}>
@@ -142,20 +155,46 @@ class Navigation extends Component {
                                 Richard
                             </Typography>
                             <Hidden lgUp>
-                                <Button color="secondary" onClick={this.scrollToContactForm}
-                                        size={widthSmDown ? "small" : "medium"}>
-                                    Contact
-                                </Button>
+                                <IconButton aria-haspopup="true"
+                                            aria-owns={showSmallScreenMenu ? "small-screen-menu" : undefined}
+                                            color="inherit"
+                                            onClick={event => this.setState({showSmallScreenMenu: event.currentTarget})}>
+                                    <MoreIcon/>
+                                </IconButton>
+                                <Menu anchorEl={showSmallScreenMenu} id="small-screen-menu" onClose={this.handleClose}
+                                      open={Boolean(showSmallScreenMenu)}>
+                                    <MenuItem onClick={() => this.scrollToTarget(0)}
+                                              selected={menuIndex === ABOUT}>About</MenuItem>
+                                    <MenuItem onClick={() => this.scrollToTarget(skillsComponent.distanceToTop)}
+                                              selected={menuIndex === SKILLS}>Skills</MenuItem>
+                                    <MenuItem onClick={() => this.scrollToTarget(portfolioComponent.distanceToTop)}
+                                              selected={menuIndex === PORTFOLIO}>Portfolio</MenuItem>
+                                    <MenuItem onClick={() => this.scrollToTarget(educationComponent.distanceToTop)}
+                                              selected={menuIndex === EDUCATION}>Education</MenuItem>
+                                    <MenuItem onClick={() => this.scrollToTarget(experienceComponent.distanceToTop)}
+                                              selected={menuIndex === EXPERIENCE}>Experience</MenuItem>
+                                    <MenuItem onClick={() => this.scrollToTarget(contactComponent.distanceToTop)}
+                                              selected={menuIndex === CONTACT}>Contact me</MenuItem>
+                                </Menu>
                             </Hidden>
                             <Hidden mdDown>
-                                <Tabs indicatorColor="secondary" onChange={this.handleTabChange}
-                                      color="secondary" value={navigation.tabIndex}>
-                                    <Tab label="About" style={tabStyle}/>
-                                    <Tab label="Skills" style={tabStyle}/>
-                                    <Tab label="Portfolio" style={tabStyle}/>
-                                    <Tab label="Education" style={tabStyle}/>
-                                    <Tab label="Experience" style={tabStyle}/>
-                                    <Tab label="Contact" style={tabStyle}/>
+                                <Tabs indicatorColor="secondary" color="secondary" value={menuIndex}>
+                                    <Tab label="About" onClick={() => this.scrollToTarget(0)} style={tabStyle}/>
+                                    <Tab label="Skills"
+                                         onClick={() => this.scrollToTarget(skillsComponent.distanceToTop)}
+                                         style={tabStyle}/>
+                                    <Tab label="Portfolio"
+                                         onClick={() => this.scrollToTarget(portfolioComponent.distanceToTop)}
+                                         style={tabStyle}/>
+                                    <Tab label="Education"
+                                         onClick={() => this.scrollToTarget(educationComponent.distanceToTop)}
+                                         style={tabStyle}/>
+                                    <Tab label="Experience"
+                                         onClick={() => this.scrollToTarget(experienceComponent.distanceToTop)}
+                                         style={tabStyle}/>
+                                    <Tab label="Contact"
+                                         onClick={() => this.scrollToTarget(contactComponent.distanceToTop)}
+                                         style={tabStyle}/>
                                 </Tabs>
                             </Hidden>
                         </Toolbar>
