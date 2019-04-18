@@ -1,15 +1,14 @@
 import {
     SET_ACTION_MESSAGE,
+    SET_CONTACT_FORM_STATUS,
     SET_TOUCH_SCREEN_STATUS,
     UPDATE_ABOUT,
     UPDATE_APP_BAR,
-    UPDATE_COMPONENT_DISTANCES_TO_TOP,
     UPDATE_CONTACT,
     UPDATE_EDUCATION,
     UPDATE_EXPERIENCE,
     UPDATE_PORTFOLIO,
     UPDATE_SKILLS,
-    UPDATE_TAB_INDEX,
     UPDATE_WEBP_SUPPORT_LOSSLESS,
     UPDATE_WEBP_SUPPORT_LOSSY
 } from "../constants/action-types";
@@ -20,14 +19,6 @@ export const updateWebPsupportLossy = payload => {
 
 export const updateWebPsupportLossless = payload => {
     return {type: UPDATE_WEBP_SUPPORT_LOSSLESS, payload}
-};
-
-export const updateComponentDistancesToTop = payload => {
-    return {type: UPDATE_COMPONENT_DISTANCES_TO_TOP, payload}
-};
-
-export const updateTabIndex = payload => {
-    return {type: UPDATE_TAB_INDEX, payload}
 };
 
 export const updateAppBar = payload => {
@@ -64,4 +55,8 @@ export const setActionMessage = payload => {
 
 export const setTouchScreenStatus = payload => {
     return {type: SET_TOUCH_SCREEN_STATUS, payload}
+};
+
+export const setContactFormStatus = payload => {
+    return {type: SET_CONTACT_FORM_STATUS, payload}
 };
