@@ -16,7 +16,7 @@ import {
     withStyles,
     withWidth
 } from "@material-ui/core";
-import {setActionMessage, updateComponentDistancesToTop, updateExperience} from "../redux/actions";
+import {setActionMessage, updateExperience} from "../redux/actions";
 import CodeIcon from '@iconify/react/fe/code';
 import MubalooLogo from "./media/mubaloo-logo.svg";
 import BathCollegeLogo from "./media/bath-college-logo.svg";
@@ -32,11 +32,6 @@ import CardMediaSingle, {mediaType} from "../utils/CardMediaSingle";
 import {actionMessageType} from "../utils/ActionMessage";
 
 const styles = () => ({
-    border: {
-        borderColor: "transparent",
-        borderStyle: "solid",
-        borderWidth: "1px"
-    },
     card: {
         marginTop: 20,
         maxWidth: 500
@@ -59,12 +54,11 @@ const styles = () => ({
 });
 
 const mapStateToProps = state => {
-    return {experienceComponent: state.navigation.experienceComponent, touchScreen: state.touchScreen.isTouchScreen};
+    return {navigation: state.navigation, touchScreen: state.touchScreen.isTouchScreen};
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
         updateExperience: dimensions => dispatch(updateExperience(dimensions)),
         setActionMessage: actionMessageContent => dispatch(setActionMessage(actionMessageContent))
     }
@@ -492,8 +486,8 @@ class Experience extends Component {
     }
 
     componentDidMount() {
-        this.setComponentMeasurements();
         window.addEventListener("resize", this.resizeEvent);
+        window.addEventListener("load", this.setComponentMeasurements);
     }
 
     resizeEvent = () => {
@@ -504,7 +498,7 @@ class Experience extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.experienceComponent.height !== this.experienceRef.current.scrollHeight) this.setComponentMeasurements();
+        if (prevProps.navigation.experienceComponent.height !== this.experienceRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
@@ -513,9 +507,11 @@ class Experience extends Component {
     }
 
     setComponentMeasurements = () => {
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
+        const {appBarComponent} = this.props.navigation;
         const height = this.experienceRef.current.scrollHeight;
-        this.props.updateExperience({height: height});
-        this.props.updateComponentDistancesToTop(true);
+        const distanceToTop = this.experienceRef.current.offsetTop + (contentStartPoint - appBarComponent.height);
+        this.props.updateExperience({height: height, distanceToTop: distanceToTop});
     };
 
     handleLinkClick = (isTouchScreen, actionMessageType, link, message) => {
@@ -534,10 +530,11 @@ class Experience extends Component {
     render() {
         const {classes, touchScreen} = this.props;
         const {positions} = this.state;
-        const {VISIT} = actionMessageType;
+        const {OK} = actionMessageType;
         const widthSmDown = isWidthDown("sm", this.props.width);
+        const widthXsDown = isWidthDown("xs", this.props.width);
         return (
-            <div className={classes.border} ref={this.experienceRef}>
+            <div ref={this.experienceRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={12} xs={12}>
                         <Fade in={true} timeout={{enter: 3000}}>
@@ -564,7 +561,7 @@ class Experience extends Component {
                                                         <img alt={position.company}
                                                              className={classes.companyLogo}
                                                              height={position.logoDetails.height}
-                                                             onClick={() => this.handleLinkClick(touchScreen, VISIT, position.link, `Visit ${position.company} website`)}
+                                                             onClick={() => this.handleLinkClick(touchScreen, OK, position.link, `Visit ${position.company} website`)}
                                                              src={position.logo}
                                                              width={position.logoDetails.width}/>
                                                     }
@@ -572,16 +569,21 @@ class Experience extends Component {
                                             }/>
                                             <StepContent>
                                                 <Toolbar disableGutters={true} variant="dense">
-
                                                     <Typography className={classes.companyTitle} color="secondary"
                                                                 variant={widthSmDown ? "h6" : "h5"}>
                                                         {position.company}
                                                     </Typography>
+                                                    {!widthXsDown &&
                                                     <Typography color="textSecondary"
                                                                 variant={widthSmDown ? "h6" : "h5"}>
                                                         {position.dates}
-                                                    </Typography>
+                                                    </Typography>}
                                                 </Toolbar>
+                                                {widthXsDown &&
+                                                <Typography color="textSecondary"
+                                                            variant={widthSmDown ? "h6" : "h5"}>
+                                                    {position.dates}
+                                                </Typography>}
                                                 <Typography color="textSecondary"
                                                             variant={widthSmDown ? "subtitle1" : "h6"}>
                                                     {position.role}

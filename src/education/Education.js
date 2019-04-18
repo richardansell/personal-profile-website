@@ -1,18 +1,13 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Fade, Grid, Hidden, Paper, Slide, Toolbar, Tooltip, Typography, withStyles, withWidth} from "@material-ui/core";
-import {setActionMessage, updateComponentDistancesToTop, updateEducation} from "../redux/actions";
+import {setActionMessage, updateEducation} from "../redux/actions";
 import {isWidthDown} from "@material-ui/core/withWidth";
 import UoBLogo from "./media/uob-logo-slate-grey.png";
 import UoBLogoWp from "./media/uob-logo-slate-grey.webp";
 import {actionMessageType} from "../utils/ActionMessage";
 
 const styles = theme => ({
-    border: {
-        borderColor: "transparent",
-        borderStyle: "solid",
-        borderWidth: "1px"
-    },
     courseContentText: {
         whiteSpace: "pre-line"
     },
@@ -30,12 +25,11 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    return {educationComponent: state.navigation.educationComponent, touchScreen: state.touchScreen.isTouchScreen};
+    return {navigation: state.navigation, touchScreen: state.touchScreen.isTouchScreen};
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateComponentDistancesToTop: update => dispatch(updateComponentDistancesToTop(update)),
         updateEducation: dimensions => dispatch(updateEducation(dimensions)),
         setActionMessage: actionMessageContent => dispatch(setActionMessage(actionMessageContent))
     }
@@ -49,7 +43,7 @@ class Education extends Component {
             instituteName: "University of Bath",
             instituteUrl: "https://www.bath.ac.uk/",
             visitInstituteTitle: "Visit University of Bath website",
-            courseDetails: "BSc Applied Computing, First Class (Honours) (GPA 4.0), 2014 - 2017",
+            courseDetails: "BSc Applied Computing, First-Class (Honours) (GPA 4.0), 2014 - 2017",
             courseContent: "Key modules included: Creative Computing, Multi-Tasking Systems, Advanced Web-Based Technologies, Mobile Technologies, Computer Hardware, Cyber Security and Ethics, Systems Analysis, Networking, Programming and Database Development.\n\nDevelopment work included the creation of a website for the Local Safeguarding Children’s Board for Bath & North-East Somerset Council, a professional services website and a website and Android mobile application for a client specialising in promoting shopping events across the UK."
         };
         this.educationRef = React.createRef();
@@ -57,8 +51,8 @@ class Education extends Component {
     }
 
     componentDidMount() {
-        this.setComponentMeasurements();
         window.addEventListener("resize", this.resizeEvent);
+        window.addEventListener("load", this.setComponentMeasurements);
     }
 
     resizeEvent = () => {
@@ -69,7 +63,7 @@ class Education extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.educationComponent.height !== this.educationRef.current.scrollHeight) this.setComponentMeasurements();
+        if (prevProps.navigation.educationComponent.height !== this.educationRef.current.scrollHeight) this.setComponentMeasurements();
     }
 
     componentWillUnmount() {
@@ -78,9 +72,11 @@ class Education extends Component {
     }
 
     setComponentMeasurements = () => {
+        const contentStartPoint = isWidthDown("xs", this.props.width) ? 100 : 200;
+        const {appBarComponent} = this.props.navigation;
         const height = this.educationRef.current.scrollHeight;
-        this.props.updateEducation({height: height});
-        this.props.updateComponentDistancesToTop(true);
+        const distanceToTop = this.educationRef.current.offsetTop + (contentStartPoint - appBarComponent.height);
+        this.props.updateEducation({height: height, distanceToTop: distanceToTop});
     };
 
     handleLinkClick = (isTouchScreen, actionMessageType, link, message) => {
@@ -104,7 +100,7 @@ class Education extends Component {
                 <source type="image/png" srcSet={UoBLogo}/>
                 <img alt={this.state.instituteName}
                      className={style}
-                     onClick={() => this.handleLinkClick(touchScreen, actionMessageType.VISIT, this.state.instituteUrl, this.state.visitInstituteTitle)}
+                     onClick={() => this.handleLinkClick(touchScreen, actionMessageType.OK, this.state.instituteUrl, this.state.visitInstituteTitle)}
                      src={UoBLogo}/>
             </picture>
         </Tooltip>
@@ -115,7 +111,7 @@ class Education extends Component {
         const {instituteName, courseDetails, courseContent} = this.state;
         const widthSmDown = isWidthDown("sm", this.props.width);
         return (
-            <div className={classes.border} ref={this.educationRef}>
+            <div ref={this.educationRef}>
                 <Grid alignItems="flex-start" container justify="center" spacing={24}>
                     <Grid item md={12} xs={12}>
                         <Fade in={true} timeout={{enter: 3000}}>
