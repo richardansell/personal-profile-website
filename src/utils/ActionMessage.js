@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Button, Fade, Snackbar} from "@material-ui/core";
+import React, {Component} from "react";
+import {Snackbar, SnackbarContent, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
 import {setActionMessage} from "../redux/actions";
 
-export const actionMessageType = {VISIT: "Visit", COPY: "Ok", LEARN_MORE: "Learn more"};
+export const actionMessageType = {COPY: "Yes", LEARN_MORE: "Learn more", OK: "Ok", VISIT: "Visit"};
 
 const mapDispatchToProps = dispatch => {
     return {setActionMessage: messageContent => dispatch(setActionMessage(messageContent))}
@@ -12,10 +12,11 @@ const mapDispatchToProps = dispatch => {
 class ActionMessage extends Component {
 
     handleAction = (actionMessage, copyText, link) => {
-        const {VISIT, COPY, LEARN_MORE} = actionMessageType;
+        const {COPY, LEARN_MORE, OK, VISIT} = actionMessageType;
         switch (actionMessage) {
-            case VISIT:
+            case OK:
             case LEARN_MORE:
+            case VISIT:
                 window.open(link, "", "", false);
                 break;
             case COPY:
@@ -44,18 +45,28 @@ class ActionMessage extends Component {
         const {actionMessageType, copyText, link, message, open} = this.props;
         return (
             <Snackbar
-                action={
-                    <Button color="inherit" size="small"
-                            onClick={() => this.handleAction(actionMessageType, copyText, link)}>
-                        {actionMessageType}
-                    </Button>
-                }
+                autoHideDuration={5000}
                 ClickAwayListenerProps={{onClickAway: this.clearActionMessage}}
-                ContentProps={{"aria-describedby": "snackbar-fab-message-id"}}
-                message={<span id="snackbar-message-id">{message}</span>}
+                ContentProps={{"aria-describedby": "action-message-snackbar-id"}}
+                onClose={this.clearActionMessage}
                 open={open}
-                TransitionComponent={Fade}
-            />
+            >
+                <SnackbarContent
+                    action={
+                        <Typography color="inherit" onClick={() => this.handleAction(actionMessageType, copyText, link)}
+                                    style={{cursor: "pointer"}} variant="overline">
+                            {actionMessageType}
+                        </Typography>
+                    }
+                    aria-describedby="action-message-snackbar-id"
+                    message={
+                        <Typography color="inherit" id="action-message-snackbar-id" variant="caption">
+                            {message}
+                        </Typography>
+                    }
+                    square={true}
+                />
+            </Snackbar>
         )
     }
 

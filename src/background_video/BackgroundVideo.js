@@ -9,15 +9,11 @@ import BgImageFallbackWp from "./media/background-image-fallback.webp";
 const styles = () => ({
     backgroundContainer: {
         height: "500px",
-        marginLeft: "-10px",
-        marginRight: "-10px",
         overflow: "hidden",
-        position: "relative",
-        top: "-10px"
+        position: "relative"
     },
     backgroundVideo: {
         bottom: "50%",
-        height: "auto",
         minHeight: "100%",
         minWidth: "100%",
         overflow: "hidden",
@@ -30,11 +26,8 @@ const styles = () => ({
     backgroundImageFallback: {
         backgroundSize: "cover",
         height: "500px",
-        marginLeft: "-10px",
-        marginRight: "-10px",
         overflow: "hidden",
         position: "relative",
-        top: "-10px"
     }
 });
 
