@@ -5,10 +5,12 @@ import "./index.css";
 import App from "./App";
 import store from "./redux/store";
 import * as serviceWorker from "./serviceWorker";
+import {detect} from "detect-browser";
+import UnsupportedBrowser from "./unsupported_browser/UnsupportedBrowser";
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        {detect().name !== "ie" ? <App/> : <UnsupportedBrowser/>}
     </Provider>, document.getElementById("root")
 );
 
