@@ -744,13 +744,20 @@ class Portfolio extends Component {
                                         },
                                         {
                                             key: 8,
+                                            label: "Built using JavaScript",
+                                            icon: JavaScriptIcon,
+                                            isCustomIcon: false,
+                                            link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                                        },
+                                        {
+                                            key: 9,
                                             label: "Built using PHP",
                                             icon: PhpIcon,
                                             isCustomIcon: false,
                                             link: "http://php.net/"
                                         },
                                         {
-                                            key: 9,
+                                            key: 10,
                                             label: "Built using XML",
                                             icon: XmlIcon,
                                             isCustomIcon: false,
@@ -975,6 +982,13 @@ class Portfolio extends Component {
                                         },
                                         {
                                             key: 6,
+                                            label: "Built using JavaScript",
+                                            icon: JavaScriptIcon,
+                                            isCustomIcon: false,
+                                            link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                                        },
+                                        {
+                                            key: 7,
                                             label: "Built using PHP",
                                             icon: PhpIcon,
                                             isCustomIcon: false,
@@ -1027,24 +1041,31 @@ class Portfolio extends Component {
                                         },
                                         {
                                             key: 2,
+                                            label: "Built using Firebase",
+                                            icon: FirebaseIcon,
+                                            isCustomIcon: false,
+                                            link: "https://firebase.google.com/"
+                                        },
+                                        {
+                                            key: 3,
                                             label: "Built using HTML",
                                             icon: HtmlIcon,
                                             isCustomIcon: false,
                                             link: "https://www.w3.org/html/"
                                         },
                                         {
-                                            key: 3,
+                                            key: 4,
                                             label: "Built using IntelliJ IDEA",
                                             icon: IntelliJIdeaIcon,
                                             isCustomIcon: false,
                                             link: "https://www.jetbrains.com/idea/"
                                         },
                                         {
-                                            key: 4,
-                                            label: "Built using Firebase",
-                                            icon: FirebaseIcon,
+                                            key: 5,
+                                            label: "Built using JavaScript",
+                                            icon: JavaScriptIcon,
                                             isCustomIcon: false,
-                                            link: "https://firebase.google.com/"
+                                            link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
                                         }
                                     ]
                                 }
